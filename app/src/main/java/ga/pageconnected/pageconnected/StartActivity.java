@@ -23,6 +23,7 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.HashMap;
 
+import ga.pageconnected.pageconnected.profile.WtInfoActivity;
 import ga.pageconnected.pageconnected.util.AdditionalFunc;
 import ga.pageconnected.pageconnected.util.FacebookLogin;
 import ga.pageconnected.pageconnected.util.FacebookLoginSupport;
@@ -208,14 +209,13 @@ public class StartActivity extends BaseActivity implements FacebookLoginSupport 
 
 
     public void redirectWtInfoActivity() {
-        showSnackbar("TODO");
-//        Intent intent = new Intent(this, WtInfoActivity.class);
-//        intent.putExtra("id", wt_id);
-//        intent.putExtra("img", wt_img);
-//        intent.putExtra("email", wt_email);
-//        intent.putExtra("name", wt_name);
-//        startActivity(intent);
-//        finish();
+        Intent intent = new Intent(this, WtInfoActivity.class);
+        intent.putExtra("id", wt_id);
+        intent.putExtra("img", wt_img);
+        intent.putExtra("email", wt_email);
+        intent.putExtra("name", wt_name);
+        startActivity(intent);
+        finish();
     }
 
     public void redirectMainActivity() {
