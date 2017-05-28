@@ -1,4 +1,63 @@
 <resources>
     <string name="app_name">P.C</string>
     <string name="facebook_app_id">1350783595066898</string>
+
+    <!-- Global -->
+    <string name="please_wait">잠시만 기다려주세요.</string>
+    <string name="search">검색</string>
+    <string name="input_search_text">검색어를 입력해주세요.</string>
+    <string name="complete">완료</string>
+    <string name="logout">로그아웃</string>
+    <string name="continue_">계속</string>
+    <string name="email">이메일</string>
+    <string name="interest_field">관심분야</string>
+    <string name="select">선택하기</string>
+    <string name="delete">삭제</string>
+    <string name="edit">편집하기</string>
+    <string name="error">오류</string>
+    <string name="ok">확인</string>
+    <string name="finish">종료</string>
+    <string name="cancel">취소</string>
+    <string name="info">정보</string>
+
+    <!-- Main Activity -->
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="share_article">기사 공유</string>
+    <string name="share_column">칼럼 공유</string>
+    <string name="share_photo">사진 공유</string>
+    <string name="day_magazine">일자별 잡지</string>
+    <string name="show_profile">프로필 보기</string>
+    <string name="logout_and_delete">로그아웃 및 데이터 삭제</string>
+    <string name="information">정보</string>
+    <string name="report">오류제보</string>
+    <string name="help">도움말</string>
+    <string name="opensource">오픈소스</string>
+    <string name="are_you_finish_app">앱을 종료하시겠습니까?</string>
+    <string name="please_input_content">내용을 입력해주세요.</string>
+    <string name="no_install_email_client">설치된 이메일 클라이언트가 존재하지 않습니다.</string>
+    <string name="removing_data">데이터 삭제 중입니다.</string>
+
+    <!-- Select Interest Activity -->
+    <string name="select_interest_field">관심분야 선택</string>
+    <string name="select_more_3">3개 이상 선택해주세요.</string>
+
+    <!-- WtInfo Activity -->
+    <string name="please_input_email">이메일을 입력해주세요.</string>
+    <string name="self_introduce">자기소개</string>
+    <string name="please_input_introduce">자기소개를 입력해주세요.</string>
+
+    <!-- Article Fragment -->
+    <string name="no_article">등록된 기사가 없습니다.</string>
+    <string name="change_interest_field">관심분야가 수정되었습니다.</string>
+
+    <!-- Column Fragment -->
+    <string name="no_column">등록된 칼럼이 없습니다.</string>
+
+    <!-- Photo Fragment -->
+    <string name="no_photo">등록된 사진이 없습니다.</string>
+
+    <!-- Day Magazine Fragment -->
+    <string name="no_day_magazine">등록된 잡지가 없습니다.</string>
+
 </resources>

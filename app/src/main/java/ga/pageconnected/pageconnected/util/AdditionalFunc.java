@@ -22,7 +22,7 @@ import ga.pageconnected.pageconnected.R;
 
 
 /**
- * Created by tw on 2017-03-28.
+ * Created by tw on 2017-05-26.
  */
 
 public class AdditionalFunc {

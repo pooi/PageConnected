@@ -91,7 +91,7 @@ public class WtInfoActivity extends BaseActivity {
         init();
 
         if (isEditMode) {
-            progressDialog.setContent("잠시만 기다려주세요.");
+            progressDialog.setContent(R.string.please_wait);
             progressDialog.show();
 
             HashMap<String, String> map = new HashMap<>();
@@ -163,7 +163,7 @@ public class WtInfoActivity extends BaseActivity {
             }
         });
         if (isEditMode) {
-            nextBtn.setText("편집하기");
+            nextBtn.setText(R.string.edit);
         }
 
         setNextButton(false);
@@ -202,7 +202,7 @@ public class WtInfoActivity extends BaseActivity {
         }
 
         progressDialog = new MaterialDialog.Builder(this)
-                .content("잠시만 기다려주세요.")
+                .content(R.string.please_wait)
                 .progress(true, 0)
                 .progressIndeterminateStyle(true)
                 .theme(Theme.LIGHT)
@@ -279,7 +279,6 @@ public class WtInfoActivity extends BaseActivity {
             switch (msg.what)
             {
                 case MSG_MESSAGE_FINISH:
-                    StartActivity.USER_SCHOOL = (String)StartActivity.USER_DATA.get("school");
                     progressDialog.hide();
                     redirectMainActivity();
                     break;
@@ -404,7 +403,7 @@ public class WtInfoActivity extends BaseActivity {
                 interest = temp;
 
                 if(!check) {
-                    showSnackbar("관심분야가 수정되었습니다.");
+                    showSnackbar(R.string.change_interest_field);
                     setInterestField();
                 }
 
@@ -458,7 +457,7 @@ public class WtInfoActivity extends BaseActivity {
                     }.start();
 
                 }else{
-                    showSnackbar("오류!!");
+                    showSnackbar(R.string.error);
                 }
             }
         }.start();

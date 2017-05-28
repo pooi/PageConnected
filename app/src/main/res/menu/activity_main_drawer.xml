@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_article"
+            android:title="@string/share_article" />
+
+        <item
+            android:id="@+id/nav_column"
+            android:title="@string/share_column" />
+
+        <item
+            android:id="@+id/nav_photo"
+            android:title="@string/share_photo" />
+
+        <item
+            android:id="@+id/nav_day_magazine"
+            android:title="@string/day_magazine" />
+
+    </group>
+
+    <item
+        android:title="유저">
+        <menu>
+            <item
+                android:id="@+id/nav_show_profile"
+                android:icon="@drawable/ic_account_black_24dp"
+                android:title="@string/show_profile" />
+
+            <item
+                android:id="@+id/nav_logout"
+                android:title="@string/logout" />
+            <item
+                android:id="@+id/nav_logout_delete"
+                android:title="@string/logout_and_delete" />
+
+        </menu>
+    </item>
+
+        <item android:title="부가">
+            <menu>
+                <item
+                    android:id="@+id/nav_info"
+                    android:title="@string/information" />
+                <item
+                    android:id="@+id/nav_report"
+                    android:title="@string/report" />
+                <item
+                    android:id="@+id/nav_help"
+                    android:title="@string/help" />
+                <item
+                    android:id="@+id/nav_open_source"
+                    android:title="@string/opensource" />
+            </menu>
+        </item>
+
+
+</menu>

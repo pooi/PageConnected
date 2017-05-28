@@ -54,7 +54,6 @@ public class StartActivity extends BaseActivity implements FacebookLoginSupport 
 
     private String USER_ID = "";
     public static HashMap<String, Object> USER_DATA = new HashMap<>();
-    public static String USER_SCHOOL = "";
 
     // ToWtInfo
     private String wt_id;
@@ -154,7 +153,6 @@ public class StartActivity extends BaseActivity implements FacebookLoginSupport 
                     rl_background.setVisibility(View.VISIBLE);
                     break;
                 case MSG_MESSAGE_SUCCESS:
-                    USER_SCHOOL = (String)USER_DATA.get("school");
                     redirectMainActivity();
                     break;
                 case MSG_MESSAGE_FAIL_FB:
