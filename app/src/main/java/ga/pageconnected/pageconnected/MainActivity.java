@@ -33,6 +33,7 @@ import ga.pageconnected.pageconnected.fragment.ArticleFragment;
 import ga.pageconnected.pageconnected.fragment.ColumnFragment;
 import ga.pageconnected.pageconnected.fragment.DayMagazineFragment;
 import ga.pageconnected.pageconnected.fragment.PhotoFragment;
+import ga.pageconnected.pageconnected.profile.ProfileActivity;
 import ga.pageconnected.pageconnected.util.FacebookLogin;
 import ga.pageconnected.pageconnected.util.ParsePHP;
 import jp.wasabeef.picasso.transformations.CropCircleTransformation;
@@ -166,9 +167,9 @@ public class MainActivity extends BaseActivity  implements NavigationView.OnNavi
 
         }else if (id == R.id.nav_show_profile) {
 
-//            Intent intent = new Intent(MainActivity.this, ProfileActivity.class);
-//            intent.putExtra("id", getUserID(this));
-//            startActivity(intent);
+            Intent intent = new Intent(MainActivity.this, ProfileActivity.class);
+            intent.putExtra("id", getUserID(this));
+            startActivity(intent);
 
         } else if(id == R.id.nav_logout){
 

@@ -49,5 +49,7 @@ dependencies {
     compile 'com.rengwuxian.materialedittext:library:2.1.4'
     compile 'com.afollestad.material-dialogs:core:0.9.3.0'
     compile 'com.wang.avi:library:2.1.2'
+    compile 'com.github.devlight.navigationtabstrip:navigationtabstrip:1.0.4'
+    compile 'com.getbase:floatingactionbutton:1.10.1'
     testCompile 'junit:junit:4.12'
 }
