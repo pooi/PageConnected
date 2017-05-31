@@ -29,10 +29,10 @@ public class ProfileActivity extends BaseActivity {
     public final static int EDIT_PROFILE = 100;
 
     private String[] titles = {
-            "정보",
-            "기사",
-            "칼럼",
-            "사진"
+            getResources().getString(R.string.info),
+            getResources().getString(R.string.article),
+            getResources().getString(R.string.column),
+            getResources().getString(R.string.photo)
     };
 
     private String userId;

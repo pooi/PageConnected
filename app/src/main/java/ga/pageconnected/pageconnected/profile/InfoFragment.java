@@ -89,7 +89,7 @@ public class InfoFragment extends BaseFragment {
         loadingIntro = (AVLoadingIndicatorView)view.findViewById(R.id.loading_intro);
 
         fabEdit = (FloatingActionButton) view.findViewById(R.id.fab_edit);
-        fabEdit.setTitle("편집");
+        fabEdit.setTitle(getResources().getString(R.string.edit));
         fabEdit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -167,10 +167,10 @@ public class InfoFragment extends BaseFragment {
                 @Override
                 public void onClick(View v) {
                     new MaterialDialog.Builder(context)
-                            .title("관심분야")
+                            .title(R.string.interest_field)
                             .items(AdditionalFunc.arrayListToStringArray(interest))
                             .theme(Theme.LIGHT)
-                            .positiveText("닫기")
+                            .positiveText(R.string.close)
                             .show();
                 }
             });

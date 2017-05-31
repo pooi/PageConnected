@@ -34,7 +34,7 @@
                 <TextView
                     android:layout_width="80dp"
                     android:layout_height="wrap_content"
-                    android:text="이메일"
+                    android:text="@string/email"
                     android:textSize="14sp"
                     android:textColor="@color/profile_title"
                     android:gravity="right"
@@ -80,7 +80,7 @@
                     android:id="@+id/tv_interest"
                     android:layout_width="80dp"
                     android:layout_height="wrap_content"
-                    android:text="관심분야"
+                    android:text="@string/interest_field"
                     android:textSize="14sp"
                     android:textColor="@color/profile_title"
                     android:gravity="right"
@@ -127,7 +127,7 @@
                 <TextView
                     android:layout_width="80dp"
                     android:layout_height="wrap_content"
-                    android:text="자기소개"
+                    android:text="@string/self_introduce"
                     android:textSize="14sp"
                     android:textColor="@color/profile_title"
                     android:gravity="right"
