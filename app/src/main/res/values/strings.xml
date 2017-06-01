@@ -23,6 +23,7 @@
     <string name="column">칼럼</string>
     <string name="photo">사진</string>
     <string name="close">닫기</string>
+    <string name="edit_short">편집</string>
 
     <!-- Main Activity -->
     <string name="navigation_drawer_open">Open navigation drawer</string>

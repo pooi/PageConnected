@@ -89,7 +89,7 @@ public class InfoFragment extends BaseFragment {
         loadingIntro = (AVLoadingIndicatorView)view.findViewById(R.id.loading_intro);
 
         fabEdit = (FloatingActionButton) view.findViewById(R.id.fab_edit);
-        fabEdit.setTitle(getResources().getString(R.string.edit));
+        fabEdit.setTitle(getResources().getString(R.string.edit_short));
         fabEdit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

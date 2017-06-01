@@ -28,12 +28,7 @@ public class ProfileActivity extends BaseActivity {
 
     public final static int EDIT_PROFILE = 100;
 
-    private String[] titles = {
-            getResources().getString(R.string.info),
-            getResources().getString(R.string.article),
-            getResources().getString(R.string.column),
-            getResources().getString(R.string.photo)
-    };
+    private String[] titles;
 
     private String userId;
 
@@ -57,6 +52,14 @@ public class ProfileActivity extends BaseActivity {
 
         Intent intent = getIntent();
         userId = intent.getStringExtra("id");
+
+
+        titles = new String[]{
+                getResources().getString(R.string.info),
+                getResources().getString(R.string.article),
+                getResources().getString(R.string.column),
+                getResources().getString(R.string.photo)
+        };
 
         initUI();
 
