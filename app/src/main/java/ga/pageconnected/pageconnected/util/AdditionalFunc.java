@@ -206,5 +206,52 @@ public class AdditionalFunc {
 
     }
 
+    public static ArrayList<HashMap<String, Object>> getArticleList(String data){
+
+        ArrayList<HashMap<String, Object>> list = new ArrayList<>();
+
+        try {
+            JSONObject jObject = new JSONObject(data);
+            JSONArray results = jObject.getJSONArray("result");
+            String countTemp = (String)jObject.get("num_result");
+            int count = Integer.parseInt(countTemp);
+
+            for ( int i = 0; i < count; ++i ) {
+                JSONObject temp = results.getJSONObject(i);
+
+                HashMap<String, Object> hashTemp = new HashMap<>();
+
+                hashTemp.put("id", (String)temp.get("id"));
+                hashTemp.put("userId", (String)temp.get("userId"));
+                hashTemp.put("name", (String)temp.get("name"));
+                hashTemp.put("email", (String)temp.get("email"));
+                hashTemp.put("img", (String)temp.get("img"));
+                hashTemp.put("layout", Integer.parseInt((String)temp.get("layout")));
+                hashTemp.put("picture", (String)temp.get("picture"));
+                hashTemp.put("title", (String)temp.get("title"));
+                hashTemp.put("content", (String)temp.get("content"));
+                hashTemp.put("date", (String)temp.get("date"));
+                hashTemp.put("hit", Integer.parseInt((String)temp.get("hit")));
+                hashTemp.put("heart", Integer.parseInt((String)temp.get("heart")));
+
+                String urlTemp = (String)temp.get("url");
+                ArrayList<String> urlList = new ArrayList<>();
+                for(String s : urlTemp.split(",")){
+                    urlList.add(s);
+                }
+                hashTemp.put("url", urlList);
+
+                list.add(hashTemp);
+
+            }
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        return list;
+
+    }
+
 
 }
