@@ -7,65 +7,27 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     >
 
-
-    <RelativeLayout
+    <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:paddingTop="10dp"
-        android:paddingBottom="10dp"
+        android:clipToPadding="false"
         >
 
 
-        <ga.pageconnected.pageconnected.util.PagerContainer
-            android:id="@+id/view_pager_container"
+        <LinearLayout
+            android:id="@+id/li_list_field"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
             >
 
-            <ga.pageconnected.pageconnected.util.CustomViewPager
-                android:id="@+id/view_pager"
-                android:layout_width="330dp"
-                android:layout_height="match_parent"
-                android:layout_gravity="center_horizontal"
-                >
 
 
-            </ga.pageconnected.pageconnected.util.CustomViewPager>
+        </LinearLayout>
 
-        </ga.pageconnected.pageconnected.util.PagerContainer>
+    </ScrollView>
 
-
-        <!--<com.matthewtamlin.sliding_intro_screen_library.indicators.DotIndicator-->
-            <!--android:id="@+id/size_indicator_ad"-->
-            <!--android:layout_width="wrap_content"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:layout_alignParentBottom="true"-->
-            <!--android:layout_centerHorizontal="true"-->
-            <!--/>-->
-
-    </RelativeLayout>
-
-
-
-
-    <TextView
-        android:id="@+id/tv_msg"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
-        android:text="@string/no_article"
-        android:textColor="@color/dark_gray"
-        />
-
-    <com.wang.avi.AVLoadingIndicatorView
-        android:id="@+id/loading"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:indicatorName="LineSpinFadeLoaderIndicator"
-        app:indicatorColor="@color/colorPrimary"
-        style="@style/AVLoadingIndicatorView.Small"
-        android:layout_centerInParent="true"
-        />
 
 
 </RelativeLayout>

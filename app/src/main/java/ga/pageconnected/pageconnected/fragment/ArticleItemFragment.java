@@ -3,7 +3,6 @@ package ga.pageconnected.pageconnected.fragment;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,7 +21,7 @@ import jp.wasabeef.picasso.transformations.CropCircleTransformation;
 /**
  * Created by tw on 2017-06-01.
  */
-public class ArticleItemFragment extends Fragment {
+public class ArticleItemFragment extends BaseFragment {
 
     // BASIC UI
     private View view;

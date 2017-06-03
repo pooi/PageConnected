@@ -55,6 +55,8 @@
     <!-- Article Fragment -->
     <string name="no_article">등록된 기사가 없습니다.</string>
     <string name="change_interest_field">관심분야가 수정되었습니다.</string>
+    <string name="day_title">%1$d일차(%2$s년 %3$s월 %4$s일)</string>
+    <string name="date_str">%1$s년 %2$s월 %3$s일</string>
 
     <!-- Column Fragment -->
     <string name="no_column">등록된 칼럼이 없습니다.</string>

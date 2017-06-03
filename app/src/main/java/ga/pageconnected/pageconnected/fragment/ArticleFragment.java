@@ -3,58 +3,26 @@ package ga.pageconnected.pageconnected.fragment;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Message;
-import android.support.annotation.NonNull;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentStatePagerAdapter;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
-
-import com.afollestad.materialdialogs.DialogAction;
-import com.afollestad.materialdialogs.MaterialDialog;
-import com.afollestad.materialdialogs.Theme;
-import com.wang.avi.AVLoadingIndicatorView;
-
-import java.util.ArrayList;
-import java.util.HashMap;
 
 import ga.pageconnected.pageconnected.Information;
 import ga.pageconnected.pageconnected.R;
-import ga.pageconnected.pageconnected.util.AdditionalFunc;
-import ga.pageconnected.pageconnected.util.CustomViewPager;
-import ga.pageconnected.pageconnected.util.PagerContainer;
-import ga.pageconnected.pageconnected.util.ParsePHP;
+import ga.pageconnected.pageconnected.activity.ArticleActivity;
 
 public class ArticleFragment extends BaseFragment {
 
-    private MyHandler handler = new MyHandler();
-    private final int MSG_MESSAGE_MAKE_LIST = 500;
-    private final int MSG_MESSAGE_MAKE_ENDLESS_LIST = 501;
-    private final int MSG_MESSAGE_PROGRESS_HIDE = 502;
-    private final int MSG_MESSAGE_SHOW_LOADING = 503;
 
     // UI
     private View view;
     private Context context;
 
+    private LinearLayout li_listField;
 
-    private AVLoadingIndicatorView loading;
-    private MaterialDialog progressDialog;
-    private TextView tv_msg;
-
-    private PagerContainer viewPagerContainer;
-    private CustomViewPager viewPager;
-    private NavigationAdapter pagerAdapter;
-
-    private int page = 0;
-    private String search;
-    private boolean isLoadFinish;
-    private ArrayList<HashMap<String, Object>> list;
-    private ArrayList<HashMap<String, Object>> tempList;
 
     @Override
     public void onCreate(Bundle savedInstanceState){
@@ -78,9 +46,6 @@ public class ArticleFragment extends BaseFragment {
         view = inflater.inflate(R.layout.fragment_article, container, false);
         context = container.getContext();
 
-        list = new ArrayList<>();
-        tempList = new ArrayList<>();
-
         init();
 
         return view;
@@ -88,164 +53,38 @@ public class ArticleFragment extends BaseFragment {
 
     private void init(){
 
-        tv_msg = (TextView)view.findViewById(R.id.tv_msg);
-        tv_msg.setVisibility(View.GONE);
-
-        viewPagerContainer = (PagerContainer)view.findViewById(R.id.view_pager_container);
-        viewPager = (CustomViewPager) view.findViewById(R.id.view_pager);
-
-        loading = (AVLoadingIndicatorView)view.findViewById(R.id.loading);
-        progressDialog = new MaterialDialog.Builder(context)
-                .content("잠시만 기다려주세요.")
-                .progress(true, 0)
-                .progressIndeterminateStyle(true)
-                .theme(Theme.LIGHT)
-                .build();
-
-        getArticleList();
+        li_listField = (LinearLayout)view.findViewById(R.id.li_list_field);
+        makeList();
 
     }
 
-    private void initLoadValue(){
-        page = 0;
-        isLoadFinish = false;
-    }
+    private void makeList(){
 
-    private void loadViewPager(){
+        li_listField.removeAllViews();
 
-        pagerAdapter = new NavigationAdapter(getFragmentManager(), list);
-        viewPager.setAdapter(pagerAdapter);
-//        viewPager.setPageMargin(0);
-//        viewPager.setClipChildren(false);
+        for(int i=0; i<Information.DATE_LIST.length; i++){
+            int day = i+1;
+            final String date = Information.DATE_LIST[i];
+            String title = String.format(getResources().getString(R.string.day_title), day, date.substring(0,4), date.substring(4,6), date.substring(6, 8));
 
-    }
+            View v = LayoutInflater.from(context).inflate(R.layout.day_list_custom_item, null, false);
 
-    private void getArticleList(){
-        if(!isLoadFinish) {
-            handler.sendMessage(handler.obtainMessage(MSG_MESSAGE_SHOW_LOADING));
+            TextView tv_title = (TextView)v.findViewById(R.id.tv_title);
+            tv_title.setText(title);
 
-            HashMap<String, String> map = new HashMap<>();
-            map.put("service", "getArticle");
-            map.put("page", Integer.toString(page));
-            if (search != null && (!"".equals(search))) {
-                map.put("search", search);
-            }
-            new ParsePHP(Information.MAIN_SERVER_ADDRESS, map) {
-
+            RelativeLayout root = (RelativeLayout)v.findViewById(R.id.root);
+            root.setOnClickListener(new View.OnClickListener() {
                 @Override
-                protected void afterThreadFinish(String data) {
-
-                    if (page <= 0) {
-                        list.clear();
-
-                        list = AdditionalFunc.getArticleList(data);
-
-                        handler.sendMessage(handler.obtainMessage(MSG_MESSAGE_MAKE_LIST));
-
-                    } else {
-
-                        tempList.clear();
-                        tempList = AdditionalFunc.getArticleList(data);
-                        if (tempList.size() < 30) {
-                            isLoadFinish = true;
-                        }
-                        handler.sendMessage(handler.obtainMessage(MSG_MESSAGE_MAKE_ENDLESS_LIST));
-
-                    }
-
+                public void onClick(View view) {
+                    Intent intent = new Intent(context, ArticleActivity.class);
+                    intent.putExtra("date", date);
+                    startActivity(intent);
                 }
-            }.start();
-        }else{
-//            if(adapter != null){
-//                adapter.setLoaded();
-//            }
+            });
+
+            li_listField.addView(v);
+
         }
-    }
-
-    private void checkMsg(){
-        if(list.size()>0){
-            tv_msg.setVisibility(View.GONE);
-        }else{
-            tv_msg.setVisibility(View.VISIBLE);
-        }
-    }
-
-    public void makeList(){
-
-        checkMsg();
-
-        loadViewPager();
-
-    }
-
-    private void addList(){
-
-        for(int i=0; i<tempList.size(); i++){
-            list.add(tempList.get(i));
-        }
-        // TODO
-//        adapter.setLoaded();
-
-    }
-
-    private class MyHandler extends Handler {
-
-        public void handleMessage(Message msg)
-        {
-            switch (msg.what)
-            {
-                case MSG_MESSAGE_MAKE_LIST:
-                    progressDialog.hide();
-                    loading.hide();
-                    makeList();
-                    break;
-                case MSG_MESSAGE_MAKE_ENDLESS_LIST:
-                    progressDialog.hide();
-                    loading.hide();
-                    addList();
-                    break;
-                case MSG_MESSAGE_PROGRESS_HIDE:
-                    progressDialog.hide();
-                    loading.hide();
-                    break;
-                case MSG_MESSAGE_SHOW_LOADING:
-                    loading.show();
-                    break;
-                default:
-                    break;
-            }
-        }
-    }
-
-
-    private static class NavigationAdapter extends FragmentStatePagerAdapter {
-
-        private ArrayList<HashMap<String, Object>> list;
-
-        public NavigationAdapter(FragmentManager fm, ArrayList<HashMap<String, Object>> list){
-            super(fm);
-            this.list = list;
-        }
-
-        @Override
-        public Fragment getItem(int position) {
-            Fragment f;
-            final int pattern = position % list.size();
-
-            f = new ArticleItemFragment();
-            Bundle bdl = new Bundle(1);
-            bdl.putInt("position", pattern);
-            bdl.putSerializable("data", list.get(pattern));
-            f.setArguments(bdl);
-
-            return f;
-        }
-
-        @Override
-        public int getCount(){
-            return list.size();
-        }
-
 
     }
 

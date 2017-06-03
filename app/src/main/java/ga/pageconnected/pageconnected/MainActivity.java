@@ -137,7 +137,7 @@ public class MainActivity extends BaseActivity  implements NavigationView.OnNavi
         }
     }
 
-    @SuppressWarnings("StatementWithEmptyBody")
+    //@SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
 
