@@ -51,6 +51,6 @@ dependencies {
     compile 'com.wang.avi:library:2.1.2'
     compile 'com.github.devlight.navigationtabstrip:navigationtabstrip:1.0.4'
     compile 'com.getbase:floatingactionbutton:1.10.1'
-    compile 'com.android.support.constraint:constraint-layout:+'
+    compile 'com.android.support.constraint:constraint-layout:1.0.2'
     testCompile 'junit:junit:4.12'
 }

@@ -23,6 +23,7 @@ import ga.pageconnected.pageconnected.Information;
 import ga.pageconnected.pageconnected.R;
 import ga.pageconnected.pageconnected.fragment.ArticleItemFragment;
 import ga.pageconnected.pageconnected.util.AdditionalFunc;
+import ga.pageconnected.pageconnected.util.CustomViewPager;
 import ga.pageconnected.pageconnected.util.PagerContainer;
 import ga.pageconnected.pageconnected.util.ParsePHP;
 
@@ -40,10 +41,11 @@ public class ArticleActivity extends BaseActivity {
     private TextView toolbarTitle;
 
     private PagerContainer viewPagerContainer;
-    private ViewPager viewPager;
+    private CustomViewPager viewPager;
     private NavigationAdapter pagerAdapter;
 
     private int page = 0;
+    private String userId;
     private String date;
     private String search;
     private boolean isLoadFinish;
@@ -56,6 +58,7 @@ public class ArticleActivity extends BaseActivity {
         setContentView(R.layout.activity_article);
 
         date = getIntent().getStringExtra("date");
+        userId = getIntent().getStringExtra("userId");
 
         list = new ArrayList<>();
         tempList = new ArrayList<>();
@@ -73,7 +76,7 @@ public class ArticleActivity extends BaseActivity {
         tv_msg.setVisibility(View.GONE);
 
         viewPagerContainer = (PagerContainer)findViewById(R.id.view_pager_container);
-        viewPager = (ViewPager) findViewById(R.id.view_pager);
+        viewPager = (CustomViewPager) findViewById(R.id.view_pager);
 
         loading = (AVLoadingIndicatorView)findViewById(R.id.loading);
         progressDialog = new MaterialDialog.Builder(this)
@@ -108,6 +111,10 @@ public class ArticleActivity extends BaseActivity {
 
             HashMap<String, String> map = new HashMap<>();
             map.put("service", "getArticle");
+            map.put("userId", userId);
+//            if(userId != null && !userId.equals("")){
+//                map.put("userId", userId);
+//            }
             map.put("date", date);
             map.put("page", Integer.toString(page));
             if (search != null && (!"".equals(search))) {

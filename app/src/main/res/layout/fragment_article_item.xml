@@ -11,7 +11,6 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_margin="5dp"
-        app:cardElevation="5dp"
         >
 
         <RelativeLayout
@@ -97,14 +96,16 @@
                 android:textColor="@color/dark_gray"
                 android:layout_below="@+id/tv_title"
                 android:layout_above="@+id/line1"
-                android:padding="10dp"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"
+                android:paddingBottom="10dp"
                 />
 
             <View
                 android:id="@+id/line1"
                 android:layout_width="match_parent"
                 android:layout_height="1dip"
-                android:background="@color/light_gray"
+                android:background="@color/light_gray2"
                 android:layout_above="@+id/li_addition_field"
                 />
 

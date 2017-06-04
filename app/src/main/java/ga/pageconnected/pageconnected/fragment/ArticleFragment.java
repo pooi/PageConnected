@@ -22,14 +22,14 @@ public class ArticleFragment extends BaseFragment {
     private Context context;
 
     private LinearLayout li_listField;
-
+    private String userId = "";
 
     @Override
     public void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
         this.setRetainInstance(true);
         if(getArguments() != null) {
-
+            userId = getArguments().getString("id");
         }
     }
 
@@ -78,6 +78,9 @@ public class ArticleFragment extends BaseFragment {
                 public void onClick(View view) {
                     Intent intent = new Intent(context, ArticleActivity.class);
                     intent.putExtra("date", date);
+                    if(!userId.equals("")){
+                        intent.putExtra("userId", userId);
+                    }
                     startActivity(intent);
                 }
             });

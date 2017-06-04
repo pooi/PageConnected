@@ -24,14 +24,14 @@
             android:layout_height="match_parent"
             >
 
-            <android.support.v4.view.ViewPager
+            <ga.pageconnected.pageconnected.util.CustomViewPager
                 android:id="@+id/view_pager"
                 android:layout_width="330dp"
                 android:layout_height="match_parent"
                 android:layout_gravity="center_horizontal"
                 >
 
-            </android.support.v4.view.ViewPager>
+            </ga.pageconnected.pageconnected.util.CustomViewPager>
 
         </ga.pageconnected.pageconnected.util.PagerContainer>
 
