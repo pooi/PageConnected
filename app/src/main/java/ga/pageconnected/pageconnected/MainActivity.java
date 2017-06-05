@@ -15,6 +15,7 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
@@ -46,6 +47,7 @@ public class MainActivity extends BaseActivity  implements NavigationView.OnNavi
     private NavigationView navigationView;
 
     private String[] menuList = {"nav_article", "nav_column", "nav_photo", "nav_day_magazine", "nav_info", "nav_report", "nav_help", "nav_open_source"};
+    private int currentSelectId;
 
     // Logout
     private MaterialDialog progressDialog;
@@ -101,13 +103,77 @@ public class MainActivity extends BaseActivity  implements NavigationView.OnNavi
         TextView tv_email = (TextView)headerView.findViewById(R.id.tv_email);
         tv_email.setText(email);
 
-
+        currentSelectId = R.id.nav_article;
         showFragment("nav_article", new ArticleFragment());
         if (getSupportActionBar() != null) {
             getSupportActionBar().setTitle(R.string.share_article);
         }
         navigationView.setCheckedItem(R.id.nav_article);
 
+    }
+
+    public Toolbar getToolbar(){
+        return (Toolbar)findViewById(R.id.toolbar);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.main_menu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                onBackPressed();
+                break;
+            case R.id.search:
+                searchAction();
+                break;
+            case R.id.add:
+                addAction();
+                break;
+
+        }
+        return true;
+    }
+
+    private void searchAction(){
+        switch (currentSelectId){
+            case R.id.nav_article:
+                showSnackbar("Search article");
+                break;
+            case R.id.nav_column:
+                showSnackbar("Search column");
+                break;
+            case R.id.nav_photo:
+                showSnackbar("Search photo");
+                break;
+            case R.id.nav_day_magazine:
+                showSnackbar("Search magazine");
+                break;
+        }
+    }
+
+    private void addAction(){
+        switch (currentSelectId){
+            case R.id.nav_article:
+                showSnackbar("Add article");
+                break;
+            case R.id.nav_column:
+                showSnackbar("Add column");
+                break;
+            case R.id.nav_photo:
+                showSnackbar("Add photo");
+                break;
+            case R.id.nav_day_magazine:
+                showSnackbar("Add magazine");
+                break;
+        }
     }
 
     @Override
@@ -149,21 +215,25 @@ public class MainActivity extends BaseActivity  implements NavigationView.OnNavi
 
             showFragment("nav_article", new ArticleFragment());
             title = getResources().getString(R.string.share_article);
+            currentSelectId = id;
 
         }else if(id == R.id.nav_column){
 
             showFragment("nav_column", new ColumnFragment());
             title = getResources().getString(R.string.share_column);
+            currentSelectId = id;
 
         }else if(id == R.id.nav_photo){
 
             showFragment("nav_photo", new PhotoFragment());
             title = getResources().getString(R.string.share_photo);
+            currentSelectId = id;
 
         }else if(id == R.id.nav_day_magazine) {
 
             showFragment("nav_day_magazine", new DayMagazineFragment());
             title = getResources().getString(R.string.day_magazine);
+            currentSelectId = id;
 
         }else if (id == R.id.nav_show_profile) {
 

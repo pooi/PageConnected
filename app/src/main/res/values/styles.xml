@@ -10,6 +10,7 @@
         <item name="android:windowBackground">@android:color/transparent</item>
         <item name="android:windowAnimationStyle">@null</item>
         <item name="android:textColorSecondary">@color/white</item>
+        <item name="android:itemTextAppearance">@style/TextAppearance</item>
     </style>
 
     <!-- Floation Action Button -->
@@ -19,6 +20,9 @@
     </style>
     <!-- ===================== -->
 
+    <style name="TextAppearance">
+        <item name="android:textColor">@android:color/black</item>
+    </style>
 
     <!-- MainActivity -->
     <style name="AppTheme.NoActionBar">

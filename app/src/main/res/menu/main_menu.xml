@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/search"
+        android:icon="@drawable/ic_magnify_white_24dp"
+        app:showAsAction="always"
+        android:title="Search">
+    </item>
+    <item
+        android:id="@+id/add"
+        android:icon="@drawable/ic_pencil_white_24dp"
+        app:showAsAction="always"
+        android:title="Add">
+    </item>
+
+    <item
+        android:id="@+id/dot_menu"
+        android:icon="@drawable/ic_dots_vertical_white_24dp"
+        app:showAsAction="always"
+        android:title="Menu">
+
+
+        <menu>
+
+            <item
+                android:id="@+id/action_settings1"
+                android:title="menu1"
+                >
+            </item>
+            <item
+                android:id="@+id/action_settings2"
+                android:title="menu2"
+                >
+            </item>
+            <item
+                android:id="@+id/action_settings3"
+                android:title="menu3"
+                >
+            </item>
+
+        </menu>
+
+    </item>
+</menu>
