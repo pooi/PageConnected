@@ -67,4 +67,7 @@
     <!-- Day Magazine Fragment -->
     <string name="no_day_magazine">등록된 잡지가 없습니다.</string>
 
+    <!-- Add Article Activity -->
+    <string name="please_select_layout">사용할 레이아웃을 선택해주세요.</string>
+
 </resources>

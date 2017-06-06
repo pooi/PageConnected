@@ -31,4 +31,6 @@ public class Information {
                 "20180225"
     };
 
+    public static int LAYOUT_COUNT = 5;
+
 }
