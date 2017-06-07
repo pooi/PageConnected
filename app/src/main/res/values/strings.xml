@@ -24,6 +24,11 @@
     <string name="photo">사진</string>
     <string name="close">닫기</string>
     <string name="edit_short">편집</string>
+    <string name="reference">참고</string>
+    <string name="add">추가하기</string>
+    <string name="add_short">추가</string>
+    <string name="title">제목</string>
+    <string name="content">내용</string>
 
     <!-- Main Activity -->
     <string name="navigation_drawer_open">Open navigation drawer</string>
@@ -69,5 +74,7 @@
 
     <!-- Add Article Activity -->
     <string name="please_select_layout">사용할 레이아웃을 선택해주세요.</string>
+    <string name="please_enter_title">제목을 입력해주세요.</string>
+    <string name="please_enter_content">내용을 입력해주세요.</string>
 
 </resources>

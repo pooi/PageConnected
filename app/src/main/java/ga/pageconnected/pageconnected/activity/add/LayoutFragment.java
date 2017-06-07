@@ -34,6 +34,7 @@ public class LayoutFragment extends BaseFragment {
 
     // UI
     private ImageView img;
+    private TextView tv_title;
 
 
 
@@ -76,6 +77,8 @@ public class LayoutFragment extends BaseFragment {
                 listener.selected(position);
             }
         });
+        tv_title = (TextView)view.findViewById(R.id.tv_title);
+        tv_title.setText("layout " + (position+1));
 
     }
 

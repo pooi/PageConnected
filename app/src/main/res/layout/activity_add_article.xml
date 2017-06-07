@@ -28,6 +28,103 @@
             android:background="@color/colorPrimary"
             />
 
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@+id/tv_layout"
+            >
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                >
+
+                <com.rengwuxian.materialedittext.MaterialEditText
+                    android:id="@+id/edit_title"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="12sp"
+                    android:textColor="@color/profile_content"
+                    android:hint="@string/please_enter_title"
+                    app:met_primaryColor="@color/profile_content"
+                    app:met_minCharacters="1"
+                    app:met_floatingLabel="normal"
+                    app:met_floatingLabelText="@string/title"
+                    android:layout_margin="10dp"
+                    />
+
+                <com.rengwuxian.materialedittext.MaterialEditText
+                    android:id="@+id/edit_content"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="12sp"
+                    android:textColor="@color/profile_content"
+                    android:hint="@string/please_enter_content"
+                    app:met_primaryColor="@color/profile_content"
+                    app:met_minCharacters="1"
+                    app:met_floatingLabel="normal"
+                    app:met_floatingLabelText="@string/content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_marginBottom="10dp"
+                    />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:minHeight="40dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    >
+
+                    <TextView
+                        android:id="@+id/tv_reference"
+                        android:layout_width="60dp"
+                        android:layout_height="wrap_content"
+                        android:text="@string/reference"
+                        android:textSize="12sp"
+                        android:textColor="@color/profile_title"
+                        android:gravity="right"
+                        android:paddingRight="5dp"
+                        />
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        >
+
+                        <LinearLayout
+                            android:id="@+id/li_reference_field"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical"
+                            >
+
+                        </LinearLayout>
+
+                        <TextView
+                            android:id="@+id/add_reference_btn"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/li_reference_field"
+                            android:text="@string/add"
+                            android:textColor="@color/colorPrimary"
+                            android:textStyle="bold"
+                            android:textSize="12sp"
+                            android:gravity="center"
+                            android:layout_marginBottom="3dp"
+                            />
+
+                    </RelativeLayout>
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+        </ScrollView>
+
     </RelativeLayout>
 
     <!-- Select Layout Frame -->
@@ -37,6 +134,7 @@
         android:layout_height="match_parent"
         android:layout_below="@+id/toolbar"
         android:background="@color/background_color"
+        android:visibility="gone"
         >
 
         <TextView

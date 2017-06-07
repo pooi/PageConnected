@@ -6,8 +6,11 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+
+import com.rengwuxian.materialedittext.MaterialEditText;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -24,6 +27,10 @@ public class AddArticleActivity extends BaseActivity implements SelectListener{
     // Input Frame
     private RelativeLayout rl_inputLayout;
     private TextView tv_layout;
+    private MaterialEditText editTitle;
+    private MaterialEditText editContent;
+    private LinearLayout li_referenceField;
+    private TextView addReferenceBtn;
 
     private int layoutNumber;
 
@@ -55,15 +62,20 @@ public class AddArticleActivity extends BaseActivity implements SelectListener{
                 setFadeInAnimation(rl_selectLayout);
             }
         });
+        editTitle = (MaterialEditText)findViewById(R.id.edit_title);
+        editContent = (MaterialEditText)findViewById(R.id.edit_content);
+        li_referenceField = (LinearLayout)findViewById(R.id.li_reference_field);
+        addReferenceBtn = (TextView)findViewById(R.id.add_reference_btn);
 
         // Select Layout Frame
         rl_selectLayout = (RelativeLayout)findViewById(R.id.rl_select_layout);
+        rl_selectLayout.setVisibility(View.VISIBLE);
         viewPagerContainer = (PagerContainer)findViewById(R.id.view_pager_container);
         viewPager = (CustomViewPager) findViewById(R.id.view_pager);
         pagerAdapter = new NavigationAdapter(getSupportFragmentManager(), this, Information.LAYOUT_COUNT);
         viewPager.setOffscreenPageLimit(Information.LAYOUT_COUNT);
         viewPager.setAdapter(pagerAdapter);
-        viewPager.setPageMargin(20);
+        viewPager.setPageMargin(30);
         viewPager.setClipChildren(false);
 
 
