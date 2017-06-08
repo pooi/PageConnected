@@ -29,6 +29,8 @@
     <string name="add_short">추가</string>
     <string name="title">제목</string>
     <string name="content">내용</string>
+    <string name="input">입력</string>
+    <string name="select_short">선택</string>
 
     <!-- Main Activity -->
     <string name="navigation_drawer_open">Open navigation drawer</string>
@@ -62,6 +64,8 @@
     <string name="change_interest_field">관심분야가 수정되었습니다.</string>
     <string name="day_title">%1$d일차(%2$s년 %3$s월 %4$s일)</string>
     <string name="date_str">%1$s년 %2$s월 %3$s일</string>
+    <string name="before_the_competition">대회 시작 전</string>
+    <string name="please_enter_url">url을 입력해주세요.</string>
 
     <!-- Column Fragment -->
     <string name="no_column">등록된 칼럼이 없습니다.</string>
@@ -76,5 +80,6 @@
     <string name="please_select_layout">사용할 레이아웃을 선택해주세요.</string>
     <string name="please_enter_title">제목을 입력해주세요.</string>
     <string name="please_enter_content">내용을 입력해주세요.</string>
+    <string name="convention_day">대회일</string>
 
 </resources>

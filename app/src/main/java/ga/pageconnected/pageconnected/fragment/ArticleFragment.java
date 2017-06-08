@@ -63,9 +63,14 @@ public class ArticleFragment extends BaseFragment {
         li_listField.removeAllViews();
 
         for(int i=0; i<Information.DATE_LIST.length; i++){
-            int day = i+1;
+            int day = i;
             final String date = Information.DATE_LIST[i];
-            String title = String.format(getResources().getString(R.string.day_title), day, date.substring(0,4), date.substring(4,6), date.substring(6, 8));
+            String title = "";
+            if(date == "0"){ // 대회 시작전
+                title = getResources().getString(R.string.before_the_competition);
+            }else {
+                title = String.format(getResources().getString(R.string.day_title), day, date.substring(0, 4), date.substring(4, 6), date.substring(6, 8));
+            }
 
             View v = LayoutInflater.from(context).inflate(R.layout.day_list_custom_item, null, false);
 

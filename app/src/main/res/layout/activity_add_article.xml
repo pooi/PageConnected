@@ -70,6 +70,13 @@
                     android:layout_marginBottom="10dp"
                     />
 
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dip"
+                    android:background="@color/light_gray2"
+                    android:layout_marginBottom="10dp"
+                    />
+
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -118,6 +125,41 @@
                             />
 
                     </RelativeLayout>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:minHeight="40dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    >
+
+                    <TextView
+                        android:id="@+id/tv_day"
+                        android:layout_width="60dp"
+                        android:layout_height="wrap_content"
+                        android:text="@string/convention_day"
+                        android:textSize="12sp"
+                        android:textColor="@color/profile_title"
+                        android:gravity="right"
+                        android:paddingRight="5dp"
+                        />
+
+                    <TextView
+                        android:id="@+id/select_day_btn"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/li_reference_field"
+                        android:text="@string/select"
+                        android:textColor="@color/colorPrimary"
+                        android:textStyle="bold"
+                        android:textSize="12sp"
+                        android:gravity="center"
+                        android:layout_marginBottom="3dp"
+                        />
 
                 </LinearLayout>
 
