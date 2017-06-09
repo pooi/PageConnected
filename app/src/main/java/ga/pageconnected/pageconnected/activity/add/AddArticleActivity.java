@@ -1,12 +1,17 @@
 package ga.pageconnected.pageconnected.activity.add;
 
+import android.graphics.Typeface;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.Editable;
 import android.text.InputType;
+import android.text.TextWatcher;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -36,10 +41,14 @@ public class AddArticleActivity extends BaseActivity implements SelectListener{
     private MaterialEditText editContent;
     private LinearLayout li_referenceField;
     private TextView addReferenceBtn;
+    private LinearLayout li_photoField;
+    private TextView addPhotoBtn;
     private TextView selectDayBtn;
+    private Button addBtn;
 
-    private int layoutNumber;
+    private int layoutNumber = -1;
     private ArrayList<String> referenceList;
+    private String day = "";
 
     // Select Layout Frame
     private RelativeLayout rl_selectLayout;
@@ -60,6 +69,23 @@ public class AddArticleActivity extends BaseActivity implements SelectListener{
 
     private void init(){
 
+        TextWatcher textWatcher = new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                checkAddable();
+            }
+        };
+
         // Input Frame
         rl_inputLayout = (RelativeLayout)findViewById(R.id.rl_input_layout);
         tv_layout = (TextView)findViewById(R.id.tv_layout);
@@ -71,8 +97,12 @@ public class AddArticleActivity extends BaseActivity implements SelectListener{
                 setFadeInAnimation(rl_selectLayout);
             }
         });
+
         editTitle = (MaterialEditText)findViewById(R.id.edit_title);
+        editTitle.addTextChangedListener(textWatcher);
         editContent = (MaterialEditText)findViewById(R.id.edit_content);
+        editContent.addTextChangedListener(textWatcher);
+
         li_referenceField = (LinearLayout)findViewById(R.id.li_reference_field);
         addReferenceBtn = (TextView)findViewById(R.id.add_reference_btn);
         addReferenceBtn.setOnClickListener(new View.OnClickListener() {
@@ -87,9 +117,19 @@ public class AddArticleActivity extends BaseActivity implements SelectListener{
                                 if(!"".equals(input.toString())) {
                                     referenceList.add(AdditionalFunc.replaceNewLineString(input.toString()));
                                     makeReferenceLayout();
+                                    checkAddable();
                                 }
                             }
                         }).show();
+            }
+        });
+        li_photoField = (LinearLayout)findViewById(R.id.li_photo_field);
+        addPhotoBtn = (TextView)findViewById(R.id.add_photo_btn);
+        addPhotoBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                // TODO
+                showSnackbar("TODO");
             }
         });
         selectDayBtn = (TextView)findViewById(R.id.select_day_btn);
@@ -102,7 +142,9 @@ public class AddArticleActivity extends BaseActivity implements SelectListener{
                         .itemsCallback(new MaterialDialog.ListCallback() {
                             @Override
                             public void onSelection(MaterialDialog dialog, View itemView, int position, CharSequence text) {
-
+                                day = Information.DATE_LIST[position];
+                                setPressedBtn(selectDayBtn, getDayString()[position]);
+                                checkAddable();
                             }
                         })
                         .theme(Theme.LIGHT)
@@ -110,6 +152,14 @@ public class AddArticleActivity extends BaseActivity implements SelectListener{
                         .show();
             }
         });
+        addBtn = (Button)findViewById(R.id.addBtn);
+        addBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                add();
+            }
+        });
+
 
         // Select Layout Frame
         rl_selectLayout = (RelativeLayout)findViewById(R.id.rl_select_layout);
@@ -125,12 +175,50 @@ public class AddArticleActivity extends BaseActivity implements SelectListener{
 
     }
 
+    private void add(){
+
+        //TODO
+        showSnackbar("TODO");
+
+    }
+
+    private void checkAddable(){
+
+        boolean isTitle = editTitle.isCharactersCountValid();
+        boolean isContent = editContent.isCharactersCountValid();
+        boolean isDay = !day.equals("");
+        boolean isLayout = layoutNumber >= 0;
+
+        boolean setting = isTitle && isContent && isDay && isLayout;
+
+        addBtn.setEnabled(setting);
+        setButtonColor(addBtn, setting);
+
+
+    }
+
+    private void setButtonColor(Button btn, boolean check){
+        if(check){
+            btn.setBackgroundColor(ContextCompat.getColor(getApplicationContext(), R.color.colorPrimary));
+        }else{
+            btn.setBackgroundColor(ContextCompat.getColor(getApplicationContext(), R.color.dark_gray));
+        }
+    }
+
+    private void setPressedBtn(TextView tv, String text){
+
+        tv.setText(text);
+        tv.setTextColor(ContextCompat.getColor(getApplicationContext(), R.color.dark_gray));
+        tv.setTypeface(Typeface.DEFAULT);
+
+    }
+
     private String[] getDayString(){
         String[] list = new String[Information.DATE_LIST.length];
         for(int i=0; i<Information.DATE_LIST.length; i++){
             int day = i;
             String date = Information.DATE_LIST[i];
-            String title = "";
+            String title;
             if(date == "0"){ // 대회 시작전
                 title = getResources().getString(R.string.before_the_competition);
             }else {
@@ -152,6 +240,7 @@ public class AddArticleActivity extends BaseActivity implements SelectListener{
 
         rl_selectLayout.setVisibility(View.GONE);
         setFadeOutAnimation(rl_selectLayout);
+        checkAddable();
 
     }
 

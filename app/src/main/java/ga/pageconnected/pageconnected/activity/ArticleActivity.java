@@ -46,7 +46,7 @@ public class ArticleActivity extends BaseActivity {
 
     private int page = 0;
     private String userId;
-    private String date;
+    private String day;
     private String search;
     private boolean isLoadFinish;
     private ArrayList<HashMap<String, Object>> list;
@@ -57,7 +57,7 @@ public class ArticleActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_article);
 
-        date = getIntent().getStringExtra("date");
+        day = getIntent().getStringExtra("date");
         userId = getIntent().getStringExtra("userId");
 
         list = new ArrayList<>();
@@ -68,7 +68,12 @@ public class ArticleActivity extends BaseActivity {
     }
 
     private void init(){
-        String d = String.format(getResources().getString(R.string.date_str), date.substring(0,4), date.substring(4,6), date.substring(6, 8));
+        String d;
+        if(day.equals("0")){
+            d = getResources().getString(R.string.before_the_competition);
+        }else{
+            d = String.format(getResources().getString(R.string.date_str), day.substring(0,4), day.substring(4,6), day.substring(6, 8));
+        }
         toolbarTitle = (TextView)findViewById(R.id.toolbar_title);
         toolbarTitle.setText(d);
 
@@ -115,7 +120,7 @@ public class ArticleActivity extends BaseActivity {
 //            if(userId != null && !userId.equals("")){
 //                map.put("userId", userId);
 //            }
-            map.put("date", date);
+            map.put("day", day);
             map.put("page", Integer.toString(page));
             if (search != null && (!"".equals(search))) {
                 map.put("search", search);

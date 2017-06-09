@@ -32,50 +32,53 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_below="@+id/tv_layout"
+            android:layout_above="@+id/addBtn"
             >
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
+                android:paddingTop="10dp"
+                android:paddingBottom="10dp"
                 >
 
-                <com.rengwuxian.materialedittext.MaterialEditText
-                    android:id="@+id/edit_title"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:textSize="12sp"
-                    android:textColor="@color/profile_content"
-                    android:hint="@string/please_enter_title"
-                    app:met_primaryColor="@color/profile_content"
-                    app:met_minCharacters="1"
-                    app:met_floatingLabel="normal"
-                    app:met_floatingLabelText="@string/title"
-                    android:layout_margin="10dp"
-                    />
 
-                <com.rengwuxian.materialedittext.MaterialEditText
-                    android:id="@+id/edit_content"
+
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:textSize="12sp"
-                    android:textColor="@color/profile_content"
-                    android:hint="@string/please_enter_content"
-                    app:met_primaryColor="@color/profile_content"
-                    app:met_minCharacters="1"
-                    app:met_floatingLabel="normal"
-                    app:met_floatingLabelText="@string/content"
+                    android:orientation="horizontal"
+                    android:minHeight="40dp"
                     android:layout_marginLeft="10dp"
                     android:layout_marginRight="10dp"
-                    android:layout_marginBottom="10dp"
-                    />
+                    >
 
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="1dip"
-                    android:background="@color/light_gray2"
-                    android:layout_marginBottom="10dp"
-                    />
+                    <TextView
+                        android:id="@+id/tv_day"
+                        android:layout_width="60dp"
+                        android:layout_height="wrap_content"
+                        android:text="@string/convention_day"
+                        android:textSize="12sp"
+                        android:textColor="@color/profile_title"
+                        android:gravity="right"
+                        android:paddingRight="5dp"
+                        />
+
+                    <TextView
+                        android:id="@+id/select_day_btn"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/li_reference_field"
+                        android:text="@string/select"
+                        android:textColor="@color/colorPrimary"
+                        android:textStyle="bold"
+                        android:textSize="12sp"
+                        android:gravity="center"
+                        android:layout_marginBottom="3dp"
+                        />
+
+                </LinearLayout>
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -138,34 +141,94 @@
                     >
 
                     <TextView
-                        android:id="@+id/tv_day"
+                        android:id="@+id/tv_photo"
                         android:layout_width="60dp"
                         android:layout_height="wrap_content"
-                        android:text="@string/convention_day"
+                        android:text="@string/photo"
                         android:textSize="12sp"
                         android:textColor="@color/profile_title"
                         android:gravity="right"
                         android:paddingRight="5dp"
                         />
 
-                    <TextView
-                        android:id="@+id/select_day_btn"
+                    <RelativeLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_below="@+id/li_reference_field"
-                        android:text="@string/select"
-                        android:textColor="@color/colorPrimary"
-                        android:textStyle="bold"
-                        android:textSize="12sp"
-                        android:gravity="center"
-                        android:layout_marginBottom="3dp"
-                        />
+                        >
+
+                        <LinearLayout
+                            android:id="@+id/li_photo_field"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical"
+                            >
+
+                        </LinearLayout>
+
+                        <TextView
+                            android:id="@+id/add_photo_btn"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/li_photo_field"
+                            android:text="@string/add"
+                            android:textColor="@color/colorPrimary"
+                            android:textStyle="bold"
+                            android:textSize="12sp"
+                            android:gravity="center"
+                            android:layout_marginBottom="3dp"
+                            />
+
+                    </RelativeLayout>
 
                 </LinearLayout>
+
+                <com.rengwuxian.materialedittext.MaterialEditText
+                    android:id="@+id/edit_title"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="12sp"
+                    android:textColor="@color/profile_content"
+                    android:hint="@string/please_enter_title"
+                    app:met_primaryColor="@color/profile_content"
+                    app:met_minCharacters="1"
+                    app:met_floatingLabel="normal"
+                    app:met_floatingLabelText="@string/title"
+                    android:layout_margin="10dp"
+                    />
+
+                <com.rengwuxian.materialedittext.MaterialEditText
+                    android:id="@+id/edit_content"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="12sp"
+                    android:textColor="@color/profile_content"
+                    android:hint="@string/please_enter_content"
+                    app:met_primaryColor="@color/profile_content"
+                    app:met_minCharacters="1"
+                    app:met_floatingLabel="normal"
+                    app:met_floatingLabelText="@string/content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_marginBottom="10dp"
+                    />
+
+
+
 
             </LinearLayout>
 
         </ScrollView>
+
+        <Button
+            android:id="@+id/addBtn"
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:background="@color/dark_gray"
+            android:text="@string/add"
+            android:textSize="12sp"
+            android:textColor="@color/white"
+            android:layout_alignParentBottom="true"
+            />
 
     </RelativeLayout>
 
