@@ -1,38 +1,71 @@
 package ga.pageconnected.pageconnected.activity.add;
 
+import android.Manifest;
+import android.annotation.TargetApi;
+import android.content.CursorLoader;
+import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.database.Cursor;
 import android.graphics.Typeface;
+import android.net.Uri;
+import android.os.Build;
+import android.os.Handler;
+import android.os.Message;
+import android.provider.MediaStore;
+import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.content.ContextCompat;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.InputType;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.afollestad.materialdialogs.Theme;
+import com.android.volley.Request;
+import com.android.volley.Response;
+import com.android.volley.error.VolleyError;
+import com.android.volley.request.SimpleMultiPartRequest;
 import com.rengwuxian.materialedittext.MaterialEditText;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 
 import ga.pageconnected.pageconnected.BaseActivity;
 import ga.pageconnected.pageconnected.Information;
+import ga.pageconnected.pageconnected.MyApplication;
 import ga.pageconnected.pageconnected.R;
 import ga.pageconnected.pageconnected.util.AdditionalFunc;
 import ga.pageconnected.pageconnected.util.CustomViewPager;
 import ga.pageconnected.pageconnected.util.PagerContainer;
+import ga.pageconnected.pageconnected.util.ParsePHP;
 
-public class AddArticleActivity extends BaseActivity implements SelectListener{
+public class AddArticleActivity extends BaseActivity implements Serializable{
 
+    private static final String TAG = "AddArticleActivity";
+    private final int MY_PERMISSION_REQUEST_STORAGE = 100;
+    public static final int SELECT_LAYOUT = 10;
+
+    private MyHandler handler = new MyHandler();
+    private final int MSG_MESSAGE_SUCCESS = 500;
+    private final int MSG_MESSAGE_FAIL = 501;
+
+    static final int PICK_IMAGE_REQUEST = 1;
 
     // Input Frame
     private RelativeLayout rl_inputLayout;
@@ -43,18 +76,17 @@ public class AddArticleActivity extends BaseActivity implements SelectListener{
     private TextView addReferenceBtn;
     private LinearLayout li_photoField;
     private TextView addPhotoBtn;
+    private TextView deletePhotoBtn;
+    private ImageView imgPhoto;
     private TextView selectDayBtn;
     private Button addBtn;
 
     private int layoutNumber = -1;
     private ArrayList<String> referenceList;
+    private String filePath;
     private String day = "";
 
-    // Select Layout Frame
-    private RelativeLayout rl_selectLayout;
-    private PagerContainer viewPagerContainer;
-    private CustomViewPager viewPager;
-    private NavigationAdapter pagerAdapter;
+    private MaterialDialog progressDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -92,9 +124,8 @@ public class AddArticleActivity extends BaseActivity implements SelectListener{
         tv_layout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                viewPager.setCurrentItem(layoutNumber);
-                rl_selectLayout.setVisibility(View.VISIBLE);
-                setFadeInAnimation(rl_selectLayout);
+                Intent intent = new Intent(AddArticleActivity.this, SelectLayoutActivity.class);
+                startActivityForResult(intent, SELECT_LAYOUT);
             }
         });
 
@@ -128,10 +159,20 @@ public class AddArticleActivity extends BaseActivity implements SelectListener{
         addPhotoBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                // TODO
-                showSnackbar("TODO");
+                imageBrowse();
             }
         });
+        deletePhotoBtn = (TextView)findViewById(R.id.delete_photo_btn);
+        deletePhotoBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                imgPhoto.setImageURI(null);
+                filePath = "";
+                imgPhoto.setVisibility(View.GONE);
+            }
+        });
+        deletePhotoBtn.setVisibility(View.GONE);
+        imgPhoto = (ImageView)findViewById(R.id.img_photo);
         selectDayBtn = (TextView)findViewById(R.id.select_day_btn);
         selectDayBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -161,24 +202,163 @@ public class AddArticleActivity extends BaseActivity implements SelectListener{
         });
 
 
-        // Select Layout Frame
-        rl_selectLayout = (RelativeLayout)findViewById(R.id.rl_select_layout);
-        rl_selectLayout.setVisibility(View.VISIBLE);
-        viewPagerContainer = (PagerContainer)findViewById(R.id.view_pager_container);
-        viewPager = (CustomViewPager) findViewById(R.id.view_pager);
-        pagerAdapter = new NavigationAdapter(getSupportFragmentManager(), this, Information.LAYOUT_COUNT);
-        viewPager.setOffscreenPageLimit(Information.LAYOUT_COUNT);
-        viewPager.setAdapter(pagerAdapter);
-        viewPager.setPageMargin(30);
-        viewPager.setClipChildren(false);
+        progressDialog = new MaterialDialog.Builder(this)
+                .content(R.string.please_wait)
+                .progress(true, 0)
+                .progressIndeterminateStyle(true)
+                .theme(Theme.LIGHT)
+                .build();
 
+    }
+
+    private void imageBrowse() {
+        Intent galleryIntent = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+        // Start the Intent
+        startActivityForResult(galleryIntent, PICK_IMAGE_REQUEST);
+    }
+
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (resultCode == RESULT_OK) {
+
+            if(requestCode == PICK_IMAGE_REQUEST){
+                Uri picUri = data.getData();
+
+                filePath = getPath(picUri);
+
+                Log.d("picUri", picUri.toString());
+                Log.d("filePath", filePath);
+
+                addPhotoBtn.setText(getResources().getString(R.string.modify));
+                imgPhoto.setImageURI(picUri);
+                imgPhoto.setVisibility(View.VISIBLE);
+                deletePhotoBtn.setVisibility(View.VISIBLE);
+
+            }
+
+        }else if(resultCode == SELECT_LAYOUT){
+
+            layoutNumber = data.getIntExtra("layout", -1);
+            tv_layout.setBackgroundColor(ContextCompat.getColor(getApplicationContext(), R.color.colorPrimary));
+            tv_layout.setText("Layout " + (layoutNumber+1));
+            checkAddable();
+
+
+        }
+
+    }
+
+    private String getPath(Uri contentUri) {
+        String[] proj = { MediaStore.Images.Media.DATA };
+        CursorLoader loader = new CursorLoader(getApplicationContext(), contentUri, proj, null, null, null);
+        Cursor cursor = loader.loadInBackground();
+        int column_index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
+        cursor.moveToFirst();
+        String result = cursor.getString(column_index);
+        cursor.close();
+        return result;
+    }
+
+    private void addWithImage(){
+
+        progressDialog.show();
+
+        SimpleMultiPartRequest smr = new SimpleMultiPartRequest(Request.Method.POST, Information.MAIN_SERVER_ADDRESS,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        Log.d("Response", response);
+                        try {
+                            JSONObject jObj = new JSONObject(response);
+                            String status = jObj.getString("status");
+
+
+//                        Toast.makeText(getApplicationContext(), message, Toast.LENGTH_LONG).show();
+
+                            if("success".equals(status)){
+                                handler.sendMessage(handler.obtainMessage(MSG_MESSAGE_SUCCESS));
+                            }else{
+                                handler.sendMessage(handler.obtainMessage(MSG_MESSAGE_FAIL));
+                            }
+
+                        } catch (JSONException e) {
+                            // JSON error
+                            e.printStackTrace();
+                            Toast.makeText(getApplicationContext(), "Json error: " + e.getMessage(), Toast.LENGTH_LONG).show();
+                        }
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Toast.makeText(getApplicationContext(), error.getMessage(), Toast.LENGTH_LONG).show();
+            }
+        });
+
+        smr.addFile("image", filePath);
+        smr.addStringParam("service", "saveArticleWithImage");
+        smr.addStringParam("userId", getUserID(this));
+        smr.addStringParam("layout", Integer.toString(layoutNumber));
+        smr.addStringParam("day", day);
+        smr.addStringParam("title", AdditionalFunc.replaceNewLineString(editTitle.getText().toString()));
+        smr.addStringParam("content", AdditionalFunc.replaceNewLineString(editContent.getText().toString()));
+        smr.addStringParam("url", AdditionalFunc.arrayListToString(referenceList));
+        MyApplication.getInstance().addToRequestQueue(smr);
 
     }
 
     private void add(){
 
-        //TODO
-        showSnackbar("TODO");
+//        $userId = $_POST['userId'];
+//        $layout = $_POST['layout'];
+//        // $picture = $_POST['picture'];
+//        $day = $_POST['day'];
+//        $title = $_POST['title'];
+//        $title = replaceSqlString($title);
+//        $content = $_POST['content'];
+//        $content = replaceSqlString($content);
+//        $url = $_POST['url'];
+
+        if(filePath != null && !"".equals(filePath)){
+
+            checkPermission();
+
+        }else{
+            progressDialog.show();
+
+            HashMap<String, String> map = new HashMap<>();
+            map.put("service", "saveArticle");
+            map.put("userId", getUserID(this));
+            map.put("layout", Integer.toString(layoutNumber));
+            map.put("day", day);
+            map.put("title", AdditionalFunc.replaceNewLineString(editTitle.getText().toString()));
+            map.put("content", AdditionalFunc.replaceNewLineString(editContent.getText().toString()));
+            map.put("url", AdditionalFunc.arrayListToString(referenceList));
+
+            new ParsePHP(Information.MAIN_SERVER_ADDRESS, map){
+                @Override
+                protected void afterThreadFinish(String data) {
+                    try {
+                        JSONObject jObj = new JSONObject(data);
+                        String status = jObj.getString("status");
+
+
+//                        Toast.makeText(getApplicationContext(), message, Toast.LENGTH_LONG).show();
+
+                        if("success".equals(status)){
+                            handler.sendMessage(handler.obtainMessage(MSG_MESSAGE_SUCCESS));
+                        }else{
+                            handler.sendMessage(handler.obtainMessage(MSG_MESSAGE_FAIL));
+                        }
+
+                    } catch (JSONException e) {
+                        // JSON error
+                        e.printStackTrace();
+                        Toast.makeText(getApplicationContext(), "Json error: " + e.getMessage(), Toast.LENGTH_LONG).show();
+                    }
+                }
+            }.start();
+        }
 
     }
 
@@ -230,19 +410,7 @@ public class AddArticleActivity extends BaseActivity implements SelectListener{
         return list;
     }
 
-    @Override
-    public void selected(int position) {
 
-        layoutNumber = position;
-
-        tv_layout.setText("Layout " + (position+1));
-        rl_inputLayout.setVisibility(View.VISIBLE);
-
-        rl_selectLayout.setVisibility(View.GONE);
-        setFadeOutAnimation(rl_selectLayout);
-        checkAddable();
-
-    }
 
     private void makeReferenceLayout(){
 
@@ -271,37 +439,94 @@ public class AddArticleActivity extends BaseActivity implements SelectListener{
 
     }
 
+    private class MyHandler extends Handler implements Serializable{
 
-    private static class NavigationAdapter extends FragmentPagerAdapter {
-
-        private int size;
-        private SelectListener listener;
-
-        public NavigationAdapter(FragmentManager fm, SelectListener listener, int size){
-            super(fm);
-            this.size = size;
-            this.listener = listener;
+        public void handleMessage(Message msg)
+        {
+            switch (msg.what)
+            {
+                case MSG_MESSAGE_SUCCESS:
+                    progressDialog.hide();
+                    new MaterialDialog.Builder(AddArticleActivity.this)
+                            .title(R.string.success_short)
+                            .content(R.string.successfully_posted_article)
+                            .positiveText(R.string.ok)
+                            .onPositive(new MaterialDialog.SingleButtonCallback() {
+                                @Override
+                                public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+                                    dialog.dismiss();
+                                    AddArticleActivity.this.finish();
+                                }
+                            })
+                            .show();
+                    break;
+                case MSG_MESSAGE_FAIL:
+                    progressDialog.hide();
+                    new MaterialDialog.Builder(AddArticleActivity.this)
+                            .title(R.string.fail_short)
+                            .content(R.string.failed_register_article)
+                            .positiveText(R.string.ok)
+                            .show();
+                    break;
+                default:
+                    break;
+            }
         }
-
-        @Override
-        public Fragment getItem(int position) {
-            Fragment f;
-            final int pattern = position % size;
-
-            f = new LayoutFragment();
-            Bundle bdl = new Bundle(1);
-            bdl.putInt("position", pattern);
-            bdl.putSerializable("listener", listener);
-            f.setArguments(bdl);
-
-            return f;
-        }
-
-        @Override
-        public int getCount(){
-            return size;
-        }
-
-
     }
+
+    @TargetApi(Build.VERSION_CODES.M)
+    private void checkPermission() {
+
+        if (checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                != PackageManager.PERMISSION_GRANTED
+                || checkSelfPermission(Manifest.permission.READ_EXTERNAL_STORAGE)
+                != PackageManager.PERMISSION_GRANTED) {
+
+            // Should we show an explanation?
+            if (shouldShowRequestPermissionRationale(Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
+                // Explain to the user why we need to write the permission.
+                Toast.makeText(this, "Read/Write external storage", Toast.LENGTH_SHORT).show();
+            }
+
+            requestPermissions(new String[]{Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE},
+                    MY_PERMISSION_REQUEST_STORAGE);
+
+            // MY_PERMISSION_REQUEST_STORAGE is an
+            // app-defined int constant
+
+        } else {
+            // 다음 부분은 항상 허용일 경우에 해당이 됩니다.
+//            writeFile();
+//            imageUpload(filePath);
+            addWithImage();
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+        switch (requestCode) {
+            case MY_PERMISSION_REQUEST_STORAGE:
+                if (grantResults[0] == PackageManager.PERMISSION_GRANTED
+                        && grantResults[1] == PackageManager.PERMISSION_GRANTED) {
+
+//                    writeFile();
+//                    imageUpload(filePath);
+                    addWithImage();
+
+                    // permission was granted, yay! do the
+                    // calendar task you need to do.
+
+                } else {
+
+                    Log.d(TAG, "Permission always deny");
+
+                    // permission denied, boo! Disable the
+                    // functionality that depends on this permission.
+                }
+                break;
+        }
+    }
+
+
+
 }

@@ -31,6 +31,10 @@
     <string name="content">내용</string>
     <string name="input">입력</string>
     <string name="select_short">선택</string>
+    <string name="modify">수정하기</string>
+    <string name="modify_short">수정</string>
+    <string name="success_short">성공</string>
+    <string name="fail_short">실패</string>
 
     <!-- Main Activity -->
     <string name="navigation_drawer_open">Open navigation drawer</string>
@@ -77,9 +81,15 @@
     <string name="no_day_magazine">등록된 잡지가 없습니다.</string>
 
     <!-- Add Article Activity -->
+    <string name="write_article">기사 작성</string>
     <string name="please_select_layout">사용할 레이아웃을 선택해주세요.</string>
     <string name="please_enter_title">제목을 입력해주세요.</string>
     <string name="please_enter_content">내용을 입력해주세요.</string>
     <string name="convention_day">대회일</string>
+    <string name="successfully_posted_article">성공적으로 기사를 등록하였습니다.</string>
+    <string name="failed_register_article">기사를 등록하는데 실패하였습니다.</string>
+
+    <!-- Select Layout Activity -->
+    <string name="select_layout">레이아웃 선택</string>
 
 </resources>

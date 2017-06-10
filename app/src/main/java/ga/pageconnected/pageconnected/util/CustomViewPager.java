@@ -1,14 +1,18 @@
 package ga.pageconnected.pageconnected.util;
 
 import android.content.Context;
+import android.os.Parcel;
+import android.os.Parcelable;
 import android.support.v4.view.ViewPager;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 
+import java.io.Serializable;
+
 /**
  * Created by tw on 2016-08-28.
  */
-public class CustomViewPager extends ViewPager {
+public class CustomViewPager extends ViewPager implements Serializable {
 
     private boolean isPagingEnabled = true;
 
@@ -37,4 +41,5 @@ public class CustomViewPager extends ViewPager {
     public void setPagingEnabled(boolean b) {
         this.isPagingEnabled = b;
     }
+
 }

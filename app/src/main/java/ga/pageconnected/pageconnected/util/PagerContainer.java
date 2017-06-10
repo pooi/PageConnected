@@ -31,11 +31,13 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.widget.FrameLayout;
 
+import java.io.Serializable;
+
 /**
  * PagerContainer: A layout that displays a ViewPager with its children that are outside
  * the typical pager bounds.
  */
-public class PagerContainer extends FrameLayout implements ViewPager.OnPageChangeListener {
+public class PagerContainer extends FrameLayout implements ViewPager.OnPageChangeListener, Serializable {
 
     private ViewPager mPager;
     boolean mNeedsRedraw = false;

@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="ga.pageconnected.pageconnected.activity.add.SelectLayoutActivity"
+    android:background="@color/background_color"
+    >
+
+    <!-- Select Layout Frame -->
+    <RelativeLayout
+        android:id="@+id/rl_select_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/toolbar"
+        android:background="@color/background_color"
+        >
+
+        <TextView
+            android:id="@+id/tv_layout_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:padding="10dp"
+            android:layout_marginTop="10dp"
+            android:text="@string/please_select_layout"
+            android:textColor="@color/dark_gray"
+            android:textSize="16sp"
+            />
+
+        <ga.pageconnected.pageconnected.util.PagerContainer
+            android:id="@+id/view_pager_container"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@+id/tv_layout_title"
+            android:layout_marginBottom="20dp"
+            android:layout_marginTop="10dp"
+            >
+
+            <ga.pageconnected.pageconnected.util.CustomViewPager
+                android:id="@+id/view_pager"
+                android:layout_width="330dp"
+                android:layout_height="match_parent"
+                android:layout_gravity="center_horizontal"
+                >
+
+            </ga.pageconnected.pageconnected.util.CustomViewPager>
+
+        </ga.pageconnected.pageconnected.util.PagerContainer>
+
+    </RelativeLayout>
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar"
+        app:contentInsetStart="0dp"
+        android:layout_height="@dimen/custom_actionbar_size"
+        android:layout_width="match_parent"
+        android:background="@color/colorPrimary"
+        >
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+
+            <TextView
+                android:id="@+id/toolbar_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/select_layout"
+                android:textColor="@color/white"
+                android:textSize="@dimen/custom_actionbar_title_size"
+                android:layout_centerInParent="true"
+                />
+
+        </RelativeLayout>
+
+    </android.support.v7.widget.Toolbar>
+
+</RelativeLayout>

@@ -23,9 +23,10 @@
             android:padding="5dp"
             android:layout_margin="10dp"
             android:gravity="center"
-            android:text="Layout"
+            android:text="@string/select_layout"
             android:textColor="@color/white"
-            android:background="@color/colorPrimary"
+            android:textSize="12sp"
+            android:background="@color/dark_gray"
             />
 
         <ScrollView
@@ -163,20 +164,50 @@
                             android:orientation="vertical"
                             >
 
-                        </LinearLayout>
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="horizontal"
+                                >
 
-                        <TextView
-                            android:id="@+id/add_photo_btn"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_below="@+id/li_photo_field"
-                            android:text="@string/add"
-                            android:textColor="@color/colorPrimary"
-                            android:textStyle="bold"
-                            android:textSize="12sp"
-                            android:gravity="center"
-                            android:layout_marginBottom="3dp"
-                            />
+                                <TextView
+                                    android:id="@+id/add_photo_btn"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:text="@string/add"
+                                    android:textColor="@color/colorPrimary"
+                                    android:textStyle="bold"
+                                    android:textSize="12sp"
+                                    android:gravity="center"
+                                    android:layout_marginBottom="3dp"
+                                    android:layout_weight="1"
+                                    />
+
+                                <TextView
+                                    android:id="@+id/delete_photo_btn"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:text="@string/delete"
+                                    android:textColor="@color/colorPrimary"
+                                    android:textStyle="bold"
+                                    android:textSize="12sp"
+                                    android:gravity="center"
+                                    android:layout_marginBottom="3dp"
+                                    android:layout_weight="1"
+                                    android:visibility="gone"
+                                    />
+
+                            </LinearLayout>
+
+                            <ImageView
+                                android:id="@+id/img_photo"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_margin="5dp"
+                                android:scaleType="fitCenter"
+                                />
+
+                        </LinearLayout>
 
                     </RelativeLayout>
 
@@ -193,6 +224,7 @@
                     app:met_minCharacters="1"
                     app:met_floatingLabel="normal"
                     app:met_floatingLabelText="@string/title"
+                    app:met_singleLineEllipsis="true"
                     android:layout_margin="10dp"
                     />
 
@@ -232,50 +264,6 @@
 
     </RelativeLayout>
 
-    <!-- Select Layout Frame -->
-    <RelativeLayout
-        android:id="@+id/rl_select_layout"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_below="@+id/toolbar"
-        android:background="@color/background_color"
-        android:visibility="gone"
-        >
-
-        <TextView
-            android:id="@+id/tv_layout_title"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:padding="10dp"
-            android:layout_marginTop="10dp"
-            android:text="@string/please_select_layout"
-            android:textColor="@color/dark_gray"
-            android:textSize="16sp"
-            />
-
-        <ga.pageconnected.pageconnected.util.PagerContainer
-            android:id="@+id/view_pager_container"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_below="@+id/tv_layout_title"
-            android:layout_marginBottom="20dp"
-            android:layout_marginTop="10dp"
-            >
-
-            <ga.pageconnected.pageconnected.util.CustomViewPager
-                android:id="@+id/view_pager"
-                android:layout_width="330dp"
-                android:layout_height="match_parent"
-                android:layout_gravity="center_horizontal"
-                >
-
-            </ga.pageconnected.pageconnected.util.CustomViewPager>
-
-        </ga.pageconnected.pageconnected.util.PagerContainer>
-
-    </RelativeLayout>
-
 
     <android.support.v7.widget.Toolbar
         android:id="@+id/toolbar"
@@ -284,7 +272,6 @@
         android:layout_width="match_parent"
         android:background="@color/colorPrimary"
         >
-
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -295,15 +282,13 @@
                 android:id="@+id/toolbar_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="기사 작성"
+                android:text="@string/write_article"
                 android:textColor="@color/white"
                 android:textSize="@dimen/custom_actionbar_title_size"
                 android:layout_centerInParent="true"
                 />
 
         </RelativeLayout>
-
-
 
     </android.support.v7.widget.Toolbar>
 

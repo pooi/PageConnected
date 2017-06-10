@@ -12,6 +12,7 @@ import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
 
+import java.io.Serializable;
 import java.util.HashMap;
 
 import ga.pageconnected.pageconnected.R;
@@ -22,7 +23,7 @@ import jp.wasabeef.picasso.transformations.CropCircleTransformation;
 /**
  * Created by tw on 2017-06-06.
  */
-public class LayoutFragment extends BaseFragment {
+public class LayoutFragment extends BaseFragment implements Serializable{
 
     // BASIC UI
     private View view;
