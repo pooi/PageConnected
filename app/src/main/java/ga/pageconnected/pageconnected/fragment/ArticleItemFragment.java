@@ -102,6 +102,7 @@ public class ArticleItemFragment extends BaseFragment {
 
         Picasso.with(context)
                 .load((String)data.get("picture"))
+                .resize(500, 0)
                 .into(defaultImg);
         tv_title.setText((String)data.get("title"));
         tv_content.setText((String)data.get("content"));

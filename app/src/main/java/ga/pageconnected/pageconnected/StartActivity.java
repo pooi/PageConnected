@@ -195,7 +195,7 @@ public class StartActivity extends BaseActivity implements FacebookLoginSupport 
 
     @Override
     public void afterFBLoginError(FacebookException error) {
-        showSnackbar("Facebook Login Error : " + error.getCause().toString());
+        showSnackbar("Facebook Login Error : " + error.getMessage().toString());
     }
 
     @Override

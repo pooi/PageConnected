@@ -169,6 +169,8 @@ public class AddArticleActivity extends BaseActivity implements Serializable{
                 imgPhoto.setImageURI(null);
                 filePath = "";
                 imgPhoto.setVisibility(View.GONE);
+                deletePhotoBtn.setVisibility(View.GONE);
+                addPhotoBtn.setText(getResources().getString(R.string.add));
             }
         });
         deletePhotoBtn.setVisibility(View.GONE);
@@ -528,5 +530,12 @@ public class AddArticleActivity extends BaseActivity implements Serializable{
     }
 
 
+    @Override
+    public void onDestroy(){
+        super.onDestroy();
+        if(progressDialog != null){
+            progressDialog.dismiss();
+        }
+    }
 
 }
