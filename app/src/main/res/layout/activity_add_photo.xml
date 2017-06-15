@@ -1,0 +1,219 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="ga.pageconnected.pageconnected.activity.add.AddArticleActivity"
+    android:background="@color/background_color"
+    >
+
+    <RelativeLayout
+        android:id="@+id/rl_input_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/toolbar"
+        android:background="@color/background_color"
+        >
+
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@+id/tv_layout"
+            android:layout_above="@+id/addBtn"
+            >
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:paddingTop="10dp"
+                android:paddingBottom="10dp"
+                >
+
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:minHeight="40dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    >
+
+                    <TextView
+                        android:id="@+id/tv_day"
+                        android:layout_width="60dp"
+                        android:layout_height="wrap_content"
+                        android:text="@string/convention_day"
+                        android:textSize="12sp"
+                        android:textColor="@color/profile_title"
+                        android:gravity="right"
+                        android:paddingRight="5dp"
+                        />
+
+                    <TextView
+                        android:id="@+id/select_day_btn"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/li_reference_field"
+                        android:text="@string/select"
+                        android:textColor="@color/colorPrimary"
+                        android:textStyle="bold"
+                        android:textSize="12sp"
+                        android:gravity="center"
+                        android:layout_marginBottom="3dp"
+                        />
+
+                </LinearLayout>
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:minHeight="40dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    >
+
+                    <TextView
+                        android:id="@+id/tv_photo"
+                        android:layout_width="60dp"
+                        android:layout_height="wrap_content"
+                        android:text="@string/photo"
+                        android:textSize="12sp"
+                        android:textColor="@color/profile_title"
+                        android:gravity="right"
+                        android:paddingRight="5dp"
+                        />
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        >
+
+                        <LinearLayout
+                            android:id="@+id/li_photo_field"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical"
+                            >
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="horizontal"
+                                >
+
+                                <TextView
+                                    android:id="@+id/add_photo_btn"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:text="@string/add"
+                                    android:textColor="@color/colorPrimary"
+                                    android:textStyle="bold"
+                                    android:textSize="12sp"
+                                    android:gravity="center"
+                                    android:layout_marginBottom="3dp"
+                                    android:layout_weight="1"
+                                    />
+
+                                <TextView
+                                    android:id="@+id/delete_photo_btn"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:text="@string/delete"
+                                    android:textColor="@color/colorPrimary"
+                                    android:textStyle="bold"
+                                    android:textSize="12sp"
+                                    android:gravity="center"
+                                    android:layout_marginBottom="3dp"
+                                    android:layout_weight="1"
+                                    android:visibility="gone"
+                                    />
+
+                            </LinearLayout>
+
+                            <ImageView
+                                android:id="@+id/img_photo"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_margin="5dp"
+                                android:scaleType="fitCenter"
+                                />
+
+                        </LinearLayout>
+
+                    </RelativeLayout>
+
+                </LinearLayout>
+
+                <com.rengwuxian.materialedittext.MaterialEditText
+                    android:id="@+id/edit_content"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="12sp"
+                    android:textColor="@color/profile_content"
+                    android:hint="@string/please_enter_content"
+                    app:met_primaryColor="@color/profile_content"
+                    app:met_minCharacters="1"
+                    app:met_floatingLabel="normal"
+                    app:met_floatingLabelText="@string/content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_marginBottom="10dp"
+                    />
+
+
+
+
+            </LinearLayout>
+
+        </ScrollView>
+
+        <Button
+            android:id="@+id/addBtn"
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:background="@color/dark_gray"
+            android:text="@string/add"
+            android:textSize="12sp"
+            android:textColor="@color/white"
+            android:layout_alignParentBottom="true"
+            />
+
+    </RelativeLayout>
+
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar"
+        app:contentInsetStart="0dp"
+        android:layout_height="@dimen/custom_actionbar_size"
+        android:layout_width="match_parent"
+        android:background="@color/colorPrimary"
+        >
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+
+            <TextView
+                android:id="@+id/toolbar_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/upload_photo"
+                android:textColor="@color/white"
+                android:textSize="@dimen/custom_actionbar_title_size"
+                android:layout_centerInParent="true"
+                />
+
+        </RelativeLayout>
+
+    </android.support.v7.widget.Toolbar>
+
+
+</RelativeLayout>

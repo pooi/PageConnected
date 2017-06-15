@@ -92,4 +92,7 @@
     <!-- Select Layout Activity -->
     <string name="select_layout">레이아웃 선택</string>
 
+    <!-- Add Photo Activity -->
+    <string name="upload_photo">사진 등록</string>
+
 </resources>

@@ -31,6 +31,7 @@ import com.squareup.picasso.Picasso;
 import java.util.HashMap;
 
 import ga.pageconnected.pageconnected.activity.add.AddArticleActivity;
+import ga.pageconnected.pageconnected.activity.add.AddPhotoActivity;
 import ga.pageconnected.pageconnected.fragment.ArticleFragment;
 import ga.pageconnected.pageconnected.fragment.ColumnFragment;
 import ga.pageconnected.pageconnected.fragment.DayMagazineFragment;
@@ -162,16 +163,19 @@ public class MainActivity extends BaseActivity  implements NavigationView.OnNavi
 
     private void addAction(){
         switch (currentSelectId){
-            case R.id.nav_article:
+            case R.id.nav_article: {
                 Intent intent = new Intent(MainActivity.this, AddArticleActivity.class);
                 startActivity(intent);
                 break;
+            }
             case R.id.nav_column:
                 showSnackbar("Add column");
                 break;
-            case R.id.nav_photo:
-                showSnackbar("Add photo");
+            case R.id.nav_photo: {
+                Intent intent = new Intent(MainActivity.this, AddPhotoActivity.class);
+                startActivity(intent);
                 break;
+            }
             case R.id.nav_day_magazine:
                 showSnackbar("Add magazine");
                 break;
