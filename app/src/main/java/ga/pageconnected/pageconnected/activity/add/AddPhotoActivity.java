@@ -20,13 +20,21 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.afollestad.materialdialogs.Theme;
+import com.android.volley.Request;
+import com.android.volley.Response;
+import com.android.volley.error.VolleyError;
+import com.android.volley.request.SimpleMultiPartRequest;
 import com.rengwuxian.materialedittext.MaterialEditText;
 import com.squareup.picasso.Picasso;
 
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -34,6 +42,7 @@ import java.util.LinkedList;
 
 import ga.pageconnected.pageconnected.BaseActivity;
 import ga.pageconnected.pageconnected.Information;
+import ga.pageconnected.pageconnected.MyApplication;
 import ga.pageconnected.pageconnected.R;
 import ga.pageconnected.pageconnected.util.AdditionalFunc;
 import ga.pageconnected.pageconnected.util.ParsePHP;
@@ -153,20 +162,62 @@ public class AddPhotoActivity extends BaseActivity implements Serializable{
 
     private void add(){
 
+        progressDialog.show();
+
+        SimpleMultiPartRequest smr = new SimpleMultiPartRequest(Request.Method.POST, Information.MAIN_SERVER_ADDRESS,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        Log.d("Response", response);
+                        try {
+                            JSONObject jObj = new JSONObject(response);
+                            String status = jObj.getString("status");
+
+
+//                        Toast.makeText(getApplicationContext(), message, Toast.LENGTH_LONG).show();
+
+                            if("success".equals(status)){
+                                handler.sendMessage(handler.obtainMessage(MSG_MESSAGE_SUCCESS));
+                            }else{
+                                handler.sendMessage(handler.obtainMessage(MSG_MESSAGE_FAIL));
+                            }
+
+                        } catch (JSONException e) {
+                            // JSON error
+                            e.printStackTrace();
+                            Toast.makeText(getApplicationContext(), "Json error: " + e.getMessage(), Toast.LENGTH_LONG).show();
+                        }
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Toast.makeText(getApplicationContext(), error.getMessage(), Toast.LENGTH_LONG).show();
+            }
+        });
+
+        for(int i=0; i<filePath.size(); i++){
+            String s = "image" + i;
+            smr.addFile(s, filePath.get(i));
+        }
+//        smr.addFile("image", filePath);
+        smr.addStringParam("service", "savePhotoArticle");
+        smr.addStringParam("userId", getUserID(this));
+        smr.addStringParam("day", day);
+        smr.addStringParam("content", AdditionalFunc.replaceNewLineString(editContent.getText().toString()));
+        smr.addStringParam("imageCount", filePath.size()+"");
+        MyApplication.getInstance().addToRequestQueue(smr);
 
     }
 
     private void checkAddable(){
 
-//        boolean isTitle = editTitle.isCharactersCountValid();
-//        boolean isContent = editContent.isCharactersCountValid();
-//        boolean isDay = !day.equals("");
-//        boolean isLayout = layoutNumber >= 0;
-//
-//        boolean setting = isTitle && isContent && isDay && isLayout;
-//
-//        addBtn.setEnabled(setting);
-//        setButtonColor(addBtn, setting);
+        boolean isDay = !day.equals("");
+        boolean isImage = filePath.size() > 0;
+
+        boolean setting = isDay && isImage;
+
+        addBtn.setEnabled(setting);
+        setButtonColor(addBtn, setting);
 
 
     }
