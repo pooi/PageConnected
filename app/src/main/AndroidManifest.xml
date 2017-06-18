@@ -132,6 +132,8 @@
         <meta-data
             android:name="io.fabric.ApiKey"
             android:value="b531dd92b25810b0110b98ce8e8127ca0076bc02" />
+
+        <activity android:name=".activity.PhotoArticleActivity"></activity>
     </application>
 
 </manifest>

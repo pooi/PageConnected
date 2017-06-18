@@ -11,6 +11,9 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
@@ -22,6 +25,7 @@ import java.util.HashMap;
 
 import ga.pageconnected.pageconnected.Information;
 import ga.pageconnected.pageconnected.R;
+import ga.pageconnected.pageconnected.activity.PhotoArticleActivity;
 import ga.pageconnected.pageconnected.adapter.PhotoListCustomAdapter;
 import ga.pageconnected.pageconnected.util.AdditionalFunc;
 import ga.pageconnected.pageconnected.util.DividerItemDecoration;
@@ -29,37 +33,21 @@ import ga.pageconnected.pageconnected.util.OnAdapterSupport;
 import ga.pageconnected.pageconnected.util.OnLoadMoreListener;
 import ga.pageconnected.pageconnected.util.ParsePHP;
 
-public class PhotoFragment extends BaseFragment implements OnAdapterSupport {
-
-    private MyHandler handler = new MyHandler();
-    private final int MSG_MESSAGE_MAKE_LIST = 500;
-    private final int MSG_MESSAGE_MAKE_ENDLESS_LIST = 501;
-    private final int MSG_MESSAGE_PROGRESS_HIDE = 502;
+public class PhotoFragment extends BaseFragment {
 
     // UI
     private View view;
     private Context context;
 
-    private AVLoadingIndicatorView loading;
-    private MaterialDialog progressDialog;
-
-    private int page = 0;
-    private String search;
-    private ArrayList<HashMap<String, Object>> tempList;
-    private ArrayList<HashMap<String, Object>> list;
-
-    // Recycle View
-    private RecyclerView rv;
-    private LinearLayoutManager mLinearLayoutManager;
-    private PhotoListCustomAdapter adapter;
-    private boolean isLoadFinish;
+    private LinearLayout li_listField;
+    private String userId = "";
 
     @Override
     public void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
         this.setRetainInstance(true);
         if(getArguments() != null) {
-
+            userId = getArguments().getString("id");
         }
     }
 
@@ -76,164 +64,57 @@ public class PhotoFragment extends BaseFragment implements OnAdapterSupport {
         view = inflater.inflate(R.layout.fragment_photo, container, false);
         context = container.getContext();
 
-        initUI();
+        init();
 
-        // TODO
-//        getPhotoList();
 
         return view;
     }
 
-    private void initUI(){
+    private void init(){
 
-        mLinearLayoutManager = new LinearLayoutManager(context);
-        mLinearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
-        rv = (RecyclerView) view.findViewById(R.id.rv);
-        rv.setHasFixedSize(true);
-        rv.setLayoutManager(mLinearLayoutManager);
-        rv.addItemDecoration(new DividerItemDecoration(context, DividerItemDecoration.VERTICAL_LIST));
-
-        list = new ArrayList<>();
-        tempList = new ArrayList<>();
-
-        loading = (AVLoadingIndicatorView)view.findViewById(R.id.loading);
-        progressDialog = new MaterialDialog.Builder(context)
-                .content("잠시만 기다려주세요.")
-                .progress(true, 0)
-                .progressIndeterminateStyle(true)
-                .theme(Theme.LIGHT)
-                .build();
+        li_listField = (LinearLayout)view.findViewById(R.id.li_list_field);
+        makeList();
 
     }
 
+    private void makeList(){
 
-    private void initLoadValue(){
-        page = 0;
-        isLoadFinish = false;
-    }
+        li_listField.removeAllViews();
 
-    private void getPhotoList(){
-        if(!isLoadFinish) {
-            loading.show();
-            HashMap<String, String> map = new HashMap<>();
-            map.put("service", "getPhotoList");
-            map.put("page", Integer.toString(page));
-            if (search != null && (!"".equals(search))) {
-                map.put("search", search);
+        for(int i=0; i<Information.DATE_LIST.length; i++){
+            int day = i;
+            final String date = Information.DATE_LIST[i];
+            String title = "";
+            if(date == "0"){ // 대회 시작전
+                title = getResources().getString(R.string.before_the_competition);
+            }else {
+                title = String.format(getResources().getString(R.string.day_title), day, date.substring(0, 4), date.substring(4, 6), date.substring(6, 8));
             }
-            new ParsePHP(Information.MAIN_SERVER_ADDRESS, map) {
 
+            View v = LayoutInflater.from(context).inflate(R.layout.day_list_custom_item, null, false);
+
+            TextView tv_title = (TextView)v.findViewById(R.id.tv_title);
+            tv_title.setText(title);
+
+            RelativeLayout root = (RelativeLayout)v.findViewById(R.id.root);
+            root.setOnClickListener(new View.OnClickListener() {
                 @Override
-                protected void afterThreadFinish(String data) {
-
-                    if (page <= 0) {
-                        list.clear();
-
-                        list = AdditionalFunc.getPhotoList(data);
-
-                        handler.sendMessage(handler.obtainMessage(MSG_MESSAGE_MAKE_LIST));
-                    } else {
-
-                        tempList.clear();
-                        tempList = AdditionalFunc.getPhotoList(data);
-                        if (tempList.size() < 30) {
-                            isLoadFinish = true;
-                        }
-                        handler.sendMessage(handler.obtainMessage(MSG_MESSAGE_MAKE_ENDLESS_LIST));
-
+                public void onClick(View view) {
+                    Intent intent = new Intent(context, PhotoArticleActivity.class);
+                    intent.putExtra("date", date);
+                    if(!userId.equals("")){
+                        intent.putExtra("userId", userId);
                     }
-
+                    startActivity(intent);
                 }
-            }.start();
-        }else{
-            if(adapter != null){
-                adapter.setLoaded();
-            }
-        }
-    }
+            });
 
-    public void makeList(){
+            li_listField.addView(v);
 
-        adapter = new PhotoListCustomAdapter(context, list, rv, this, this);
-
-        rv.setAdapter(adapter);
-
-        adapter.setOnLoadMoreListener(new OnLoadMoreListener() {
-            @Override
-            public void onLoadMore() {
-                page+=1;
-                getPhotoList();
-            }
-        });
-
-        adapter.notifyDataSetChanged();
-
-    }
-
-    private void addList(){
-
-        for(int i=0; i<tempList.size(); i++){
-            list.add(tempList.get(i));
-            adapter.notifyItemInserted(list.size());
         }
 
-        adapter.setLoaded();
-
     }
 
-    @Override
-    public void showView() {
-
-    }
-
-    @Override
-    public void hideView() {
-
-    }
-
-    @Override
-    public void redirectActivityForResult(Intent intent) {
-        startActivityForResult(intent, 0);
-    }
-
-    @Override
-    public void redirectActivity(Intent intent) {
-        startActivity(intent);
-    }
-
-    private class MyHandler extends Handler {
-
-        public void handleMessage(Message msg)
-        {
-            switch (msg.what)
-            {
-                case MSG_MESSAGE_MAKE_LIST:
-                    progressDialog.hide();
-                    loading.hide();
-                    makeList();
-                    break;
-                case MSG_MESSAGE_MAKE_ENDLESS_LIST:
-                    progressDialog.hide();
-                    loading.hide();
-                    addList();
-                    break;
-                case MSG_MESSAGE_PROGRESS_HIDE:
-                    progressDialog.hide();
-                    loading.hide();
-                    break;
-                default:
-                    break;
-            }
-        }
-    }
-
-    @Override
-    public void onDestroy(){
-        super.onDestroy();
-        if(progressDialog != null){
-            progressDialog.dismiss();
-        }
-    }
 
 
 }

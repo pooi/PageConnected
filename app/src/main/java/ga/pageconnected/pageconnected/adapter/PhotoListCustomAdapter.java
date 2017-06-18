@@ -15,6 +15,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import ga.pageconnected.pageconnected.R;
+import ga.pageconnected.pageconnected.activity.PhotoArticleActivity;
 import ga.pageconnected.pageconnected.fragment.PhotoFragment;
 import ga.pageconnected.pageconnected.util.OnAdapterSupport;
 import ga.pageconnected.pageconnected.util.OnLoadMoreListener;
@@ -27,7 +28,7 @@ public class PhotoListCustomAdapter extends RecyclerView.Adapter<PhotoListCustom
 
     // UI
     private Context context;
-    private PhotoFragment fragment;
+    private PhotoArticleActivity activity;
 
     //    private MaterialNavigationDrawer activity;
     private OnAdapterSupport onAdapterSupport;
@@ -41,11 +42,11 @@ public class PhotoListCustomAdapter extends RecyclerView.Adapter<PhotoListCustom
     private boolean loading = false;
 
     // 생성자
-    public PhotoListCustomAdapter(Context context, ArrayList<HashMap<String, Object>> list, RecyclerView recyclerView, OnAdapterSupport listener, PhotoFragment fragment) {
+    public PhotoListCustomAdapter(Context context, ArrayList<HashMap<String, Object>> list, RecyclerView recyclerView, OnAdapterSupport listener, PhotoArticleActivity activity) {
         this.context = context;
         this.list = list;
         this.onAdapterSupport = listener;
-        this.fragment = (PhotoFragment)fragment;
+        this.activity = (PhotoArticleActivity) activity;
 
         if (recyclerView.getLayoutManager() instanceof LinearLayoutManager) {
             recyclerView.addOnScrollListener(new ScrollListener() {
