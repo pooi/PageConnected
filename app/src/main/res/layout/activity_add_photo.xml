@@ -116,7 +116,6 @@
                     android:textColor="@color/profile_content"
                     android:hint="@string/please_enter_content"
                     app:met_primaryColor="@color/profile_content"
-                    app:met_minCharacters="1"
                     app:met_floatingLabel="normal"
                     app:met_floatingLabelText="@string/content"
                     android:layout_marginLeft="10dp"

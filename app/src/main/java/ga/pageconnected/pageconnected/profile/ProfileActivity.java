@@ -115,7 +115,7 @@ public class ProfileActivity extends BaseActivity {
                         if(photoFragment == null){
                             photoFragment = new PhotoFragment();
                             Bundle bdl = new Bundle(1);
-                            bdl.putString("recipientId", userId);
+                            bdl.putString("id", userId);
                             photoFragment.setArguments(bdl);
                         }
                         f = photoFragment;
