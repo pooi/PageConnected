@@ -7,40 +7,27 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     >
 
-    <android.support.v7.widget.RecyclerView
-        android:layout_height="match_parent"
+
+    <ScrollView
         android:layout_width="match_parent"
-        android:id="@+id/rv"
-        android:clipToPadding="false"
+        android:layout_height="match_parent"
         android:paddingTop="10dp"
+        android:clipToPadding="false"
         >
-    </android.support.v7.widget.RecyclerView>
 
 
-    <com.wang.avi.AVLoadingIndicatorView
-        android:id="@+id/loading"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:indicatorName="LineSpinFadeLoaderIndicator"
-        app:indicatorColor="@color/colorPrimary"
-        style="@style/AVLoadingIndicatorView.Small"
-        android:layout_centerInParent="true"
-        />
-
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        >
-        <TextView
-            android:id="@+id/tv_msg"
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:id="@+id/li_list_field"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:text="@string/no_photo"
-            android:textColor="@color/dark_gray"
-            />
+            android:orientation="vertical"
+            >
 
-    </RelativeLayout>
+
+
+        </LinearLayout>
+
+    </ScrollView>
 
 
 </RelativeLayout>

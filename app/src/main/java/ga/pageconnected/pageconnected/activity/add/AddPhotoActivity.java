@@ -45,6 +45,7 @@ import ga.pageconnected.pageconnected.Information;
 import ga.pageconnected.pageconnected.MyApplication;
 import ga.pageconnected.pageconnected.R;
 import ga.pageconnected.pageconnected.util.AdditionalFunc;
+import ga.pageconnected.pageconnected.util.AllInOnePhoto;
 import ga.pageconnected.pageconnected.util.ParsePHP;
 
 public class AddPhotoActivity extends BaseActivity implements Serializable{
@@ -68,8 +69,8 @@ public class AddPhotoActivity extends BaseActivity implements Serializable{
 
     private MaterialDialog progressDialog;
 
-    private ArrayList<View> imgViewList;
-    private ArrayList<String> filePath;
+    private ArrayList<AllInOnePhoto> imageList;
+//    private ArrayList<String> filePath;
     private String day = "";
 
     @Override
@@ -77,8 +78,8 @@ public class AddPhotoActivity extends BaseActivity implements Serializable{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_photo);
 
-        imgViewList = new ArrayList<>();
-        filePath = new ArrayList<>();
+        imageList = new ArrayList<>();
+//        filePath = new ArrayList<>();
 
         init();
 
@@ -195,16 +196,16 @@ public class AddPhotoActivity extends BaseActivity implements Serializable{
             }
         });
 
-        for(int i=0; i<filePath.size(); i++){
+        for(int i=0; i<imageList.size(); i++){
             String s = "image" + i;
-            smr.addFile(s, filePath.get(i));
+            smr.addFile(s, imageList.get(i).getPath());
         }
 //        smr.addFile("image", filePath);
         smr.addStringParam("service", "savePhotoArticle");
         smr.addStringParam("userId", getUserID(this));
         smr.addStringParam("day", day);
         smr.addStringParam("content", AdditionalFunc.replaceNewLineString(editContent.getText().toString()));
-        smr.addStringParam("imageCount", filePath.size()+"");
+        smr.addStringParam("imageCount", imageList.size()+"");
         MyApplication.getInstance().addToRequestQueue(smr);
 
     }
@@ -212,7 +213,7 @@ public class AddPhotoActivity extends BaseActivity implements Serializable{
     private void checkAddable(){
 
         boolean isDay = !day.equals("");
-        boolean isImage = filePath.size() > 0;
+        boolean isImage = imageList.size() > 0;
 
         boolean setting = isDay && isImage;
 
@@ -270,7 +271,7 @@ public class AddPhotoActivity extends BaseActivity implements Serializable{
             @Override
             public void onClick(View view) {
 //                int pos = (int)view.getTag();
-//                deletePhotoLayout(pos);
+                deletePhotoLayout((AllInOnePhoto)view.getTag());
             }
         });
 
@@ -278,17 +279,24 @@ public class AddPhotoActivity extends BaseActivity implements Serializable{
         li_photoField.addView(v);
         li_photoField.addView(cv_addPhoto);
 
+        AllInOnePhoto photo = new AllInOnePhoto(uri, getPath(uri), v);
+        imageList.add(photo);
+        deleteBtn.setTag(photo);
+
 //        deleteBtn.setTag(imgViewList.size());
 //        imgViewList.add(v);
         checkPhotoCount();
         checkAddable();
     }
 
-    private void deletePhotoLayout(int position){
+    private void deletePhotoLayout(AllInOnePhoto photo){
 
 //        View v = imgViewList.get(position);
 //        li_photoField.removeView(v);
 //        imgViewList.remove(v);
+        View v = photo.getView();
+        imageList.remove(photo);
+        li_photoField.removeView(v);
 
         checkPhotoCount();
         checkAddable();
@@ -296,8 +304,10 @@ public class AddPhotoActivity extends BaseActivity implements Serializable{
     }
 
     private void checkPhotoCount(){
-        if(filePath.size() >= 5){
+        if(imageList.size() >= 5) {
             cv_addPhoto.setVisibility(View.GONE);
+        }else{
+            cv_addPhoto.setVisibility(View.VISIBLE);
         }
     }
 
@@ -344,10 +354,11 @@ public class AddPhotoActivity extends BaseActivity implements Serializable{
             if(requestCode == PICK_IMAGE_REQUEST){
                 Uri picUri = data.getData();
 
-                filePath.add(getPath(picUri));
+//                filePath.add(getPath(picUri));
 
                 Log.d("picUri", picUri.toString());
-                Log.d("filePath", filePath.get(filePath.size()-1));
+//                Log.d("filePath", filePath.get(filePath.size()-1));
+                Log.d("filePath", getPath(picUri));
 
 //                imgPhoto.setImageURI(picUri);
                 addPhotoLayout(picUri);
