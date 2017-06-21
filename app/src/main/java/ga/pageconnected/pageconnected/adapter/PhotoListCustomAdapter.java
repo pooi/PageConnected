@@ -3,13 +3,18 @@ package ga.pageconnected.pageconnected.adapter;
 import android.app.Activity;
 import android.app.Fragment;
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
+
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -17,8 +22,10 @@ import java.util.HashMap;
 import ga.pageconnected.pageconnected.R;
 import ga.pageconnected.pageconnected.activity.PhotoArticleActivity;
 import ga.pageconnected.pageconnected.fragment.PhotoFragment;
+import ga.pageconnected.pageconnected.profile.ProfileActivity;
 import ga.pageconnected.pageconnected.util.OnAdapterSupport;
 import ga.pageconnected.pageconnected.util.OnLoadMoreListener;
+import jp.wasabeef.picasso.transformations.CropCircleTransformation;
 
 
 /**
@@ -75,6 +82,49 @@ public class PhotoListCustomAdapter extends RecyclerView.Adapter<PhotoListCustom
         final HashMap<String,Object> item = list.get(position);
         final int pos = position;
 
+        // profile
+        holder.tv_name.setText((String)item.get("name"));
+        holder.tv_email.setText((String)item.get("email"));
+        Picasso.with(context)
+                .load((String)item.get("img"))
+                .transform(new CropCircleTransformation())
+                .into(holder.profileImg);
+        holder.rl_profile.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(context, ProfileActivity.class);
+                intent.putExtra("id", (String)item.get("userId"));
+                onAdapterSupport.redirectActivity(intent);
+            }
+        });
+
+        // content
+        String content = (String)item.get("content");
+        if("".equals(content)){
+            holder.tv_content.setVisibility(View.GONE);
+        }else{
+            holder.tv_content.setVisibility(View.VISIBLE);
+            holder.tv_content.setText(content);
+        }
+
+        // image
+        ArrayList<HashMap<String, Object>> imageList = (ArrayList<HashMap<String, Object>>)item.get("imageList");
+        if(imageList.size() > 1){
+            holder.tv_imageCount.setVisibility(View.VISIBLE);
+            holder.tv_imageCount.setText("+" + (imageList.size()));
+        }else{
+            holder.tv_imageCount.setVisibility(View.GONE);
+        }
+        if(imageList.size() > 0){
+            String photo = (String)imageList.get(0).get("photo");
+            Picasso.with(context)
+                    .load(photo)
+                    .resize(500, 0)
+                    .into(holder.defaultImg);
+        }
+
+        holder.tv_hit.setText((String)item.get("hit"));
+        holder.tv_heart.setText((String)item.get("heart"));
 
 
     }
@@ -151,9 +201,27 @@ public class PhotoListCustomAdapter extends RecyclerView.Adapter<PhotoListCustom
 
     public final static class ViewHolder extends RecyclerView.ViewHolder {
 
+        RelativeLayout rl_profile;
+        ImageView profileImg;
+        TextView tv_name;
+        TextView tv_email;
+        TextView tv_content;
+        ImageView defaultImg;
+        TextView tv_imageCount;
+        TextView tv_heart;
+        TextView tv_hit;
 
         public ViewHolder(View v) {
             super(v);
+            rl_profile = (RelativeLayout)v.findViewById(R.id.rl_profile);
+            profileImg = (ImageView)v.findViewById(R.id.profileImg);
+            tv_name = (TextView)v.findViewById(R.id.tv_name);
+            tv_email = (TextView)v.findViewById(R.id.tv_email);
+            tv_content = (TextView)v.findViewById(R.id.tv_content);
+            defaultImg = (ImageView)v.findViewById(R.id.img_default);
+            tv_imageCount = (TextView)v.findViewById(R.id.tv_img_count);
+            tv_heart = (TextView)v.findViewById(R.id.tv_heart);
+            tv_hit = (TextView)v.findViewById(R.id.tv_hit);
         }
     }
 

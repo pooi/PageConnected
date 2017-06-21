@@ -263,14 +263,42 @@ public class AdditionalFunc {
             String countTemp = (String)jObject.get("num_result");
             int count = Integer.parseInt(countTemp);
 
-            for ( int i = 0; i < count; ++i ) {
+            for ( int i = 0; i < count; i++ ) {
                 JSONObject temp = results.getJSONObject(i);
 
                 HashMap<String, Object> hashTemp = new HashMap<>();
 
                 hashTemp.put("id", (String)temp.get("id"));
                 hashTemp.put("userId", (String)temp.get("userId"));
+                hashTemp.put("name", (String)temp.get("name"));
+                hashTemp.put("email", (String)temp.get("email"));
+                hashTemp.put("img", (String)temp.get("img"));
                 hashTemp.put("content", (String)temp.get("content"));
+                hashTemp.put("day", (String)temp.get("day"));
+                hashTemp.put("date", (String)temp.get("date"));
+                hashTemp.put("time", (String)temp.get("time"));
+                hashTemp.put("hit", (String)temp.get("hit"));
+
+                JSONObject jObjectImg = (JSONObject)temp.get("imageList");
+                JSONArray resultsImg = jObjectImg.getJSONArray("result");
+                String countTempImg = (String)jObjectImg.get("num_image");
+                int countImg = Integer.parseInt(countTempImg);
+
+                ArrayList<HashMap<String, Object>> imageList = new ArrayList<>();
+                for(int j=0; j<countImg; j++){
+
+                    JSONObject tempImg = resultsImg.getJSONObject(j);
+
+                    HashMap<String, Object> map = new HashMap<>();
+                    map.put("id", (String)tempImg.get("id"));
+                    map.put("photo", (String)tempImg.get("photo"));
+                    map.put("heart", (String)tempImg.get("heart"));
+
+                    imageList.add(map);
+
+                }
+
+                hashTemp.put("imageList", imageList);
 
                 list.add(hashTemp);
 

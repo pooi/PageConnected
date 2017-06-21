@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.widget.TextView;
 
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.afollestad.materialdialogs.Theme;
@@ -35,9 +36,13 @@ public class PhotoArticleActivity extends BaseActivity implements OnAdapterSuppo
     private final int MSG_MESSAGE_PROGRESS_HIDE = 502;
 
 
+    private TextView tv_msg;
+    private TextView toolbarTitle;
     private AVLoadingIndicatorView loading;
     private MaterialDialog progressDialog;
 
+    private String userId;
+    private String day;
     private int page = 0;
     private String search;
     private ArrayList<HashMap<String, Object>> tempList;
@@ -54,11 +59,30 @@ public class PhotoArticleActivity extends BaseActivity implements OnAdapterSuppo
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_photo_article);
 
+        day = getIntent().getStringExtra("date");
+        userId = getIntent().getStringExtra("userId");
+
+        list = new ArrayList<>();
+        tempList = new ArrayList<>();
+
         initUI();
+
+        getPhotoList();
 
     }
 
     private void initUI(){
+        String d;
+        if(day.equals("0")){
+            d = getResources().getString(R.string.before_the_competition);
+        }else{
+            d = String.format(getResources().getString(R.string.date_str), day.substring(0,4), day.substring(4,6), day.substring(6, 8));
+        }
+        toolbarTitle = (TextView)findViewById(R.id.toolbar_title);
+        toolbarTitle.setText(d);
+
+        tv_msg = (TextView)findViewById(R.id.tv_msg);
+        tv_msg.setVisibility(View.GONE);
 
         mLinearLayoutManager = new LinearLayoutManager(getApplicationContext());
         mLinearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
@@ -90,7 +114,9 @@ public class PhotoArticleActivity extends BaseActivity implements OnAdapterSuppo
         if(!isLoadFinish) {
             loading.show();
             HashMap<String, String> map = new HashMap<>();
-            map.put("service", "getPhotoList");
+            map.put("service", "getPhotoArticle");
+            map.put("userId", userId);
+            map.put("day", day);
             map.put("page", Integer.toString(page));
             if (search != null && (!"".equals(search))) {
                 map.put("search", search);
