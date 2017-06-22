@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="ga.pageconnected.pageconnected.activity.PhotoArticleDatailActivity"
+    android:background="@color/background_color"
+    >
+
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            >
+
+
+            <RelativeLayout
+                android:id="@+id/rl_profile"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:layout_toLeftOf="@+id/li_btn"
+                android:layout_alignParentTop="true"
+                >
+
+                <ImageView
+                    android:id="@+id/profileImg"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:layout_margin="10dp"
+                    />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:layout_toRightOf="@+id/profileImg"
+                    android:layout_centerVertical="true"
+                    >
+
+                    <TextView
+                        android:id="@+id/tv_name"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textSize="12sp"
+                        android:textColor="@color/dark_gray"
+                        />
+
+                    <TextView
+                        android:id="@+id/tv_email"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textSize="12sp"
+                        android:textColor="@color/gray"
+                        />
+
+                </LinearLayout>
+
+            </RelativeLayout>
+
+            <!-- Profile -->
+
+            <TextView
+                android:id="@+id/tv_content"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingBottom="5dp"
+                android:paddingTop="5dp"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"
+                android:text="Content"
+                android:textSize="12sp"
+                android:textColor="@color/dark_gray"
+                android:background="@color/white"
+                />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dip"
+                android:background="@color/light_gray2"
+                />
+
+            <LinearLayout
+                android:id="@+id/li_addition_field"
+                android:layout_width="match_parent"
+                android:layout_height="25dp"
+                android:layout_alignParentBottom="true"
+                android:orientation="horizontal"
+                android:gravity="right"
+                android:paddingRight="5dp"
+                android:paddingLeft="5dp"
+                android:background="@color/white"
+                >
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_margin="3dp"
+                    android:src="@drawable/ic_account_grey600_18dp"
+                    />
+
+                <TextView
+                    android:id="@+id/tv_heart"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:gravity="center_vertical"
+                    android:text="heart"
+                    android:textSize="12sp"
+                    android:textColor="@color/gray"
+                    android:layout_marginRight="5dp"
+                    />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_margin="3dp"
+                    android:src="@drawable/ic_account_grey600_18dp"
+                    />
+
+                <TextView
+                    android:id="@+id/tv_hit"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:gravity="center_vertical"
+                    android:text="hit"
+                    android:textSize="12sp"
+                    android:textColor="@color/gray"
+                    />
+
+            </LinearLayout>
+
+
+            <!-- Content -->
+
+            <LinearLayout
+                android:id="@+id/li_photo_field"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:divider="@drawable/empty_tall_divider"
+                android:showDividers="middle"
+                android:orientation="vertical"
+                >
+
+            </LinearLayout>
+
+
+        </LinearLayout>
+
+
+    </ScrollView>
+
+</RelativeLayout>

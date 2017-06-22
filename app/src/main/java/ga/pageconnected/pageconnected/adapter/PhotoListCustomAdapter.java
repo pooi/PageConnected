@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.Fragment;
 import android.content.Context;
 import android.content.Intent;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -21,6 +22,7 @@ import java.util.HashMap;
 
 import ga.pageconnected.pageconnected.R;
 import ga.pageconnected.pageconnected.activity.PhotoArticleActivity;
+import ga.pageconnected.pageconnected.activity.PhotoArticleDatailActivity;
 import ga.pageconnected.pageconnected.fragment.PhotoFragment;
 import ga.pageconnected.pageconnected.profile.ProfileActivity;
 import ga.pageconnected.pageconnected.util.OnAdapterSupport;
@@ -81,6 +83,15 @@ public class PhotoListCustomAdapter extends RecyclerView.Adapter<PhotoListCustom
     public void onBindViewHolder(final ViewHolder holder, int position) {
         final HashMap<String,Object> item = list.get(position);
         final int pos = position;
+
+        holder.cv.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(context, PhotoArticleDatailActivity.class);
+                intent.putExtra("item", item);
+                onAdapterSupport.redirectActivity(intent);
+            }
+        });
 
         // profile
         holder.tv_name.setText((String)item.get("name"));
@@ -201,6 +212,7 @@ public class PhotoListCustomAdapter extends RecyclerView.Adapter<PhotoListCustom
 
     public final static class ViewHolder extends RecyclerView.ViewHolder {
 
+        CardView cv;
         RelativeLayout rl_profile;
         ImageView profileImg;
         TextView tv_name;
@@ -213,6 +225,7 @@ public class PhotoListCustomAdapter extends RecyclerView.Adapter<PhotoListCustom
 
         public ViewHolder(View v) {
             super(v);
+            cv = (CardView)v.findViewById(R.id.cv);
             rl_profile = (RelativeLayout)v.findViewById(R.id.rl_profile);
             profileImg = (ImageView)v.findViewById(R.id.profileImg);
             tv_name = (TextView)v.findViewById(R.id.tv_name);
