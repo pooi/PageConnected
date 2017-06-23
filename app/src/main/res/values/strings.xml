@@ -92,6 +92,11 @@
     <!-- Select Layout Activity -->
     <string name="select_layout">레이아웃 선택</string>
 
+    <!-- Add Column Activity -->
+    <string name="write_column">칼럼 작성</string>
+    <string name="successfully_posted_column">성공적으로 기사를 등록하였습니다.</string>
+    <string name="failed_register_column">기사를 등록하는데 실패하였습니다.</string>
+
     <!-- Add Photo Activity -->
     <string name="upload_photo">사진 등록</string>
 

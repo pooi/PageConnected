@@ -31,6 +31,7 @@ import com.squareup.picasso.Picasso;
 import java.util.HashMap;
 
 import ga.pageconnected.pageconnected.activity.add.AddArticleActivity;
+import ga.pageconnected.pageconnected.activity.add.AddColumnActivity;
 import ga.pageconnected.pageconnected.activity.add.AddPhotoActivity;
 import ga.pageconnected.pageconnected.fragment.ArticleFragment;
 import ga.pageconnected.pageconnected.fragment.ColumnFragment;
@@ -168,9 +169,11 @@ public class MainActivity extends BaseActivity  implements NavigationView.OnNavi
                 startActivity(intent);
                 break;
             }
-            case R.id.nav_column:
-                showSnackbar("Add column");
+            case R.id.nav_column: {
+                Intent intent = new Intent(MainActivity.this, AddColumnActivity.class);
+                startActivity(intent);
                 break;
+            }
             case R.id.nav_photo: {
                 Intent intent = new Intent(MainActivity.this, AddPhotoActivity.class);
                 startActivity(intent);
