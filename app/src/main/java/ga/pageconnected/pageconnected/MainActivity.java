@@ -15,6 +15,7 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.text.InputType;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -30,6 +31,8 @@ import com.squareup.picasso.Picasso;
 
 import java.util.HashMap;
 
+import ga.pageconnected.pageconnected.activity.ArticleActivity;
+import ga.pageconnected.pageconnected.activity.PhotoArticleActivity;
 import ga.pageconnected.pageconnected.activity.add.AddArticleActivity;
 import ga.pageconnected.pageconnected.activity.add.AddColumnActivity;
 import ga.pageconnected.pageconnected.activity.add.AddPhotoActivity;
@@ -148,13 +151,73 @@ public class MainActivity extends BaseActivity  implements NavigationView.OnNavi
     private void searchAction(){
         switch (currentSelectId){
             case R.id.nav_article:
-                showSnackbar("Search article");
+                new MaterialDialog.Builder(MainActivity.this)
+                        .title(R.string.search_long)
+                        .inputType(InputType.TYPE_CLASS_TEXT |
+                                InputType.TYPE_TEXT_VARIATION_PERSON_NAME |
+                                InputType.TYPE_TEXT_FLAG_CAP_WORDS)
+                        .theme(Theme.LIGHT)
+                        .positiveText(R.string.search)
+                        .negativeText(R.string.cancel)
+                        .neutralText(R.string.reset)
+                        .onNeutral(new MaterialDialog.SingleButtonCallback() {
+                            @Override
+                            public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+//                                search = "";
+//                                initLoadValue();
+//                                progressDialog.show();
+//                                getBoardList();
+                            }
+                        })
+                        .input(getResources().getString(R.string.please_input_search_text), "", new MaterialDialog.InputCallback() {
+                            @Override
+                            public void onInput(@NonNull MaterialDialog dialog, CharSequence input) {
+                                String search = input.toString();
+
+                                Intent intent = new Intent(MainActivity.this, ArticleActivity.class);
+                                intent.putExtra("day", "%");
+                                intent.putExtra("search", search);
+                                startActivity(intent);
+
+                            }
+                        })
+                        .show();
                 break;
             case R.id.nav_column:
                 showSnackbar("Search column");
                 break;
             case R.id.nav_photo:
-                showSnackbar("Search photo");
+                new MaterialDialog.Builder(MainActivity.this)
+                        .title(R.string.search_long)
+                        .inputType(InputType.TYPE_CLASS_TEXT |
+                                InputType.TYPE_TEXT_VARIATION_PERSON_NAME |
+                                InputType.TYPE_TEXT_FLAG_CAP_WORDS)
+                        .theme(Theme.LIGHT)
+                        .positiveText(R.string.search)
+                        .negativeText(R.string.cancel)
+                        .neutralText(R.string.reset)
+                        .onNeutral(new MaterialDialog.SingleButtonCallback() {
+                            @Override
+                            public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+//                                search = "";
+//                                initLoadValue();
+//                                progressDialog.show();
+//                                getBoardList();
+                            }
+                        })
+                        .input(getResources().getString(R.string.please_input_search_text), "", new MaterialDialog.InputCallback() {
+                            @Override
+                            public void onInput(@NonNull MaterialDialog dialog, CharSequence input) {
+                                String search = input.toString();
+
+                                Intent intent = new Intent(MainActivity.this, PhotoArticleActivity.class);
+                                intent.putExtra("day", "%");
+                                intent.putExtra("search", search);
+                                startActivity(intent);
+
+                            }
+                        })
+                        .show();
                 break;
             case R.id.nav_day_magazine:
                 showSnackbar("Search magazine");

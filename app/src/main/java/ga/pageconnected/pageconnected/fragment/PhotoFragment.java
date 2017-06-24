@@ -101,7 +101,7 @@ public class PhotoFragment extends BaseFragment {
                 @Override
                 public void onClick(View view) {
                     Intent intent = new Intent(context, PhotoArticleActivity.class);
-                    intent.putExtra("date", date);
+                    intent.putExtra("day", date);
                     if(!userId.equals("")){
                         intent.putExtra("userId", userId);
                     }

@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/background_color"
+    tools:context="ga.pageconnected.pageconnected.activity.SearchActivity">
+
+
+    <FrameLayout
+        android:id="@+id/content_fragment"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:paddingTop="@dimen/custom_actionbar_size"
+        android:clipToPadding="false"
+        >
+
+    </FrameLayout>
+
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar"
+        app:contentInsetStart="0dp"
+        android:layout_height="@dimen/custom_actionbar_size"
+        android:layout_width="match_parent"
+        android:background="@color/colorPrimary"
+        >
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+
+            <TextView
+                android:id="@+id/toolbar_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/search"
+                android:textColor="@color/white"
+                android:textSize="@dimen/custom_actionbar_title_size"
+                android:layout_centerInParent="true"
+                />
+
+        </RelativeLayout>
+
+    </android.support.v7.widget.Toolbar>
+
+</RelativeLayout>

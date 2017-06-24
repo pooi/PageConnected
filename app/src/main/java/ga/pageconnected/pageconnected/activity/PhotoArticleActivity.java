@@ -59,8 +59,9 @@ public class PhotoArticleActivity extends BaseActivity implements OnAdapterSuppo
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_photo_article);
 
-        day = getIntent().getStringExtra("date");
+        day = getIntent().getStringExtra("day");
         userId = getIntent().getStringExtra("userId");
+        search = getIntent().getStringExtra("search");
 
         list = new ArrayList<>();
         tempList = new ArrayList<>();
@@ -75,6 +76,8 @@ public class PhotoArticleActivity extends BaseActivity implements OnAdapterSuppo
         String d;
         if(day.equals("0")){
             d = getResources().getString(R.string.before_the_competition);
+        }else if(day.equals("%")) {
+            d = getResources().getString(R.string.search_result);
         }else{
             d = String.format(getResources().getString(R.string.date_str), day.substring(0,4), day.substring(4,6), day.substring(6, 8));
         }

@@ -35,6 +35,8 @@
     <string name="modify_short">수정</string>
     <string name="success_short">성공</string>
     <string name="fail_short">실패</string>
+    <string name="search_long">검색하기</string>
+    <string name="reset">초기화</string>
 
     <!-- Main Activity -->
     <string name="navigation_drawer_open">Open navigation drawer</string>
@@ -53,6 +55,8 @@
     <string name="please_input_content">내용을 입력해주세요.</string>
     <string name="no_install_email_client">설치된 이메일 클라이언트가 존재하지 않습니다.</string>
     <string name="removing_data">데이터 삭제 중입니다.</string>
+    <string name="please_input_search_text">검색어를 입력해주세요.</string>
+    <string name="search_result">검색 결과</string>
 
     <!-- Select Interest Activity -->
     <string name="select_interest_field">관심분야 선택</string>

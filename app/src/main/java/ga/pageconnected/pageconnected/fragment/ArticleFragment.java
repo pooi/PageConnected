@@ -82,7 +82,7 @@ public class ArticleFragment extends BaseFragment {
                 @Override
                 public void onClick(View view) {
                     Intent intent = new Intent(context, ArticleActivity.class);
-                    intent.putExtra("date", date);
+                    intent.putExtra("day", date);
                     if(!userId.equals("")){
                         intent.putExtra("userId", userId);
                     }
