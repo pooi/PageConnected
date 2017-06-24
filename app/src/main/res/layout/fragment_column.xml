@@ -7,20 +7,25 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     >
 
-    <RelativeLayout
+    <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:paddingTop="10dp"
+        android:clipToPadding="false"
         >
-        <TextView
-            android:id="@+id/tv_msg"
-            android:layout_width="wrap_content"
+
+
+        <LinearLayout
+            android:id="@+id/li_list_field"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:text="@string/no_column"
-            android:textColor="@color/dark_gray"
-            />
+            android:orientation="vertical"
+            >
 
-    </RelativeLayout>
 
+
+        </LinearLayout>
+
+    </ScrollView>
 
 </RelativeLayout>
