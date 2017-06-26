@@ -106,7 +106,7 @@ public class ProfileActivity extends BaseActivity {
                         if(columnFragment == null){
                             columnFragment = new ColumnFragment();
                             Bundle bdl = new Bundle(1);
-                            bdl.putString("userId", userId);
+                            bdl.putString("id", userId);
                             columnFragment.setArguments(bdl);
                         }
                         f = columnFragment;
