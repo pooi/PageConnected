@@ -25,6 +25,7 @@ import ga.pageconnected.pageconnected.activity.PhotoArticleActivity;
 import ga.pageconnected.pageconnected.activity.PhotoArticleDatailActivity;
 import ga.pageconnected.pageconnected.fragment.PhotoFragment;
 import ga.pageconnected.pageconnected.profile.ProfileActivity;
+import ga.pageconnected.pageconnected.util.AdditionalFunc;
 import ga.pageconnected.pageconnected.util.OnAdapterSupport;
 import ga.pageconnected.pageconnected.util.OnLoadMoreListener;
 import jp.wasabeef.picasso.transformations.CropCircleTransformation;
@@ -135,6 +136,9 @@ public class PhotoListCustomAdapter extends RecyclerView.Adapter<PhotoListCustom
                     .into(holder.defaultImg);
         }
 
+        String date = AdditionalFunc.parseDateString((String)item.get("date"), (String)item.get("time"));
+        holder.tv_date.setText(date);
+
         holder.tv_hit.setText((String)item.get("hit"));
         holder.tv_heart.setText((String)item.get("heart"));
 
@@ -221,6 +225,7 @@ public class PhotoListCustomAdapter extends RecyclerView.Adapter<PhotoListCustom
         TextView tv_content;
         ImageView defaultImg;
         TextView tv_imageCount;
+        TextView tv_date;
         TextView tv_heart;
         TextView tv_hit;
 
@@ -234,6 +239,7 @@ public class PhotoListCustomAdapter extends RecyclerView.Adapter<PhotoListCustom
             tv_content = (TextView)v.findViewById(R.id.tv_content);
             defaultImg = (ImageView)v.findViewById(R.id.img_default);
             tv_imageCount = (TextView)v.findViewById(R.id.tv_img_count);
+            tv_date = (TextView)v.findViewById(R.id.tv_date);
             tv_heart = (TextView)v.findViewById(R.id.tv_heart);
             tv_hit = (TextView)v.findViewById(R.id.tv_hit);
         }

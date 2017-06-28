@@ -131,53 +131,74 @@
 
             <!-- Count -->
 
-            <LinearLayout
-                android:id="@+id/li_addition_field"
+            <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="25dp"
-                android:layout_alignParentBottom="true"
-                android:orientation="horizontal"
-                android:gravity="right"
-                android:paddingRight="5dp"
-                android:paddingLeft="5dp"
                 >
 
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_margin="3dp"
-                    android:src="@drawable/ic_account_grey600_18dp"
-                    />
-
                 <TextView
-                    android:id="@+id/tv_heart"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:gravity="center_vertical"
-                    android:text="heart"
+                    android:id="@+id/tv_date"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="date"
                     android:textSize="12sp"
                     android:textColor="@color/gray"
-                    android:layout_marginRight="5dp"
+                    android:layout_centerVertical="true"
+                    android:layout_toLeftOf="@+id/li_addition_field"
+                    android:paddingLeft="5dp"
+                    android:paddingRight="5dp"
                     />
 
-                <ImageView
+                <LinearLayout
+                    android:id="@+id/li_addition_field"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:layout_margin="3dp"
-                    android:src="@drawable/ic_account_grey600_18dp"
-                    />
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:orientation="horizontal"
+                    android:gravity="right"
+                    android:paddingRight="5dp"
+                    android:paddingLeft="5dp"
+                    >
 
-                <TextView
-                    android:id="@+id/tv_hit"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:gravity="center_vertical"
-                    android:text="hit"
-                    android:textSize="12sp"
-                    android:textColor="@color/gray"
-                    />
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_margin="3dp"
+                        android:src="@drawable/ic_account_grey600_18dp"
+                        />
 
-            </LinearLayout>
+                    <TextView
+                        android:id="@+id/tv_heart"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:gravity="center_vertical"
+                        android:text="heart"
+                        android:textSize="12sp"
+                        android:textColor="@color/gray"
+                        android:layout_marginRight="5dp"
+                        />
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_margin="3dp"
+                        android:src="@drawable/ic_account_grey600_18dp"
+                        />
+
+                    <TextView
+                        android:id="@+id/tv_hit"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:gravity="center_vertical"
+                        android:text="hit"
+                        android:textSize="12sp"
+                        android:textColor="@color/gray"
+                        />
+
+                </LinearLayout>
+
+            </RelativeLayout>
 
 
         </LinearLayout>

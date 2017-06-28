@@ -17,6 +17,7 @@ import java.util.HashMap;
 
 import ga.pageconnected.pageconnected.BaseActivity;
 import ga.pageconnected.pageconnected.R;
+import ga.pageconnected.pageconnected.util.AdditionalFunc;
 import ga.pageconnected.pageconnected.util.UserInfo;
 import jp.wasabeef.picasso.transformations.CropCircleTransformation;
 
@@ -26,6 +27,7 @@ public class PhotoArticleDatailActivity extends BaseActivity {
     private TextView tv_name;
     private TextView tv_email;
     private ImageView profileImg;
+    private TextView tv_date;
     private TextView tv_content;
     private TextView tv_hit;
 
@@ -85,6 +87,10 @@ public class PhotoArticleDatailActivity extends BaseActivity {
             tv_content.setText(content);
             tv_content.setVisibility(View.VISIBLE);
         }
+
+        tv_date = (TextView)findViewById(R.id.tv_date);
+        String date = AdditionalFunc.parseDateString((String)item.get("date"), (String)item.get("time"));
+        tv_date.setText(date);
         tv_hit = (TextView)findViewById(R.id.tv_hit);
         tv_hit.setText(hit);
 

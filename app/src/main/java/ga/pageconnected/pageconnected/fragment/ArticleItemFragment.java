@@ -16,6 +16,7 @@ import java.util.HashMap;
 
 import ga.pageconnected.pageconnected.R;
 import ga.pageconnected.pageconnected.profile.ProfileActivity;
+import ga.pageconnected.pageconnected.util.AdditionalFunc;
 import jp.wasabeef.picasso.transformations.CropCircleTransformation;
 
 /**
@@ -41,6 +42,7 @@ public class ArticleItemFragment extends BaseFragment {
     private ImageView defaultImg;
     private TextView tv_title;
     private TextView tv_content;
+    private TextView tv_date;
     private TextView tv_heart;
     private TextView tv_hit;
 
@@ -82,6 +84,7 @@ public class ArticleItemFragment extends BaseFragment {
         defaultImg = (ImageView) view.findViewById(R.id.img_default);
         tv_title = (TextView)view.findViewById(R.id.tv_title);
         tv_content = (TextView)view.findViewById(R.id.tv_content);
+        tv_date = (TextView)view.findViewById(R.id.tv_date);
         tv_heart = (TextView)view.findViewById(R.id.tv_heart);
         tv_hit = (TextView)view.findViewById(R.id.tv_hit);
 
@@ -106,6 +109,8 @@ public class ArticleItemFragment extends BaseFragment {
                 .into(defaultImg);
         tv_title.setText((String)data.get("title"));
         tv_content.setText((String)data.get("content"));
+
+        tv_date.setText(AdditionalFunc.parseDateString((String)data.get("date"), (String)data.get("time")));
 
         tv_heart.setText((int)data.get("hit") + "");
         tv_hit.setText((int)data.get("heart") + "");

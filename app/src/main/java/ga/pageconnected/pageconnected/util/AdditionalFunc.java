@@ -115,6 +115,20 @@ public class AdditionalFunc {
 
     }
 
+    public static String parseDateString(String d, String t){
+
+        String date = "";
+
+        try {
+            date = d.substring(0, 4) + "." + d.substring(4, 6) + "." + d.substring(6, 8) + " " + t.substring(0, 2) + ":" + t.substring(2, 4) + ":" + t.substring(4, 6);
+        }catch (Exception e){
+            System.out.println(e.getMessage());
+        }
+
+        return date;
+
+    }
+
     public static ArrayList<String> stringToArrayList(String str){
 
         ArrayList<String> list = new ArrayList<>();
