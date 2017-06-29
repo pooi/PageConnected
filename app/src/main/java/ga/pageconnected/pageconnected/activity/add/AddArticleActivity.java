@@ -19,6 +19,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.content.ContextCompat;
 import android.os.Bundle;
+import android.support.v7.widget.CardView;
 import android.text.Editable;
 import android.text.InputType;
 import android.text.TextWatcher;
@@ -39,6 +40,7 @@ import com.android.volley.Response;
 import com.android.volley.error.VolleyError;
 import com.android.volley.request.SimpleMultiPartRequest;
 import com.rengwuxian.materialedittext.MaterialEditText;
+import com.squareup.picasso.Picasso;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -52,6 +54,7 @@ import ga.pageconnected.pageconnected.Information;
 import ga.pageconnected.pageconnected.MyApplication;
 import ga.pageconnected.pageconnected.R;
 import ga.pageconnected.pageconnected.util.AdditionalFunc;
+import ga.pageconnected.pageconnected.util.AllInOnePhoto;
 import ga.pageconnected.pageconnected.util.CustomViewPager;
 import ga.pageconnected.pageconnected.util.PagerContainer;
 import ga.pageconnected.pageconnected.util.ParsePHP;
@@ -75,25 +78,28 @@ public class AddArticleActivity extends BaseActivity implements Serializable{
     private MaterialEditText editContent;
     private LinearLayout li_referenceField;
     private TextView addReferenceBtn;
-    private LinearLayout li_photoField;
-    private TextView addPhotoBtn;
-    private TextView deletePhotoBtn;
-    private ImageView imgPhoto;
     private TextView selectDayBtn;
     private Button addBtn;
 
+    private LinearLayout li_photoField;
+    private CardView cv_addPhoto;
+    private ImageView addPhotoBtn;
+
+
     private int layoutNumber = -1;
     private ArrayList<String> referenceList;
-    private String filePath;
     private String day = "";
 
     private MaterialDialog progressDialog;
+
+    private ArrayList<AllInOnePhoto> imageList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_article);
 
+        imageList = new ArrayList<>();
         referenceList = new ArrayList<>();
 
         init();
@@ -155,27 +161,17 @@ public class AddArticleActivity extends BaseActivity implements Serializable{
                         }).show();
             }
         });
+
         li_photoField = (LinearLayout)findViewById(R.id.li_photo_field);
-        addPhotoBtn = (TextView)findViewById(R.id.add_photo_btn);
+        cv_addPhoto = (CardView)findViewById(R.id.cv_add_photo);
+        addPhotoBtn = (ImageView)findViewById(R.id.add_photo_btn);
         addPhotoBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 imageBrowse();
             }
         });
-        deletePhotoBtn = (TextView)findViewById(R.id.delete_photo_btn);
-        deletePhotoBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                imgPhoto.setImageURI(null);
-                filePath = "";
-                imgPhoto.setVisibility(View.GONE);
-                deletePhotoBtn.setVisibility(View.GONE);
-                addPhotoBtn.setText(getResources().getString(R.string.add));
-            }
-        });
-        deletePhotoBtn.setVisibility(View.GONE);
-        imgPhoto = (ImageView)findViewById(R.id.img_photo);
+
         selectDayBtn = (TextView)findViewById(R.id.select_day_btn);
         selectDayBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -220,6 +216,61 @@ public class AddArticleActivity extends BaseActivity implements Serializable{
         startActivityForResult(galleryIntent, PICK_IMAGE_REQUEST);
     }
 
+    private void addPhotoLayout(Uri uri){
+
+        View v = getLayoutInflater().inflate(R.layout.add_photo_list_custom_item, null, false);
+
+        ImageView img = (ImageView)v.findViewById(R.id.img);
+        Button deleteBtn = (Button) v.findViewById(R.id.delete_btn);
+
+        Picasso.with(getApplicationContext())
+                .load(uri)
+                .resize(0, 500)
+                .into(img);
+        deleteBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+//                int pos = (int)view.getTag();
+                deletePhotoLayout((AllInOnePhoto)view.getTag());
+            }
+        });
+
+        li_photoField.removeView(cv_addPhoto);
+        li_photoField.addView(v);
+        li_photoField.addView(cv_addPhoto);
+
+        AllInOnePhoto photo = new AllInOnePhoto(uri, getPath(uri), v);
+        imageList.add(photo);
+        deleteBtn.setTag(photo);
+
+//        deleteBtn.setTag(imgViewList.size());
+//        imgViewList.add(v);
+        checkPhotoCount();
+        checkAddable();
+    }
+
+    private void deletePhotoLayout(AllInOnePhoto photo){
+
+//        View v = imgViewList.get(position);
+//        li_photoField.removeView(v);
+//        imgViewList.remove(v);
+        View v = photo.getView();
+        imageList.remove(photo);
+        li_photoField.removeView(v);
+
+        checkPhotoCount();
+        checkAddable();
+
+    }
+
+    private void checkPhotoCount(){
+        if(imageList.size() >= 2) {
+            cv_addPhoto.setVisibility(View.GONE);
+        }else{
+            cv_addPhoto.setVisibility(View.VISIBLE);
+        }
+    }
+
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
@@ -228,15 +279,13 @@ public class AddArticleActivity extends BaseActivity implements Serializable{
             if(requestCode == PICK_IMAGE_REQUEST){
                 Uri picUri = data.getData();
 
-                filePath = getPath(picUri);
+//                filePath = getPath(picUri);
 
                 Log.d("picUri", picUri.toString());
-                Log.d("filePath", filePath);
+//                Log.d("filePath", filePath);
+                Log.d("filePath", getPath(picUri));
 
-                addPhotoBtn.setText(getResources().getString(R.string.modify));
-                imgPhoto.setImageURI(picUri);
-                imgPhoto.setVisibility(View.VISIBLE);
-                deletePhotoBtn.setVisibility(View.VISIBLE);
+                addPhotoLayout(picUri);
 
             }
 
@@ -297,8 +346,11 @@ public class AddArticleActivity extends BaseActivity implements Serializable{
                 Toast.makeText(getApplicationContext(), error.getMessage(), Toast.LENGTH_LONG).show();
             }
         });
-
-        smr.addFile("image", filePath);
+        for(int i=0; i<imageList.size(); i++){
+            String s = "image" + i;
+            smr.addFile(s, imageList.get(i).getPath());
+        }
+//        smr.addFile("image", filePath);
         smr.addStringParam("service", "saveArticleWithImage");
         smr.addStringParam("userId", getUserID(this));
         smr.addStringParam("layout", Integer.toString(layoutNumber));
@@ -306,6 +358,7 @@ public class AddArticleActivity extends BaseActivity implements Serializable{
         smr.addStringParam("title", AdditionalFunc.replaceNewLineString(editTitle.getText().toString()));
         smr.addStringParam("content", AdditionalFunc.replaceNewLineString(editContent.getText().toString()));
         smr.addStringParam("url", AdditionalFunc.arrayListToString(referenceList));
+        smr.addStringParam("imageCount", imageList.size()+"");
         MyApplication.getInstance().addToRequestQueue(smr);
 
     }
@@ -322,7 +375,7 @@ public class AddArticleActivity extends BaseActivity implements Serializable{
 //        $content = replaceSqlString($content);
 //        $url = $_POST['url'];
 
-        if(filePath != null && !"".equals(filePath)){
+        if(imageList.size() > 0){
 
             checkPermission();
 
