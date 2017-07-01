@@ -23,7 +23,6 @@
             android:layout_height="wrap_content"
             android:gravity="center"
             android:padding="10dp"
-            android:layout_marginTop="10dp"
             android:text="@string/please_select_layout"
             android:textColor="@color/dark_gray"
             android:textSize="16sp"
@@ -34,8 +33,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_below="@+id/tv_layout_title"
-            android:layout_marginBottom="20dp"
-            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
             >
 
             <ga.pageconnected.pageconnected.util.CustomViewPager
@@ -51,31 +49,31 @@
 
     </RelativeLayout>
 
-    <android.support.v7.widget.Toolbar
-        android:id="@+id/toolbar"
-        app:contentInsetStart="0dp"
-        android:layout_height="@dimen/custom_actionbar_size"
-        android:layout_width="match_parent"
-        android:background="@color/colorPrimary"
-        >
+    <!--<android.support.v7.widget.Toolbar-->
+        <!--android:id="@+id/toolbar"-->
+        <!--app:contentInsetStart="0dp"-->
+        <!--android:layout_height="@dimen/custom_actionbar_size"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:background="@color/colorPrimary"-->
+        <!--&gt;-->
 
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
+        <!--<RelativeLayout-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="match_parent">-->
 
 
-            <TextView
-                android:id="@+id/toolbar_title"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/select_layout"
-                android:textColor="@color/white"
-                android:textSize="@dimen/custom_actionbar_title_size"
-                android:layout_centerInParent="true"
-                />
+            <!--<TextView-->
+                <!--android:id="@+id/toolbar_title"-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:text="@string/select_layout"-->
+                <!--android:textColor="@color/white"-->
+                <!--android:textSize="@dimen/custom_actionbar_title_size"-->
+                <!--android:layout_centerInParent="true"-->
+                <!--/>-->
 
-        </RelativeLayout>
+        <!--</RelativeLayout>-->
 
-    </android.support.v7.widget.Toolbar>
+    <!--</android.support.v7.widget.Toolbar>-->
 
 </RelativeLayout>
