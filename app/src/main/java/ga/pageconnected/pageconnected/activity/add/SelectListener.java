@@ -7,5 +7,5 @@ import java.io.Serializable;
  */
 
 public interface SelectListener extends Serializable {
-    void selected(int position);
+    void selected(int position, int maxImageCount);
 }

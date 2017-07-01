@@ -15,6 +15,7 @@ import java.io.Serializable;
 
 import ga.pageconnected.pageconnected.R;
 import ga.pageconnected.pageconnected.fragment.BaseFragment;
+import ga.pageconnected.pageconnected.util.LayoutController;
 
 /**
  * Created by tw on 2017-06-06.
@@ -47,27 +48,8 @@ public class LayoutFragment extends BaseFragment implements Serializable{
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        switch (position){
-            case 0:
-                view = inflater.inflate(R.layout.fragment_layout_item_01, container, false);
-                break;
-            case 1:
-                view = inflater.inflate(R.layout.fragment_layout_item_02, container, false);
-                break;
-            case 2:
-                view = inflater.inflate(R.layout.fragment_layout_item_03, container, false);
-                break;
-            case 3:
-                view = inflater.inflate(R.layout.fragment_layout_item_04, container, false);
-                break;
-            case 4:
-                view = inflater.inflate(R.layout.fragment_layout_item_05, container, false);
-                break;
-            default:
-                view = inflater.inflate(R.layout.fragment_layout, container, false);
-                break;
-        }
 //        view = inflater.inflate(R.layout.fragment_layout, container, false);
+        view = inflater.inflate(LayoutController.getLayoutId(position), container, false);
         context = container.getContext();
 
         initData();
@@ -112,7 +94,7 @@ public class LayoutFragment extends BaseFragment implements Serializable{
         img.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                listener.selected(position);
+                listener.selected(position, 0);
             }
         });
 
@@ -123,7 +105,7 @@ public class LayoutFragment extends BaseFragment implements Serializable{
         (view.findViewById(R.id.cv)).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                listener.selected(position);
+                listener.selected(position, LayoutController.getMaxImageCount(position));
             }
         });
 

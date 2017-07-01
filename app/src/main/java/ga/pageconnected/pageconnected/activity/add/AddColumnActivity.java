@@ -45,6 +45,7 @@ import org.json.JSONObject;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 
 import ga.pageconnected.pageconnected.BaseActivity;
 import ga.pageconnected.pageconnected.Information;
@@ -80,7 +81,8 @@ public class AddColumnActivity extends BaseActivity implements Serializable{
     private CardView cv_addPhoto;
     private ImageView addPhotoBtn;
 
-    private int layoutNumber = -1;
+    private int layoutNumber = 0;
+    private int maxLayoutImageCount = 0;
     private ArrayList<String> referenceList;
     private String day = "";
 
@@ -126,6 +128,7 @@ public class AddColumnActivity extends BaseActivity implements Serializable{
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(AddColumnActivity.this, SelectLayoutActivity.class);
+                intent.putExtra("selectLayout", layoutNumber);
                 startActivityForResult(intent, SELECT_LAYOUT);
             }
         });
@@ -256,6 +259,16 @@ public class AddColumnActivity extends BaseActivity implements Serializable{
 
     }
 
+    private void deleteAllPhoto(){
+
+        for(AllInOnePhoto photo : imageList){
+            View v = photo.getView();
+            li_photoField.removeView(v);
+        }
+        imageList.clear();
+
+    }
+
     private void checkPhotoCount(){
         if(imageList.size() >= 2) {
             cv_addPhoto.setVisibility(View.GONE);
@@ -285,9 +298,12 @@ public class AddColumnActivity extends BaseActivity implements Serializable{
         }else if(resultCode == SELECT_LAYOUT){
 
             layoutNumber = data.getIntExtra("layout", -1);
+            maxLayoutImageCount = data.getIntExtra("maxImageCount", 0);
             tv_layout.setBackgroundColor(ContextCompat.getColor(getApplicationContext(), R.color.colorPrimary));
             tv_layout.setText("Layout " + (layoutNumber+1));
+            deleteAllPhoto();
             checkAddable();
+            checkPhotoCount();
 
 
         }

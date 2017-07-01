@@ -34,10 +34,11 @@ public class SelectLayoutActivity extends BaseActivity {
 
         selectListener = new SelectListener() {
             @Override
-            public void selected(int position) {
+            public void selected(int position, int maxImageCount) {
 
                 Intent intent = new Intent();
                 intent.putExtra("layout", position);
+                intent.putExtra("maxImageCount", maxImageCount);
                 setResult(AddArticleActivity.SELECT_LAYOUT, intent);
                 SelectLayoutActivity.this.finish();
 //                layoutNumber = position;
@@ -57,6 +58,7 @@ public class SelectLayoutActivity extends BaseActivity {
 
     private void init(){
 
+        int selectLayout = getIntent().getIntExtra("selectLayout", 0);
 
         // Select Layout Frame
         rl_selectLayout = (RelativeLayout)findViewById(R.id.rl_select_layout);
@@ -68,6 +70,7 @@ public class SelectLayoutActivity extends BaseActivity {
         viewPager.setAdapter(pagerAdapter);
         viewPager.setPageMargin(30);
         viewPager.setClipChildren(false);
+        viewPager.setCurrentItem(selectLayout);
 
     }
 
