@@ -1,11 +1,10 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/root"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@color/background_color"
-    android:layout_marginLeft="5dp"
-    android:layout_marginRight="5dp"
     >
 
     <android.support.v7.widget.CardView
@@ -32,21 +31,25 @@
                 >
 
                 <ImageView
+                    android:id="@+id/img0"
+                    android:layout_width="0dp"
+                    android:layout_height="200dp"
+                    android:layout_weight="1"
+                    android:background="@color/light_gray"
+                    android:layout_marginRight="1dp"
+                    android:layout_marginLeft="1dp"
+                    android:scaleType="centerCrop"
+                    />
+
+                <ImageView
                     android:id="@+id/img1"
                     android:layout_width="0dp"
                     android:layout_height="200dp"
                     android:layout_weight="1"
                     android:background="@color/light_gray"
-                    android:layout_marginRight="2dp"
-                    />
-
-                <ImageView
-                    android:id="@+id/img2"
-                    android:layout_width="0dp"
-                    android:layout_height="200dp"
-                    android:layout_weight="1"
-                    android:background="@color/light_gray"
-                    android:layout_marginLeft="2dp"
+                    android:layout_marginRight="1dp"
+                    android:layout_marginLeft="1dp"
+                    android:scaleType="centerCrop"
                     />
 
             </LinearLayout>
@@ -71,7 +74,7 @@
 
 
                 <TextView
-                    android:id="@+id/tv_content1"
+                    android:id="@+id/tv_content"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:text="Content"

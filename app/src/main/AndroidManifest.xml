@@ -155,6 +155,17 @@
                 <category android:name="ga.pageconnected.pageconnected" />
             </intent-filter>
         </activity>
+        <activity
+            android:name=".activity.ShowLayoutActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:theme="@style/AppTheme"
+            android:windowSoftInputMode="adjustPan">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="ga.pageconnected.pageconnected" />
+            </intent-filter>
+        </activity>
 
         <!-- Facebook Activity -->
         <meta-data

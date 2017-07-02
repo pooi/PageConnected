@@ -33,7 +33,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_below="@+id/tv_layout"
-            android:layout_above="@+id/addBtn"
+            android:layout_above="@+id/li_btn_field"
             >
 
             <LinearLayout
@@ -161,7 +161,6 @@
                             android:id="@+id/sv_member"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_toLeftOf="@+id/show_apply_member_btn"
                             android:paddingLeft="5dp"
                             >
 
@@ -244,16 +243,39 @@
 
         </ScrollView>
 
-        <Button
-            android:id="@+id/addBtn"
+        <LinearLayout
+            android:id="@+id/li_btn_field"
             android:layout_width="match_parent"
-            android:layout_height="30dp"
-            android:background="@color/dark_gray"
-            android:text="@string/add"
-            android:textSize="12sp"
-            android:textColor="@color/white"
+            android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
-            />
+            android:orientation="horizontal"
+            >
+
+            <Button
+                android:id="@+id/previewBtn"
+                android:layout_width="0dp"
+                android:layout_height="30dp"
+                android:layout_weight="1"
+                android:background="@color/dark_gray"
+                android:text="@string/preview"
+                android:textSize="12sp"
+                android:textColor="@color/white"
+                android:layout_alignParentBottom="true"
+                />
+
+            <Button
+                android:id="@+id/addBtn"
+                android:layout_width="0dp"
+                android:layout_height="30dp"
+                android:layout_weight="1"
+                android:background="@color/dark_gray"
+                android:text="@string/add"
+                android:textSize="12sp"
+                android:textColor="@color/white"
+                android:layout_alignParentBottom="true"
+                />
+
+        </LinearLayout>
 
     </RelativeLayout>
 

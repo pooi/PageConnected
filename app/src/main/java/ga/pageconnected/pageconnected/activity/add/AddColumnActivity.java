@@ -51,8 +51,10 @@ import ga.pageconnected.pageconnected.BaseActivity;
 import ga.pageconnected.pageconnected.Information;
 import ga.pageconnected.pageconnected.MyApplication;
 import ga.pageconnected.pageconnected.R;
+import ga.pageconnected.pageconnected.activity.ShowLayoutActivity;
 import ga.pageconnected.pageconnected.util.AdditionalFunc;
 import ga.pageconnected.pageconnected.util.AllInOnePhoto;
+import ga.pageconnected.pageconnected.util.LayoutController;
 import ga.pageconnected.pageconnected.util.ParsePHP;
 
 public class AddColumnActivity extends BaseActivity implements Serializable{
@@ -76,6 +78,7 @@ public class AddColumnActivity extends BaseActivity implements Serializable{
     private TextView addReferenceBtn;
     private TextView selectDayBtn;
     private Button addBtn;
+    private Button previewBtn;
 
     private LinearLayout li_photoField;
     private CardView cv_addPhoto;
@@ -195,6 +198,13 @@ public class AddColumnActivity extends BaseActivity implements Serializable{
                 add();
             }
         });
+        previewBtn = (Button)findViewById(R.id.previewBtn);
+        previewBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                redirectShowLayoutActivity();
+            }
+        });
 
 
         progressDialog = new MaterialDialog.Builder(this)
@@ -270,7 +280,7 @@ public class AddColumnActivity extends BaseActivity implements Serializable{
     }
 
     private void checkPhotoCount(){
-        if(imageList.size() >= 2) {
+        if(imageList.size() >= maxLayoutImageCount) {
             cv_addPhoto.setVisibility(View.GONE);
         }else{
             cv_addPhoto.setVisibility(View.VISIBLE);
@@ -319,6 +329,20 @@ public class AddColumnActivity extends BaseActivity implements Serializable{
         String result = cursor.getString(column_index);
         cursor.close();
         return result;
+    }
+
+    private void redirectShowLayoutActivity(){
+
+        Intent intent = new Intent(AddColumnActivity.this, ShowLayoutActivity.class);
+        intent.putExtra("item", LayoutController.buildLayoutItemObject(
+                layoutNumber,
+                editTitle.getText().toString(),
+                editContent.getText().toString(),
+                referenceList,
+                imageList
+        ));
+        startActivity(intent);
+
     }
 
     private void addWithImage(){
@@ -438,6 +462,8 @@ public class AddColumnActivity extends BaseActivity implements Serializable{
 
         addBtn.setEnabled(setting);
         setButtonColor(addBtn, setting);
+        previewBtn.setEnabled(setting);
+        setButtonColorPreview(previewBtn, setting);
 
 
     }
@@ -445,6 +471,14 @@ public class AddColumnActivity extends BaseActivity implements Serializable{
     private void setButtonColor(Button btn, boolean check){
         if(check){
             btn.setBackgroundColor(ContextCompat.getColor(getApplicationContext(), R.color.colorPrimary));
+        }else{
+            btn.setBackgroundColor(ContextCompat.getColor(getApplicationContext(), R.color.dark_gray));
+        }
+    }
+
+    private void setButtonColorPreview(Button btn, boolean check){
+        if(check){
+            btn.setBackgroundColor(ContextCompat.getColor(getApplicationContext(), R.color.pastel_orange));
         }else{
             btn.setBackgroundColor(ContextCompat.getColor(getApplicationContext(), R.color.dark_gray));
         }

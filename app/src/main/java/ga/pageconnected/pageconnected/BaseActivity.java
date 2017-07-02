@@ -61,4 +61,8 @@ public class BaseActivity extends AppCompatActivity {
         snackbar.show();
     }
 
+    public int getColorId(int id){
+        return ContextCompat.getColor(getApplicationContext(), id);
+    }
+
 }

@@ -3,6 +3,7 @@ package ga.pageconnected.pageconnected.util;
 import android.view.View;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 
 import ga.pageconnected.pageconnected.R;
 
@@ -68,6 +69,12 @@ public class LayoutController implements Serializable {
         }
 
         return count;
+
+    }
+
+    public static LayoutItem buildLayoutItemObject(int layoutNumber, String title, String content, ArrayList<String> reference, ArrayList<AllInOnePhoto> imageList){
+
+        return new LayoutItem(layoutNumber, title, content, reference, AdditionalFunc.AllInOnePhotoToPhotoList(imageList));
 
     }
 

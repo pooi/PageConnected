@@ -176,6 +176,20 @@ public class AdditionalFunc {
         return str;
     }
 
+    public static ArrayList<String> AllInOnePhotoToPhotoList(ArrayList<AllInOnePhoto> imageList){
+
+        ArrayList<String> list = new ArrayList<>();
+
+        for(AllInOnePhoto photo : imageList){
+
+            list.add(photo.getUri().toString());
+
+        }
+
+        return list;
+
+    }
+
 
     public static HashMap<String, Object> getUserInfo(String data){
 
@@ -241,7 +255,6 @@ public class AdditionalFunc {
                 hashTemp.put("email", (String)temp.get("email"));
                 hashTemp.put("img", (String)temp.get("img"));
                 hashTemp.put("layout", Integer.parseInt((String)temp.get("layout")));
-                hashTemp.put("picture", (String)temp.get("picture"));
                 hashTemp.put("title", (String)temp.get("title"));
                 hashTemp.put("content", (String)temp.get("content"));
                 hashTemp.put("day", (String)temp.get("day"));
@@ -253,9 +266,22 @@ public class AdditionalFunc {
                 String urlTemp = (String)temp.get("url");
                 ArrayList<String> urlList = new ArrayList<>();
                 for(String s : urlTemp.split(",")){
+                    if("".equals(s)){
+                        continue;
+                    }
                     urlList.add(s);
                 }
                 hashTemp.put("url", urlList);
+
+                String pictureTemp = (String)temp.get("picture");
+                ArrayList<String> pictureList = new ArrayList<>();
+                for(String s : pictureTemp.split(",")){
+                    if("".equals(s)){
+                        continue;
+                    }
+                    pictureList.add(s);
+                }
+                hashTemp.put("picture", pictureList);
 
                 list.add(hashTemp);
 
@@ -290,7 +316,6 @@ public class AdditionalFunc {
                 hashTemp.put("email", (String)temp.get("email"));
                 hashTemp.put("img", (String)temp.get("img"));
                 hashTemp.put("layout", Integer.parseInt((String)temp.get("layout")));
-                hashTemp.put("picture", (String)temp.get("picture"));
                 hashTemp.put("title", (String)temp.get("title"));
                 hashTemp.put("content", (String)temp.get("content"));
                 hashTemp.put("day", (String)temp.get("day"));
@@ -302,9 +327,22 @@ public class AdditionalFunc {
                 String urlTemp = (String)temp.get("url");
                 ArrayList<String> urlList = new ArrayList<>();
                 for(String s : urlTemp.split(",")){
+                    if("".equals(s)){
+                        continue;
+                    }
                     urlList.add(s);
                 }
                 hashTemp.put("url", urlList);
+
+                String pictureTemp = (String)temp.get("picture");
+                ArrayList<String> pictureList = new ArrayList<>();
+                for(String s : pictureTemp.split(",")){
+                    if("".equals(s)){
+                        continue;
+                    }
+                    pictureList.add(s);
+                }
+                hashTemp.put("picture", pictureList);
 
                 list.add(hashTemp);
 

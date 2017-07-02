@@ -37,6 +37,7 @@
     <string name="fail_short">실패</string>
     <string name="search_long">검색하기</string>
     <string name="reset">초기화</string>
+    <string name="preview">미리보기</string>
 
     <!-- Main Activity -->
     <string name="navigation_drawer_open">Open navigation drawer</string>
