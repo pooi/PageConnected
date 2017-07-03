@@ -19,8 +19,10 @@ import java.util.HashMap;
 
 import ga.pageconnected.pageconnected.R;
 import ga.pageconnected.pageconnected.activity.ColumnActivity;
+import ga.pageconnected.pageconnected.activity.ShowLayoutActivity;
 import ga.pageconnected.pageconnected.profile.ProfileActivity;
 import ga.pageconnected.pageconnected.util.AdditionalFunc;
+import ga.pageconnected.pageconnected.util.LayoutItem;
 import ga.pageconnected.pageconnected.util.OnAdapterSupport;
 import ga.pageconnected.pageconnected.util.OnLoadMoreListener;
 import jp.wasabeef.picasso.transformations.CropCircleTransformation;
@@ -83,7 +85,7 @@ public class ColumnListCustomAdapter extends RecyclerView.Adapter<ColumnListCust
         holder.cv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                redirectShowLayoutActivity(item);
             }
         });
 
@@ -109,11 +111,23 @@ public class ColumnListCustomAdapter extends RecyclerView.Adapter<ColumnListCust
         String content = (String)item.get("content");
         holder.tv_content.setText(content);
 
-        String picture = (String)item.get("picture");
-        Picasso.with(context)
-                .load(picture)
-                .resize(500, 0)
-                .into(holder.defaultImg);
+        ArrayList<String> pictureList = (ArrayList<String>)item.get("picture");
+        if(pictureList.size() <= 0){
+            holder.defaultImg.setVisibility(View.GONE);
+            holder.tv_imageCount.setVisibility(View.GONE);
+        }else{
+            holder.defaultImg.setVisibility(View.VISIBLE);
+            Picasso.with(context)
+                    .load(pictureList.get(0))
+                    .resize(500, 0)
+                    .into(holder.defaultImg);
+            if(pictureList.size() > 1) {
+                holder.tv_imageCount.setVisibility(View.VISIBLE);
+                holder.tv_imageCount.setText("+" + (pictureList.size()-1));
+            }else{
+                holder.tv_imageCount.setVisibility(View.GONE);
+            }
+        }
 
         String date = AdditionalFunc.parseDateString((String)item.get("date"), (String)item.get("time"));
         holder.tv_date.setText(date);
@@ -121,6 +135,20 @@ public class ColumnListCustomAdapter extends RecyclerView.Adapter<ColumnListCust
         holder.tv_hit.setText(((int)item.get("hit"))+"");
         holder.tv_heart.setText(((int)item.get("heart"))+"");
 
+
+    }
+
+    private void redirectShowLayoutActivity(HashMap<String, Object> data){
+
+        Intent intent = new Intent(context, ShowLayoutActivity.class);
+        intent.putExtra("item", new LayoutItem(
+                (int)data.get("layout"),
+                (String)data.get("title"),
+                (String)data.get("content"),
+                (ArrayList<String>)data.get("url"),
+                (ArrayList<String>)data.get("picture")
+        ));
+        onAdapterSupport.redirectActivity(intent);
 
     }
 
@@ -204,6 +232,7 @@ public class ColumnListCustomAdapter extends RecyclerView.Adapter<ColumnListCust
         TextView tv_title;
         TextView tv_content;
         ImageView defaultImg;
+        TextView tv_imageCount;
         TextView tv_date;
         TextView tv_heart;
         TextView tv_hit;
@@ -217,6 +246,7 @@ public class ColumnListCustomAdapter extends RecyclerView.Adapter<ColumnListCust
             tv_email = (TextView)v.findViewById(R.id.tv_email);
             tv_content = (TextView)v.findViewById(R.id.tv_content);
             defaultImg = (ImageView)v.findViewById(R.id.img_default);
+            tv_imageCount = (TextView)v.findViewById(R.id.tv_img_count);
             tv_title = (TextView)v.findViewById(R.id.tv_title);
             tv_date = (TextView)v.findViewById(R.id.tv_date);
             tv_heart = (TextView)v.findViewById(R.id.tv_heart);

@@ -12,11 +12,14 @@ import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 import ga.pageconnected.pageconnected.R;
+import ga.pageconnected.pageconnected.activity.ShowLayoutActivity;
 import ga.pageconnected.pageconnected.profile.ProfileActivity;
 import ga.pageconnected.pageconnected.util.AdditionalFunc;
+import ga.pageconnected.pageconnected.util.LayoutItem;
 import jp.wasabeef.picasso.transformations.CropCircleTransformation;
 
 /**
@@ -40,6 +43,7 @@ public class ArticleItemFragment extends BaseFragment {
     private TextView tv_email;
     // content
     private ImageView defaultImg;
+    private TextView tv_imageCount;
     private TextView tv_title;
     private TextView tv_content;
     private TextView tv_date;
@@ -75,13 +79,35 @@ public class ArticleItemFragment extends BaseFragment {
 
     }
 
+    private void redirectShowLayoutActivity(){
+
+        Intent intent = new Intent(context, ShowLayoutActivity.class);
+        intent.putExtra("item", new LayoutItem(
+                (int)data.get("layout"),
+                (String)data.get("title"),
+                (String)data.get("content"),
+                (ArrayList<String>)data.get("url"),
+                (ArrayList<String>)data.get("picture")
+        ));
+        startActivity(intent);
+
+    }
+
     private void initUI(){
+
+        view.findViewById(R.id.cv).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                redirectShowLayoutActivity();
+            }
+        });
 
         rl_profile = (RelativeLayout)view.findViewById(R.id.rl_profile);
         profileImg = (ImageView)view.findViewById(R.id.profileImg);
         tv_name = (TextView)view.findViewById(R.id.tv_name);
         tv_email = (TextView)view.findViewById(R.id.tv_email);
         defaultImg = (ImageView) view.findViewById(R.id.img_default);
+        tv_imageCount = (TextView)view.findViewById(R.id.tv_img_count);
         tv_title = (TextView)view.findViewById(R.id.tv_title);
         tv_content = (TextView)view.findViewById(R.id.tv_content);
         tv_date = (TextView)view.findViewById(R.id.tv_date);
@@ -103,10 +129,24 @@ public class ArticleItemFragment extends BaseFragment {
         tv_name.setText((String)data.get("name"));
         tv_email.setText((String)data.get("email"));
 
-        Picasso.with(context)
-                .load((String)data.get("picture"))
-                .resize(500, 0)
-                .into(defaultImg);
+        ArrayList<String> pictureList = (ArrayList<String>)data.get("picture");
+        if(pictureList.size() <= 0){
+            defaultImg.setVisibility(View.GONE);
+            tv_imageCount.setVisibility(View.GONE);
+        }else{
+            defaultImg.setVisibility(View.VISIBLE);
+            Picasso.with(context)
+                    .load(pictureList.get(0))
+                    .resize(500, 0)
+                    .into(defaultImg);
+            if(pictureList.size() > 1) {
+                tv_imageCount.setVisibility(View.VISIBLE);
+                tv_imageCount.setText("+" + (pictureList.size()-1));
+            }else{
+                tv_imageCount.setVisibility(View.GONE);
+            }
+        }
+
         tv_title.setText((String)data.get("title"));
         tv_content.setText((String)data.get("content"));
 

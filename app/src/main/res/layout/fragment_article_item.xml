@@ -65,14 +65,39 @@
 
                 <!-- Profile -->
 
-            <ImageView
-                android:id="@+id/img_default"
+            <RelativeLayout
+                android:id="@+id/rl_image"
                 android:layout_width="match_parent"
                 android:layout_height="220dp"
-                android:background="@color/pastel_orange"
-                android:layout_below="@+id/rl_profile"
-                android:scaleType="centerCrop"
-                />
+                android:layout_below="@+id/rl_profile">
+
+                <ImageView
+                    android:id="@+id/img_default"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@color/pastel_orange"
+                    android:scaleType="centerCrop"
+                    />
+
+                <TextView
+                    android:id="@+id/tv_img_count"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="+1"
+                    android:textColor="@color/white"
+                    android:textSize="12sp"
+                    android:paddingTop="3dp"
+                    android:paddingBottom="3dp"
+                    android:paddingLeft="10dp"
+                    android:paddingRight="10dp"
+                    android:layout_marginRight="5dp"
+                    android:layout_marginBottom="5dp"
+                    android:background="@drawable/round_background_transparent"
+                    android:layout_alignParentBottom="true"
+                    android:layout_alignParentRight="true"
+                    />
+
+            </RelativeLayout>
 
             <!-- Default Image -->
 
@@ -81,7 +106,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:padding="10dp"
-                android:layout_below="@+id/img_default"
+                android:layout_below="@+id/rl_image"
                 android:textSize="12sp"
                 android:textColor="@color/dark_gray"
                 android:textStyle="bold"
