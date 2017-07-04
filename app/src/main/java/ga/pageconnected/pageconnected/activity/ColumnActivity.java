@@ -11,10 +11,14 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.afollestad.materialdialogs.Theme;
 import com.wang.avi.AVLoadingIndicatorView;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -31,6 +35,7 @@ import ga.pageconnected.pageconnected.util.OnAdapterSupport;
 import ga.pageconnected.pageconnected.util.OnLoadMoreListener;
 import ga.pageconnected.pageconnected.util.PagerContainer;
 import ga.pageconnected.pageconnected.util.ParsePHP;
+import ga.pageconnected.pageconnected.util.UpdateItem;
 
 public class ColumnActivity extends BaseActivity implements OnAdapterSupport {
 
@@ -205,6 +210,30 @@ public class ColumnActivity extends BaseActivity implements OnAdapterSupport {
 
     @Override
     public void redirectActivity(Intent intent) {
+        new UpdateItem("column", "hit", intent.getStringExtra("updateId"), 1, new UpdateItem.FinishAction() {
+            @Override
+            public void afterAction(String data) {
+                try {
+                    JSONObject jObj = new JSONObject(data);
+                    String status = jObj.getString("status");
+
+
+//                        Toast.makeText(getApplicationContext(), message, Toast.LENGTH_LONG).show();
+
+                    System.out.println(status);
+                    if("success".equals(status)){
+                        //handler.sendMessage(handler.obtainMessage(MSG_MESSAGE_SUCCESS));
+                    }else{
+                        //handler.sendMessage(handler.obtainMessage(MSG_MESSAGE_FAIL));
+                    }
+
+                } catch (JSONException e) {
+                    // JSON error
+                    e.printStackTrace();
+                    Toast.makeText(getApplicationContext(), "Json error: " + e.getMessage(), Toast.LENGTH_LONG).show();
+                }
+            }
+        }).start();
         startActivity(intent);
     }
 

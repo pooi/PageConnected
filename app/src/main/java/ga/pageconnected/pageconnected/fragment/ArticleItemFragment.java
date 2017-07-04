@@ -9,8 +9,12 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.squareup.picasso.Picasso;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -20,6 +24,7 @@ import ga.pageconnected.pageconnected.activity.ShowLayoutActivity;
 import ga.pageconnected.pageconnected.profile.ProfileActivity;
 import ga.pageconnected.pageconnected.util.AdditionalFunc;
 import ga.pageconnected.pageconnected.util.LayoutItem;
+import ga.pageconnected.pageconnected.util.UpdateItem;
 import jp.wasabeef.picasso.transformations.CropCircleTransformation;
 
 /**
@@ -90,6 +95,27 @@ public class ArticleItemFragment extends BaseFragment {
                 (ArrayList<String>)data.get("picture")
         ));
         startActivity(intent);
+        new UpdateItem("article", "hit", (String)data.get("id"), 1, new UpdateItem.FinishAction() {
+            @Override
+            public void afterAction(String data) {
+                try {
+                    JSONObject jObj = new JSONObject(data);
+                    String status = jObj.getString("status");
+
+                    System.out.println(status);
+                    if("success".equals(status)){
+                        //handler.sendMessage(handler.obtainMessage(MSG_MESSAGE_SUCCESS));
+                    }else{
+                        //handler.sendMessage(handler.obtainMessage(MSG_MESSAGE_FAIL));
+                    }
+
+                } catch (JSONException e) {
+                    // JSON error
+                    e.printStackTrace();
+                    Toast.makeText(context, "Json error: " + e.getMessage(), Toast.LENGTH_LONG).show();
+                }
+            }
+        }).start();
 
     }
 
@@ -152,8 +178,8 @@ public class ArticleItemFragment extends BaseFragment {
 
         tv_date.setText(AdditionalFunc.parseDateString((String)data.get("date"), (String)data.get("time")));
 
-        tv_heart.setText((int)data.get("hit") + "");
-        tv_hit.setText((int)data.get("heart") + "");
+        tv_heart.setText((int)data.get("heart") + "");
+        tv_hit.setText((int)data.get("hit") + "");
 
     }
 

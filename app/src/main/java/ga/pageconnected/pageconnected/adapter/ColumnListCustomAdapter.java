@@ -148,6 +148,7 @@ public class ColumnListCustomAdapter extends RecyclerView.Adapter<ColumnListCust
                 (ArrayList<String>)data.get("url"),
                 (ArrayList<String>)data.get("picture")
         ));
+        intent.putExtra("updateId", (String)data.get("id"));
         onAdapterSupport.redirectActivity(intent);
 
     }

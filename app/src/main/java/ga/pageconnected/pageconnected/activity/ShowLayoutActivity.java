@@ -25,6 +25,7 @@ public class ShowLayoutActivity extends BaseActivity {
     private ImageView[] ivList;
     private TextView tv_title;
     private TextView tv_content;
+    private View line0;
     private TextView tv_reference;
 
     private LayoutItem layoutItem;
@@ -49,11 +50,12 @@ public class ShowLayoutActivity extends BaseActivity {
         root.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                ShowLayoutActivity.this.onBackPressed();
+                ShowLayoutActivity.this.finish();
             }
         });
         tv_title = (TextView)findViewById(R.id.tv_title);
         tv_content = (TextView)findViewById(R.id.tv_content);
+        line0 = (View)findViewById(R.id.line0);
         tv_reference = (TextView)findViewById(R.id.tv_reference);
 
         ivList = new ImageView[layoutItem.getMaxImageCount()];
@@ -83,14 +85,21 @@ public class ShowLayoutActivity extends BaseActivity {
     private void fillContent(){
         tv_title.setText(layoutItem.getTitle());
         tv_content.setText(layoutItem.getContent());
-        String reference = "";
-        for(int i=0; i<layoutItem.getReference().size(); i++){
-            reference += layoutItem.getReference().get(i);
-            if(i < layoutItem.getReference().size()-1){
-                reference += "\n";
+        if(layoutItem.getReference().size() <= 0){
+            line0.setVisibility(View.GONE);
+            tv_reference.setVisibility(View.GONE);
+        }else {
+            line0.setVisibility(View.VISIBLE);
+            tv_reference.setVisibility(View.VISIBLE);
+            String reference = "";
+            for (int i = 0; i < layoutItem.getReference().size(); i++) {
+                reference += layoutItem.getReference().get(i);
+                if (i < layoutItem.getReference().size() - 1) {
+                    reference += "\n";
+                }
             }
+            tv_reference.setText(reference);
         }
-        tv_reference.setText(reference);
 
         for(int i=0; i<layoutItem.getImageCount(); i++){
             final int pos = i;
