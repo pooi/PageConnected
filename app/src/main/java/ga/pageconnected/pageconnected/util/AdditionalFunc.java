@@ -415,5 +415,38 @@ public class AdditionalFunc {
 
     }
 
+    public static ArrayList<HashMap<String, String>> getMagazineList(String data){
+
+        ArrayList<HashMap<String, String>> list = new ArrayList<>();
+
+        try {
+            JSONObject jObject = new JSONObject(data);
+            JSONArray results = jObject.getJSONArray("result");
+            String countTemp = (String)jObject.get("num_result");
+            int count = Integer.parseInt(countTemp);
+
+            for ( int i = 0; i < count; ++i ) {
+                JSONObject temp = results.getJSONObject(i);
+
+                HashMap<String, String> hashTemp = new HashMap<>();
+
+                hashTemp.put("id", (String)temp.get("id"));
+                hashTemp.put("title", (String)temp.get("title"));
+                hashTemp.put("day", (String)temp.get("day"));
+                hashTemp.put("coverImg", (String)temp.get("coverImg"));
+                hashTemp.put("file", (String)temp.get("file"));
+
+                list.add(hashTemp);
+
+            }
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        return list;
+
+    }
+
 
 }

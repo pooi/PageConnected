@@ -72,6 +72,7 @@
     <string name="no_article">등록된 기사가 없습니다.</string>
     <string name="change_interest_field">관심분야가 수정되었습니다.</string>
     <string name="day_title">%1$d일차(%2$s년 %3$s월 %4$s일)</string>
+    <string name="day_title_short">%1$d일차</string>
     <string name="date_str">%1$s년 %2$s월 %3$s일</string>
     <string name="before_the_competition">대회 시작 전</string>
     <string name="please_enter_url">url을 입력해주세요.</string>
