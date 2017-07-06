@@ -105,26 +105,32 @@ public class DayMagazineFragment extends BaseFragment implements OnAdapterSuppor
 
     private void getMagazineList(){
 
-            loading.show();
-            HashMap<String, String> map = new HashMap<>();
-            map.put("service", "getMagazineList");
-            new ParsePHP(Information.MAIN_SERVER_ADDRESS, map) {
+        loading.show();
+        HashMap<String, String> map = new HashMap<>();
+        map.put("service", "getMagazineList");
+        new ParsePHP(Information.MAIN_SERVER_ADDRESS, map) {
 
-                @Override
-                protected void afterThreadFinish(String data) {
+            @Override
+            protected void afterThreadFinish(String data) {
 
-                        list.clear();
+                    list.clear();
 
-                        list = AdditionalFunc.getMagazineList(data);
+                    list = AdditionalFunc.getMagazineList(data);
 
-                        handler.sendMessage(handler.obtainMessage(MSG_MESSAGE_MAKE_LIST));
+                    handler.sendMessage(handler.obtainMessage(MSG_MESSAGE_MAKE_LIST));
 
-                }
-            }.start();
+            }
+        }.start();
 
     }
 
     public void makeList(){
+
+        if(list.size() > 0){
+            tv_msg.setVisibility(View.GONE);
+        }else{
+            tv_msg.setVisibility(View.VISIBLE);
+        }
 
         adapter = new MagazineListCustomAdapter(context, list, rv, this, this);
 

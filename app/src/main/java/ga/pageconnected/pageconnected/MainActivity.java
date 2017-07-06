@@ -54,6 +54,7 @@ public class MainActivity extends BaseActivity  implements NavigationView.OnNavi
 
     private String[] menuList = {"nav_article", "nav_column", "nav_photo", "nav_day_magazine", "nav_info", "nav_report", "nav_help", "nav_open_source"};
     private int currentSelectId;
+    private boolean menuVisible = true;
 
     // Logout
     private MaterialDialog progressDialog;
@@ -275,6 +276,23 @@ public class MainActivity extends BaseActivity  implements NavigationView.OnNavi
         }
     }
 
+    public boolean onPrepareOptionsMenu(Menu menu)
+    {
+        MenuItem search = menu.findItem(R.id.search);
+        MenuItem add = menu.findItem(R.id.add);
+        if(menuVisible)
+        {
+            add.setVisible(true);
+            search.setVisible(true);
+        }
+        else
+        {
+            add.setVisible(false);
+            search.setVisible(false);
+        }
+        return true;
+    }
+
     //@SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
@@ -288,24 +306,28 @@ public class MainActivity extends BaseActivity  implements NavigationView.OnNavi
             showFragment("nav_article", new ArticleFragment());
             title = getResources().getString(R.string.share_article);
             currentSelectId = id;
+            menuVisible = true;
 
         }else if(id == R.id.nav_column){
 
             showFragment("nav_column", new ColumnFragment());
             title = getResources().getString(R.string.share_column);
             currentSelectId = id;
+            menuVisible = true;
 
         }else if(id == R.id.nav_photo){
 
             showFragment("nav_photo", new PhotoFragment());
             title = getResources().getString(R.string.share_photo);
             currentSelectId = id;
+            menuVisible = true;
 
         }else if(id == R.id.nav_day_magazine) {
 
             showFragment("nav_day_magazine", new DayMagazineFragment());
             title = getResources().getString(R.string.day_magazine);
             currentSelectId = id;
+            menuVisible = false;
 
         }else if (id == R.id.nav_show_profile) {
 
@@ -386,6 +408,8 @@ public class MainActivity extends BaseActivity  implements NavigationView.OnNavi
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
+
+        invalidateOptionsMenu();
 
         return true;
     }

@@ -96,7 +96,7 @@ public class MagazineListCustomAdapter extends RecyclerView.Adapter<MagazineList
         if("0".equals(day)){ // 대회 시작전
             title = context.getResources().getString(R.string.before_the_competition);
         }else {
-            title = String.format(context.getResources().getString(R.string.day_title), dayIndex, day.substring(0, 4), day.substring(4, 6), day.substring(6, 8));
+            title = String.format(context.getResources().getString(R.string.day_title2), dayIndex, day.substring(0, 4), day.substring(4, 6), day.substring(6, 8));
         }
 
         holder.cv.setOnClickListener(new View.OnClickListener() {

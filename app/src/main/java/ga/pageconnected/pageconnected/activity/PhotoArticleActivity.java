@@ -162,6 +162,12 @@ public class PhotoArticleActivity extends BaseActivity implements OnAdapterSuppo
 
     public void makeList(){
 
+        if(list.size() > 0){
+            tv_msg.setVisibility(View.GONE);
+        }else{
+            tv_msg.setVisibility(View.VISIBLE);
+        }
+
         adapter = new PhotoListCustomAdapter(getApplicationContext(), list, rv, this, this);
 
         rv.setAdapter(adapter);
