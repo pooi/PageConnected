@@ -23,7 +23,7 @@ public class UpdateItem extends Thread implements Serializable {
 
     private String data;
 
-    public UpdateItem(String target, String type, String id, int action, FinishAction finishAction){
+    public UpdateItem(String target, String type, String id, int action, String userId, FinishAction finishAction){
 
         this.finishAction = finishAction;
 
@@ -33,6 +33,7 @@ public class UpdateItem extends Thread implements Serializable {
         map.put("type", type);
         map.put("id", id);
         map.put("action", Integer.toString(action));
+        map.put("userId", userId);
 
 
     }
@@ -46,6 +47,7 @@ public class UpdateItem extends Thread implements Serializable {
                 protected void afterThreadFinish(String data) {
 
                     UpdateItem.this.data = data;
+                    System.out.println(data);
                     handler.sendMessage(handler.obtainMessage(MSG_MESSAGE_EXECUTE_ACTION));
 
                 }

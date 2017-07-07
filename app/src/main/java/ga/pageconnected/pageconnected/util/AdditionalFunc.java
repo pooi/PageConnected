@@ -262,6 +262,8 @@ public class AdditionalFunc {
                 hashTemp.put("time", (String)temp.get("time"));
                 hashTemp.put("hit", Integer.parseInt((String)temp.get("hit")));
                 hashTemp.put("heart", Integer.parseInt((String)temp.get("heart")));
+                hashTemp.put("hitAble", "1".equals((String)temp.get("hitAble")));
+                hashTemp.put("heartAble", "1".equals((String)temp.get("heartAble")));
 
                 String urlTemp = (String)temp.get("url");
                 ArrayList<String> urlList = new ArrayList<>();
@@ -323,6 +325,8 @@ public class AdditionalFunc {
                 hashTemp.put("time", (String)temp.get("time"));
                 hashTemp.put("hit", Integer.parseInt((String)temp.get("hit")));
                 hashTemp.put("heart", Integer.parseInt((String)temp.get("heart")));
+                hashTemp.put("hitAble", "1".equals((String)temp.get("hitAble")));
+                hashTemp.put("heartAble", "1".equals((String)temp.get("heartAble")));
 
                 String urlTemp = (String)temp.get("url");
                 ArrayList<String> urlList = new ArrayList<>();
@@ -381,6 +385,7 @@ public class AdditionalFunc {
                 hashTemp.put("date", (String)temp.get("date"));
                 hashTemp.put("time", (String)temp.get("time"));
                 hashTemp.put("hit", (String)temp.get("hit"));
+                hashTemp.put("hitAble", "1".equals((String)temp.get("hitAble")));
 
                 JSONObject jObjectImg = (JSONObject)temp.get("imageList");
                 JSONArray resultsImg = jObjectImg.getJSONArray("result");

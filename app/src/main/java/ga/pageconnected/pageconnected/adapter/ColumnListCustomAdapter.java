@@ -85,7 +85,7 @@ public class ColumnListCustomAdapter extends RecyclerView.Adapter<ColumnListCust
         holder.cv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                redirectShowLayoutActivity(item);
+                redirectShowLayoutActivity(item, pos);
             }
         });
 
@@ -138,7 +138,7 @@ public class ColumnListCustomAdapter extends RecyclerView.Adapter<ColumnListCust
 
     }
 
-    private void redirectShowLayoutActivity(HashMap<String, Object> data){
+    private void redirectShowLayoutActivity(HashMap<String, Object> data, int pos){
 
         Intent intent = new Intent(context, ShowLayoutActivity.class);
         intent.putExtra("item", new LayoutItem(
@@ -148,8 +148,9 @@ public class ColumnListCustomAdapter extends RecyclerView.Adapter<ColumnListCust
                 (ArrayList<String>)data.get("url"),
                 (ArrayList<String>)data.get("picture")
         ));
-        intent.putExtra("updateId", (String)data.get("id"));
-        onAdapterSupport.redirectActivity(intent);
+//        intent.putExtra("updateId", (String)data.get("id"));
+//        onAdapterSupport.redirectActivity(intent);
+        activity.redirectActivityWithUpdateItem(intent, (String)data.get("id"), pos);
 
     }
 

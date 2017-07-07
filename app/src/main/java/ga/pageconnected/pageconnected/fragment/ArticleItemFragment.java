@@ -95,27 +95,30 @@ public class ArticleItemFragment extends BaseFragment {
                 (ArrayList<String>)data.get("picture")
         ));
         startActivity(intent);
-        new UpdateItem("article", "hit", (String)data.get("id"), 1, new UpdateItem.FinishAction() {
-            @Override
-            public void afterAction(String data) {
-                try {
-                    JSONObject jObj = new JSONObject(data);
-                    String status = jObj.getString("status");
+        if((boolean)data.get("hitAble")) {
+            new UpdateItem("article", "hit", (String) data.get("id"), 1, getUserID(this), new UpdateItem.FinishAction() {
+                @Override
+                public void afterAction(String data) {
+                    try {
+                        JSONObject jObj = new JSONObject(data);
+                        String status = jObj.getString("status");
 
-                    System.out.println(status);
-                    if("success".equals(status)){
-                        //handler.sendMessage(handler.obtainMessage(MSG_MESSAGE_SUCCESS));
-                    }else{
-                        //handler.sendMessage(handler.obtainMessage(MSG_MESSAGE_FAIL));
+                        System.out.println(status);
+                        if ("success".equals(status)) {
+                            //handler.sendMessage(handler.obtainMessage(MSG_MESSAGE_SUCCESS));
+                            ArticleItemFragment.this.data.put("hitAble", false);
+                        } else {
+                            //handler.sendMessage(handler.obtainMessage(MSG_MESSAGE_FAIL));
+                        }
+
+                    } catch (JSONException e) {
+                        // JSON error
+                        e.printStackTrace();
+                        Toast.makeText(context, "Json error: " + e.getMessage(), Toast.LENGTH_LONG).show();
                     }
-
-                } catch (JSONException e) {
-                    // JSON error
-                    e.printStackTrace();
-                    Toast.makeText(context, "Json error: " + e.getMessage(), Toast.LENGTH_LONG).show();
                 }
-            }
-        }).start();
+            }).start();
+        }
 
     }
 

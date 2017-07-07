@@ -90,8 +90,9 @@ public class PhotoListCustomAdapter extends RecyclerView.Adapter<PhotoListCustom
             public void onClick(View view) {
                 Intent intent = new Intent(context, PhotoArticleDatailActivity.class);
                 intent.putExtra("item", item);
-                intent.putExtra("updateId", (String)item.get("id"));
-                onAdapterSupport.redirectActivity(intent);
+//                intent.putExtra("updateId", (String)item.get("id"));
+//                onAdapterSupport.redirectActivity(intent);
+                activity.redirectActivityWithUpdateItem(intent, (String)item.get("id"), pos);
             }
         });
 

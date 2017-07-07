@@ -5,8 +5,6 @@ import android.os.Message;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
-import android.support.v4.app.FragmentStatePagerAdapter;
-import android.support.v4.view.ViewPager;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
@@ -120,6 +118,7 @@ public class ArticleActivity extends BaseActivity {
             HashMap<String, String> map = new HashMap<>();
             map.put("service", "getArticle");
             map.put("userId", userId);
+            map.put("requestUserId", getUserID(this));
 //            if(userId != null && !userId.equals("")){
 //                map.put("userId", userId);
 //            }

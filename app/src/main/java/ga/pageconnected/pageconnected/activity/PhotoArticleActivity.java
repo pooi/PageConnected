@@ -124,6 +124,7 @@ public class PhotoArticleActivity extends BaseActivity implements OnAdapterSuppo
             HashMap<String, String> map = new HashMap<>();
             map.put("service", "getPhotoArticle");
             map.put("userId", userId);
+            map.put("requestUserId", getUserID(this));
             map.put("day", day);
             map.put("page", Integer.toString(page));
             if (search != null && (!"".equals(search))) {
@@ -212,31 +213,43 @@ public class PhotoArticleActivity extends BaseActivity implements OnAdapterSuppo
 
     @Override
     public void redirectActivity(Intent intent) {
-        new UpdateItem("photo", "hit", intent.getStringExtra("updateId"), 1, new UpdateItem.FinishAction() {
-            @Override
-            public void afterAction(String data) {
-                try {
-                    JSONObject jObj = new JSONObject(data);
-                    String status = jObj.getString("status");
+        startActivity(intent);
+    }
+
+    public void redirectActivityWithUpdateItem(Intent intent, String updateId, final int position){
+
+        if((boolean)list.get(position).get("hitAble")) {
+            new UpdateItem("photo", "hit", updateId, 1, getUserID(this), new UpdateItem.FinishAction() {
+                @Override
+                public void afterAction(String data) {
+                    try {
+                        JSONObject jObj = new JSONObject(data);
+                        String status = jObj.getString("status");
+                        String message = jObj.getString("message");
 
 
 //                        Toast.makeText(getApplicationContext(), message, Toast.LENGTH_LONG).show();
 
-                    System.out.println(status);
-                    if("success".equals(status)){
-                        //handler.sendMessage(handler.obtainMessage(MSG_MESSAGE_SUCCESS));
-                    }else{
-                        //handler.sendMessage(handler.obtainMessage(MSG_MESSAGE_FAIL));
-                    }
+                        System.out.println(status);
+                        if ("success".equals(status)) {
+                            //handler.sendMessage(handler.obtainMessage(MSG_MESSAGE_SUCCESS));
+                            list.get(position).put("hitAble", false);
+                            list.get(position).put("hit", message);
+                            adapter.notifyItemChanged(position);
+                        } else {
+                            //handler.sendMessage(handler.obtainMessage(MSG_MESSAGE_FAIL));
+                        }
 
-                } catch (JSONException e) {
-                    // JSON error
-                    e.printStackTrace();
-                    Toast.makeText(getApplicationContext(), "Json error: " + e.getMessage(), Toast.LENGTH_LONG).show();
+                    } catch (JSONException e) {
+                        // JSON error
+                        e.printStackTrace();
+                        Toast.makeText(getApplicationContext(), "Json error: " + e.getMessage(), Toast.LENGTH_LONG).show();
+                    }
                 }
-            }
-        }).start();
+            }).start();
+        }
         startActivity(intent);
+
     }
 
     private class MyHandler extends Handler {
