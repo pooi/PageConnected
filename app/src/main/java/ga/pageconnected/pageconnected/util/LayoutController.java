@@ -4,6 +4,7 @@ import android.view.View;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import ga.pageconnected.pageconnected.R;
 
@@ -72,9 +73,9 @@ public class LayoutController implements Serializable {
 
     }
 
-    public static LayoutItem buildLayoutItemObject(int layoutNumber, String title, String content, ArrayList<String> reference, ArrayList<AllInOnePhoto> imageList){
+    public static LayoutItem buildLayoutItemObject(String table, int layoutNumber, String title, String content, ArrayList<String> reference, ArrayList<AllInOnePhoto> imageList, HashMap<String, Object> item){
 
-        return new LayoutItem(layoutNumber, title, content, reference, AdditionalFunc.AllInOnePhotoToPhotoList(imageList));
+        return new LayoutItem(table, layoutNumber, title, content, reference, AdditionalFunc.AllInOnePhotoToPhotoList(imageList), new HashMap<String, Object>());
 
     }
 

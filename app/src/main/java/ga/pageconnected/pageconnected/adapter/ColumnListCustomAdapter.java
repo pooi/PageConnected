@@ -142,12 +142,15 @@ public class ColumnListCustomAdapter extends RecyclerView.Adapter<ColumnListCust
 
         Intent intent = new Intent(context, ShowLayoutActivity.class);
         intent.putExtra("item", new LayoutItem(
+                "column",
                 (int)data.get("layout"),
                 (String)data.get("title"),
                 (String)data.get("content"),
                 (ArrayList<String>)data.get("url"),
-                (ArrayList<String>)data.get("picture")
+                (ArrayList<String>)data.get("picture"),
+                data
         ));
+        intent.putExtra("position", pos);
 //        intent.putExtra("updateId", (String)data.get("id"));
 //        onAdapterSupport.redirectActivity(intent);
         activity.redirectActivityWithUpdateItem(intent, (String)data.get("id"), pos);

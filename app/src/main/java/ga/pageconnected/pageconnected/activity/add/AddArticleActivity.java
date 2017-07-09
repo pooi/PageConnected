@@ -341,12 +341,15 @@ public class AddArticleActivity extends BaseActivity implements Serializable{
 
         Intent intent = new Intent(AddArticleActivity.this, ShowLayoutActivity.class);
         intent.putExtra("item", LayoutController.buildLayoutItemObject(
+                "article",
                 layoutNumber,
                 editTitle.getText().toString(),
                 editContent.getText().toString(),
                 referenceList,
-                imageList
+                imageList,
+                new HashMap<String, Object>()
         ));
+        intent.putExtra("testMode", true);
         startActivity(intent);
 
     }

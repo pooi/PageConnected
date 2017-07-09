@@ -247,7 +247,29 @@ public class ColumnActivity extends BaseActivity implements OnAdapterSupport {
                 }
             }).start();
         }
-        startActivity(intent);
+
+
+        startActivityForResult(intent, ShowLayoutActivity.UPDATE_HEART);
+
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        switch (resultCode) {
+            case ShowLayoutActivity.UPDATE_HEART:
+                int pos = data.getIntExtra("position", -1);
+                if(pos >= 0){
+                    boolean heartAble = data.getBooleanExtra("heartAble", false);
+                    list.get(pos).put("heartAble", heartAble);
+                    int heart = data.getIntExtra("heart", 0);
+                    list.get(pos).put("heart", heart);
+                    adapter.notifyItemChanged(pos);
+                }
+                break;
+            default:
+                break;
+        }
 
     }
 

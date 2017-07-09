@@ -88,11 +88,13 @@ public class ArticleItemFragment extends BaseFragment {
 
         Intent intent = new Intent(context, ShowLayoutActivity.class);
         intent.putExtra("item", new LayoutItem(
+                "article",
                 (int)data.get("layout"),
                 (String)data.get("title"),
                 (String)data.get("content"),
                 (ArrayList<String>)data.get("url"),
-                (ArrayList<String>)data.get("picture")
+                (ArrayList<String>)data.get("picture"),
+                data
         ));
         startActivity(intent);
         if((boolean)data.get("hitAble")) {
