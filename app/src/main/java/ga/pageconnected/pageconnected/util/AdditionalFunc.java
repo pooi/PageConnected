@@ -399,6 +399,7 @@ public class AdditionalFunc {
 
                     HashMap<String, Object> map = new HashMap<>();
                     map.put("id", (String)tempImg.get("id"));
+                    map.put("userId", (String)tempImg.get("userId"));
                     map.put("photo", (String)tempImg.get("photo"));
                     map.put("heart", (String)tempImg.get("heart"));
 

@@ -258,13 +258,15 @@ public class ColumnActivity extends BaseActivity implements OnAdapterSupport {
         super.onActivityResult(requestCode, resultCode, data);
         switch (resultCode) {
             case ShowLayoutActivity.UPDATE_HEART:
-                int pos = data.getIntExtra("position", -1);
-                if(pos >= 0){
-                    boolean heartAble = data.getBooleanExtra("heartAble", false);
-                    list.get(pos).put("heartAble", heartAble);
-                    int heart = data.getIntExtra("heart", 0);
-                    list.get(pos).put("heart", heart);
-                    adapter.notifyItemChanged(pos);
+                if(data != null) {
+                    int pos = data.getIntExtra("position", -1);
+                    if (pos >= 0) {
+                        boolean heartAble = data.getBooleanExtra("heartAble", false);
+                        list.get(pos).put("heartAble", heartAble);
+                        int heart = data.getIntExtra("heart", 0);
+                        list.get(pos).put("heart", heart);
+                        adapter.notifyItemChanged(pos);
+                    }
                 }
                 break;
             default:

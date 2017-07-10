@@ -1,5 +1,6 @@
 package ga.pageconnected.pageconnected.activity;
 
+import android.content.Intent;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v4.app.Fragment;
@@ -212,6 +213,31 @@ public class ArticleActivity extends BaseActivity {
                     break;
             }
         }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        switch (resultCode) {
+            case ShowLayoutActivity.UPDATE_HEART:
+                if(data != null) {
+                    int pos = data.getIntExtra("position", -1);
+                    if (pos >= 0) {
+                        boolean heartAble = data.getBooleanExtra("heartAble", false);
+                        list.get(pos).put("heartAble", heartAble);
+                        int heart = data.getIntExtra("heart", 0);
+                        list.get(pos).put("heart", heart);
+                        ArticleItemFragment fragment = (ArticleItemFragment) pagerAdapter.getItem(pos);
+                        if(fragment != null) {
+                            fragment.setItem(list.get(pos));
+                        }
+                    }
+                }
+                break;
+            default:
+                break;
+        }
+
     }
 
 

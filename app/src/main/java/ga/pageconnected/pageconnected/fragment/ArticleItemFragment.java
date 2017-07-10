@@ -96,7 +96,9 @@ public class ArticleItemFragment extends BaseFragment {
                 (ArrayList<String>)data.get("picture"),
                 data
         ));
-        startActivity(intent);
+        intent.putExtra("position", position);
+        startActivityForResult(intent, ShowLayoutActivity.UPDATE_HEART);
+
         if((boolean)data.get("hitAble")) {
             new UpdateItem("article", "hit", (String) data.get("id"), 1, getUserID(this), new UpdateItem.FinishAction() {
                 @Override
@@ -187,5 +189,33 @@ public class ArticleItemFragment extends BaseFragment {
         tv_hit.setText((int)data.get("hit") + "");
 
     }
+
+    public void setItem(HashMap<String, Object> item){
+        this.data = item;
+    }
+
+
+//    @Override
+//    public void onActivityResult(int requestCode, int resultCode, Intent intent) {
+//        super.onActivityResult(requestCode, resultCode, intent);
+//        switch (requestCode) {
+//            case ShowLayoutActivity.UPDATE_HEART:
+//                if(intent != null) {
+//                    int pos = intent.getIntExtra("position", -1);
+//                    if (pos >= 0) {
+//                        boolean heartAble = intent.getBooleanExtra("heartAble", false);
+//                        data.put("heartAble", heartAble);
+//                        int heart = intent.getIntExtra("heart", 0);
+//                        data.put("heart", heart);
+////                    ArticleItemFragment fragment = (ArticleItemFragment)pagerAdapter.getItem(pos);
+////                    fragment.setItem(list.get(pos));
+//                    }
+//                }
+//                break;
+//            default:
+//                break;
+//        }
+//
+//    }
 
 }
