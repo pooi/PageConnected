@@ -31,7 +31,7 @@
                 android:layout_alignParentTop="true"
                 >
 
-                <ImageView
+                <ga.pageconnected.pageconnected.util.AdvancedImageView
                     android:id="@+id/profileImg"
                     android:layout_width="50dp"
                     android:layout_height="50dp"
@@ -75,7 +75,7 @@
                 android:layout_height="200dp"
                 >
 
-                <ImageView
+                <ga.pageconnected.pageconnected.util.AdvancedImageView
                     android:id="@+id/img_default"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"

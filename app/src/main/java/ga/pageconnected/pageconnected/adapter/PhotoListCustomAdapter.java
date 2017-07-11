@@ -26,6 +26,7 @@ import ga.pageconnected.pageconnected.activity.PhotoArticleDatailActivity;
 import ga.pageconnected.pageconnected.fragment.PhotoFragment;
 import ga.pageconnected.pageconnected.profile.ProfileActivity;
 import ga.pageconnected.pageconnected.util.AdditionalFunc;
+import ga.pageconnected.pageconnected.util.AdvancedImageView;
 import ga.pageconnected.pageconnected.util.OnAdapterSupport;
 import ga.pageconnected.pageconnected.util.OnLoadMoreListener;
 import jp.wasabeef.picasso.transformations.CropCircleTransformation;
@@ -103,6 +104,7 @@ public class PhotoListCustomAdapter extends RecyclerView.Adapter<PhotoListCustom
                 .load((String)item.get("img"))
                 .transform(new CropCircleTransformation())
                 .into(holder.profileImg);
+        holder.profileImg.setImage((String)item.get("img"));
         holder.rl_profile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -220,7 +222,7 @@ public class PhotoListCustomAdapter extends RecyclerView.Adapter<PhotoListCustom
 
         CardView cv;
         RelativeLayout rl_profile;
-        ImageView profileImg;
+        AdvancedImageView profileImg;
         TextView tv_name;
         TextView tv_email;
         TextView tv_content;
@@ -234,7 +236,7 @@ public class PhotoListCustomAdapter extends RecyclerView.Adapter<PhotoListCustom
             super(v);
             cv = (CardView)v.findViewById(R.id.cv);
             rl_profile = (RelativeLayout)v.findViewById(R.id.rl_profile);
-            profileImg = (ImageView)v.findViewById(R.id.profileImg);
+            profileImg = (AdvancedImageView)v.findViewById(R.id.profileImg);
             tv_name = (TextView)v.findViewById(R.id.tv_name);
             tv_email = (TextView)v.findViewById(R.id.tv_email);
             tv_content = (TextView)v.findViewById(R.id.tv_content);

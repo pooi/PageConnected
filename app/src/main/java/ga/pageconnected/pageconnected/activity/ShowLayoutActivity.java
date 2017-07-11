@@ -25,6 +25,7 @@ import org.json.JSONObject;
 
 import ga.pageconnected.pageconnected.BaseActivity;
 import ga.pageconnected.pageconnected.R;
+import ga.pageconnected.pageconnected.util.AdvancedImageView;
 import ga.pageconnected.pageconnected.util.LayoutItem;
 import ga.pageconnected.pageconnected.util.UpdateItem;
 
@@ -37,7 +38,7 @@ public class ShowLayoutActivity extends BaseActivity {
     private final int MSG_MESSAGE_UPDATE_FAIL_HEART = 501;
 
     private RelativeLayout root;
-    private ImageView[] ivList;
+    private AdvancedImageView[] ivList;
     private TextView tv_title;
     private TextView tv_content;
     private View line0;
@@ -90,17 +91,17 @@ public class ShowLayoutActivity extends BaseActivity {
         rl_interest = (RelativeLayout)findViewById(R.id.rl_interest);
         img_heart = (ImageView)findViewById(R.id.img_heart);
 
-        ivList = new ImageView[layoutItem.getMaxImageCount()];
+        ivList = new AdvancedImageView[layoutItem.getMaxImageCount()];
         for(int i=0; i<layoutItem.getMaxImageCount(); i++){
             switch (i){
                 case 0:
-                    ivList[i] = (ImageView)findViewById(R.id.img0);
+                    ivList[i] = (AdvancedImageView)findViewById(R.id.img0);
                     break;
                 case 1:
-                    ivList[i] = (ImageView)findViewById(R.id.img1);
+                    ivList[i] = (AdvancedImageView)findViewById(R.id.img1);
                     break;
                 case 2:
-                    ivList[i] = (ImageView)findViewById(R.id.img2);
+                    ivList[i] = (AdvancedImageView)findViewById(R.id.img2);
                     break;
             }
         }
@@ -232,6 +233,7 @@ public class ShowLayoutActivity extends BaseActivity {
                     .load(path)
                     .resize(0, 800)
                     .into(ivList[pos]);
+            ivList[pos].setImageList(layoutItem.getImageList(), pos, layoutItem.getTitle());
         }
 
         if(!testMode) {

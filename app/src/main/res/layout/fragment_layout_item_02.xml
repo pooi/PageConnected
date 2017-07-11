@@ -31,7 +31,7 @@
                 android:orientation="horizontal"
                 >
 
-                <ImageView
+                <ga.pageconnected.pageconnected.util.AdvancedImageView
                     android:id="@+id/img0"
                     android:layout_width="0dp"
                     android:layout_height="200dp"
@@ -42,7 +42,7 @@
                     android:scaleType="centerCrop"
                     />
 
-                <ImageView
+                <ga.pageconnected.pageconnected.util.AdvancedImageView
                     android:id="@+id/img1"
                     android:layout_width="0dp"
                     android:layout_height="200dp"

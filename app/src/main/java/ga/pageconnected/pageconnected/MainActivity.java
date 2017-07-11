@@ -41,6 +41,7 @@ import ga.pageconnected.pageconnected.fragment.ColumnFragment;
 import ga.pageconnected.pageconnected.fragment.DayMagazineFragment;
 import ga.pageconnected.pageconnected.fragment.PhotoFragment;
 import ga.pageconnected.pageconnected.profile.ProfileActivity;
+import ga.pageconnected.pageconnected.util.AdvancedImageView;
 import ga.pageconnected.pageconnected.util.FacebookLogin;
 import ga.pageconnected.pageconnected.util.ParsePHP;
 import jp.wasabeef.picasso.transformations.CropCircleTransformation;
@@ -97,13 +98,14 @@ public class MainActivity extends BaseActivity  implements NavigationView.OnNavi
         String img = (String)StartActivity.USER_DATA.get("img");
 
         View headerView = navigationView.getHeaderView(0);
-        ImageView profileImg = (ImageView)headerView.findViewById(R.id.profileImg);
+        AdvancedImageView profileImg = (AdvancedImageView)headerView.findViewById(R.id.profileImg);
         Picasso.with(this)
                 .load(img)
                 .transform(new CropCircleTransformation())
                 .memoryPolicy(MemoryPolicy.NO_CACHE)
                 .networkPolicy(NetworkPolicy.NO_CACHE)
                 .into(profileImg);
+        profileImg.setImage(img, name);
 
         TextView tv_name = (TextView)headerView.findViewById(R.id.tv_name);
         tv_name.setText(name);

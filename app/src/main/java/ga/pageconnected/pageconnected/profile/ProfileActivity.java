@@ -22,6 +22,7 @@ import ga.pageconnected.pageconnected.R;
 import ga.pageconnected.pageconnected.fragment.ArticleFragment;
 import ga.pageconnected.pageconnected.fragment.ColumnFragment;
 import ga.pageconnected.pageconnected.fragment.PhotoFragment;
+import ga.pageconnected.pageconnected.util.AdvancedImageView;
 import jp.wasabeef.picasso.transformations.CropCircleTransformation;
 
 public class ProfileActivity extends BaseActivity {
@@ -41,7 +42,7 @@ public class ProfileActivity extends BaseActivity {
 
     private RelativeLayout rl_profile;
     private TextView tv_name;
-    private ImageView profileImg;
+    private AdvancedImageView profileImg;
     private AVLoadingIndicatorView loadingName;
     boolean isProfileVisible = true;
 
@@ -70,7 +71,7 @@ public class ProfileActivity extends BaseActivity {
         rl_profile = (RelativeLayout)findViewById(R.id.rl_profile);
 
         tv_name = (TextView)findViewById(R.id.tv_name);
-        profileImg = (ImageView)findViewById(R.id.profileImg);
+        profileImg = (AdvancedImageView)findViewById(R.id.profileImg);
         loadingName = (AVLoadingIndicatorView)findViewById(R.id.loading_name);
 
         mNavigationTabStrip = (NavigationTabStrip) findViewById(R.id.nts_top);
@@ -161,6 +162,7 @@ public class ProfileActivity extends BaseActivity {
                 .load(img)
                 .transform(new CropCircleTransformation())
                 .into(profileImg);
+        profileImg.setImage(img, name);
 
     }
 

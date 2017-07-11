@@ -23,6 +23,7 @@ import ga.pageconnected.pageconnected.R;
 import ga.pageconnected.pageconnected.activity.ShowLayoutActivity;
 import ga.pageconnected.pageconnected.profile.ProfileActivity;
 import ga.pageconnected.pageconnected.util.AdditionalFunc;
+import ga.pageconnected.pageconnected.util.AdvancedImageView;
 import ga.pageconnected.pageconnected.util.LayoutItem;
 import ga.pageconnected.pageconnected.util.UpdateItem;
 import jp.wasabeef.picasso.transformations.CropCircleTransformation;
@@ -43,11 +44,11 @@ public class ArticleItemFragment extends BaseFragment {
     //// UI
     // profile
     private RelativeLayout rl_profile;
-    private ImageView profileImg;
+    private AdvancedImageView profileImg;
     private TextView tv_name;
     private TextView tv_email;
     // content
-    private ImageView defaultImg;
+    private AdvancedImageView defaultImg;
     private TextView tv_imageCount;
     private TextView tv_title;
     private TextView tv_content;
@@ -136,10 +137,10 @@ public class ArticleItemFragment extends BaseFragment {
         });
 
         rl_profile = (RelativeLayout)view.findViewById(R.id.rl_profile);
-        profileImg = (ImageView)view.findViewById(R.id.profileImg);
+        profileImg = (AdvancedImageView)view.findViewById(R.id.profileImg);
         tv_name = (TextView)view.findViewById(R.id.tv_name);
         tv_email = (TextView)view.findViewById(R.id.tv_email);
-        defaultImg = (ImageView) view.findViewById(R.id.img_default);
+        defaultImg = (AdvancedImageView) view.findViewById(R.id.img_default);
         tv_imageCount = (TextView)view.findViewById(R.id.tv_img_count);
         tv_title = (TextView)view.findViewById(R.id.tv_title);
         tv_content = (TextView)view.findViewById(R.id.tv_content);
@@ -159,6 +160,7 @@ public class ArticleItemFragment extends BaseFragment {
                 .load((String)data.get("img"))
                 .transform(new CropCircleTransformation())
                 .into(profileImg);
+        profileImg.setImage((String)data.get("img"), (String)data.get("name"));
         tv_name.setText((String)data.get("name"));
         tv_email.setText((String)data.get("email"));
 
@@ -172,6 +174,7 @@ public class ArticleItemFragment extends BaseFragment {
                     .load(pictureList.get(0))
                     .resize(500, 0)
                     .into(defaultImg);
+            defaultImg.setImageList(pictureList, 0);
             if(pictureList.size() > 1) {
                 tv_imageCount.setVisibility(View.VISIBLE);
                 tv_imageCount.setText("+" + (pictureList.size()-1));

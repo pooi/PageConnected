@@ -108,6 +108,9 @@
     <!-- Add Photo Activity -->
     <string name="upload_photo">사진 등록</string>
 
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
     <!-- Show Layout Activity -->
 
 </resources>

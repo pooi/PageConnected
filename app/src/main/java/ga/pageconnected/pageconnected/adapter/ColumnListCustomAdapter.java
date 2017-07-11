@@ -22,6 +22,7 @@ import ga.pageconnected.pageconnected.activity.ColumnActivity;
 import ga.pageconnected.pageconnected.activity.ShowLayoutActivity;
 import ga.pageconnected.pageconnected.profile.ProfileActivity;
 import ga.pageconnected.pageconnected.util.AdditionalFunc;
+import ga.pageconnected.pageconnected.util.AdvancedImageView;
 import ga.pageconnected.pageconnected.util.LayoutItem;
 import ga.pageconnected.pageconnected.util.OnAdapterSupport;
 import ga.pageconnected.pageconnected.util.OnLoadMoreListener;
@@ -96,6 +97,7 @@ public class ColumnListCustomAdapter extends RecyclerView.Adapter<ColumnListCust
                 .load((String)item.get("img"))
                 .transform(new CropCircleTransformation())
                 .into(holder.profileImg);
+        holder.profileImg.setImage((String)item.get("img"), (String)item.get("name"));
         holder.rl_profile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -121,6 +123,7 @@ public class ColumnListCustomAdapter extends RecyclerView.Adapter<ColumnListCust
                     .load(pictureList.get(0))
                     .resize(500, 0)
                     .into(holder.defaultImg);
+            holder.defaultImg.setImageList(pictureList, 0);
             if(pictureList.size() > 1) {
                 holder.tv_imageCount.setVisibility(View.VISIBLE);
                 holder.tv_imageCount.setText("+" + (pictureList.size()-1));
@@ -231,12 +234,12 @@ public class ColumnListCustomAdapter extends RecyclerView.Adapter<ColumnListCust
 
         CardView cv;
         RelativeLayout rl_profile;
-        ImageView profileImg;
+        AdvancedImageView profileImg;
         TextView tv_name;
         TextView tv_email;
         TextView tv_title;
         TextView tv_content;
-        ImageView defaultImg;
+        AdvancedImageView defaultImg;
         TextView tv_imageCount;
         TextView tv_date;
         TextView tv_heart;
@@ -246,11 +249,11 @@ public class ColumnListCustomAdapter extends RecyclerView.Adapter<ColumnListCust
             super(v);
             cv = (CardView)v.findViewById(R.id.cv);
             rl_profile = (RelativeLayout)v.findViewById(R.id.rl_profile);
-            profileImg = (ImageView)v.findViewById(R.id.profileImg);
+            profileImg = (AdvancedImageView) v.findViewById(R.id.profileImg);
             tv_name = (TextView)v.findViewById(R.id.tv_name);
             tv_email = (TextView)v.findViewById(R.id.tv_email);
             tv_content = (TextView)v.findViewById(R.id.tv_content);
-            defaultImg = (ImageView)v.findViewById(R.id.img_default);
+            defaultImg = (AdvancedImageView) v.findViewById(R.id.img_default);
             tv_imageCount = (TextView)v.findViewById(R.id.tv_img_count);
             tv_title = (TextView)v.findViewById(R.id.tv_title);
             tv_date = (TextView)v.findViewById(R.id.tv_date);

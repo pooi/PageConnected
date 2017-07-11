@@ -18,6 +18,7 @@ import java.util.HashMap;
 import ga.pageconnected.pageconnected.BaseActivity;
 import ga.pageconnected.pageconnected.R;
 import ga.pageconnected.pageconnected.util.AdditionalFunc;
+import ga.pageconnected.pageconnected.util.AdvancedImageView;
 import ga.pageconnected.pageconnected.util.UserInfo;
 import jp.wasabeef.picasso.transformations.CropCircleTransformation;
 
@@ -103,19 +104,22 @@ public class PhotoArticleDatailActivity extends BaseActivity {
     private void makeList(){
 
         li_photoField.removeAllViews();
+        ArrayList<String> al = getAllImageList();
 
-        for(HashMap<String, Object> map : imageList){
+        for(int i=0; i<imageList.size(); i++){
+            HashMap<String, Object> map = imageList.get(i);
 
             View v = getLayoutInflater().from(this).inflate(R.layout.photo_simple_list_custom_item, null, false);
             v.setTag((String)map.get("id"));
 
-            ImageView imageView = (ImageView)v.findViewById(R.id.img_default);
+            AdvancedImageView imageView = (AdvancedImageView)v.findViewById(R.id.img_default);
             TextView tv_heart = (TextView)v.findViewById(R.id.tv_heart);
 
             Picasso.with(getApplicationContext())
                     .load((String)map.get("photo"))
                     .resize(500, 0)
                     .into(imageView);
+            imageView.setImageList(al, i);
             tv_heart.setText((String)map.get("heart"));
 
             li_photoField.addView(v);
@@ -123,4 +127,13 @@ public class PhotoArticleDatailActivity extends BaseActivity {
         }
 
     }
+
+    private ArrayList<String> getAllImageList(){
+        ArrayList<String> al = new ArrayList<>();
+        for(HashMap<String, Object> map : imageList){
+            al.add((String)map.get("photo"));
+        }
+        return al;
+    }
+
 }

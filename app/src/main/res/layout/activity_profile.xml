@@ -45,7 +45,7 @@
 
                     </RelativeLayout>
 
-                    <ImageView
+                    <ga.pageconnected.pageconnected.util.AdvancedImageView
                         android:id="@+id/profileImg"
                         android:layout_width="100dp"
                         android:layout_height="100dp"

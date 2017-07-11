@@ -25,7 +25,7 @@
         android:gravity="bottom"
         >
 
-        <ImageView
+        <ga.pageconnected.pageconnected.util.AdvancedImageView
             android:id="@+id/profileImg"
             android:layout_width="60dp"
             android:layout_height="60dp"

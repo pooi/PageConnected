@@ -26,7 +26,7 @@
 
 
 
-            <ImageView
+            <ga.pageconnected.pageconnected.util.AdvancedImageView
                 android:id="@+id/img0"
                 android:layout_width="match_parent"
                 android:layout_height="200dp"

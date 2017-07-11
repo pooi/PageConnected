@@ -24,7 +24,7 @@
 
             <!-- Image -->
 
-            <ImageView
+            <ga.pageconnected.pageconnected.util.AdvancedImageView
                 android:id="@+id/img_default"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
