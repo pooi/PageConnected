@@ -148,8 +148,8 @@
         android:layout_below="@+id/cv"
         />
 
-    <RelativeLayout
-        android:id="@+id/rl_interest"
+    <LinearLayout
+        android:id="@+id/li_func_field"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/cv"
@@ -157,27 +157,65 @@
         android:layout_marginTop="5dp"
         android:visibility="gone"
         android:clickable="true"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
         >
 
-        <ImageView
-            android:id="@+id/img_heart"
+        <RelativeLayout
+            android:id="@+id/rl_interest"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/ic_heart_outline_white_24dp"
+            >
+
+            <ImageView
+                android:id="@+id/img_heart"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_heart_outline_white_24dp"
+                />
+
+            <TextView
+                android:id="@+id/tv_interest"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toRightOf="@+id/img_heart"
+                android:text="@string/interest_short"
+                android:textSize="18sp"
+                android:textColor="@color/white"
+                android:layout_centerVertical="true"
+                android:paddingLeft="5dp"
+                />
+
+        </RelativeLayout>
+
+        <View
+            android:id="@+id/func_middle_line"
+            android:layout_width="1dip"
+            android:layout_height="match_parent"
+            android:background="@color/white"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
             />
 
-        <TextView
-            android:id="@+id/tv_interest"
+
+        <RelativeLayout
+            android:id="@+id/rl_generate"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_toRightOf="@+id/img_heart"
-            android:text="@string/interest_short"
-            android:textSize="18sp"
-            android:textColor="@color/white"
-            android:layout_centerVertical="true"
-            android:paddingLeft="5dp"
-            />
+            >
 
-    </RelativeLayout>
+            <TextView
+                android:id="@+id/tv_generate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/generate_pdf"
+                android:textSize="18sp"
+                android:textColor="@color/white"
+                android:layout_centerVertical="true"
+                />
+
+        </RelativeLayout>
+
+    </LinearLayout>
 
 </RelativeLayout>

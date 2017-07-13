@@ -41,7 +41,7 @@ public abstract class ParsePHP extends Thread {
         String response = new String();
 
         try {
-            Thread.sleep(2000);
+//            Thread.sleep(2000);
 
             URL url = new URL(urlText);
             HttpURLConnection conn = (HttpURLConnection) url.openConnection(); // 해당 URL에 연결

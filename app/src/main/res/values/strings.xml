@@ -39,6 +39,7 @@
     <string name="reset">초기화</string>
     <string name="preview">미리보기</string>
     <string name="interest_short">관심</string>
+    <string name="temp_file_short">임시PDF파일</string>
 
     <!-- Main Activity -->
     <string name="navigation_drawer_open">Open navigation drawer</string>
@@ -59,6 +60,10 @@
     <string name="removing_data">데이터 삭제 중입니다.</string>
     <string name="please_input_search_text">검색어를 입력해주세요.</string>
     <string name="search_result">검색 결과</string>
+    <string name="there_is_no_file">파일이 존재하지 않습니다.</string>
+    <string name="file_short">파일</string>
+    <string name="file_list">파일 목록</string>
+    <string name="delete_all">전체삭제</string>
 
     <!-- Select Interest Activity -->
     <string name="select_interest_field">관심분야 선택</string>
@@ -108,9 +113,13 @@
     <!-- Add Photo Activity -->
     <string name="upload_photo">사진 등록</string>
 
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+
 
     <!-- Show Layout Activity -->
+    <string name="generate_pdf">PDF 생성</string>
+    <string name="show_pdf">PDF 보기</string>
+    <string name="fail_generate_pdf">PDF를 생성하는데 실패하였습니다.</string>
+    <string name="loading_font_file">폰트 파일을 불러오는 중...</string>
+    <string name="generating_pdf_page">페이지 생성 중...(%1$d/%2$d)</string>
 
 </resources>

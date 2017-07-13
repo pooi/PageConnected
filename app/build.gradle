@@ -34,6 +34,7 @@ android {
                 versionName "1.0.0"
                 testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
                 versionName "1.0.0"// + code
+                multiDexEnabled true //important
             }
         } else {
             throw new GradleException("Could not read version.properties!")
@@ -49,7 +50,7 @@ android {
 }
 
 dependencies {
-    compile fileTree(dir: 'libs', include: ['*.jar'])
+    compile fileTree(include: ['*.jar'], dir: 'libs')
     androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
@@ -74,4 +75,6 @@ dependencies {
     compile 'dev.dworks.libs:volleyplus:+'
     compile 'com.github.chrisbanes:PhotoView:2.0.0'
     testCompile 'junit:junit:4.12'
+    compile files('libs/itext-pdfa-5.5.6.jar')
+    compile files('libs/itextpdf-5.5.6.jar')
 }
