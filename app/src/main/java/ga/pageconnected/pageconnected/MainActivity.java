@@ -4,6 +4,8 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
+import android.net.Uri;
+import android.os.Environment;
 import android.os.Handler;
 import android.os.Message;
 import android.support.annotation.NonNull;
@@ -29,6 +31,8 @@ import com.squareup.picasso.MemoryPolicy;
 import com.squareup.picasso.NetworkPolicy;
 import com.squareup.picasso.Picasso;
 
+import java.io.File;
+import java.util.ArrayList;
 import java.util.HashMap;
 
 import ga.pageconnected.pageconnected.activity.ArticleActivity;
@@ -41,6 +45,7 @@ import ga.pageconnected.pageconnected.fragment.ColumnFragment;
 import ga.pageconnected.pageconnected.fragment.DayMagazineFragment;
 import ga.pageconnected.pageconnected.fragment.PhotoFragment;
 import ga.pageconnected.pageconnected.profile.ProfileActivity;
+import ga.pageconnected.pageconnected.util.AdditionalFunc;
 import ga.pageconnected.pageconnected.util.AdvancedImageView;
 import ga.pageconnected.pageconnected.util.FacebookLogin;
 import ga.pageconnected.pageconnected.util.ParsePHP;
@@ -53,7 +58,7 @@ public class MainActivity extends BaseActivity  implements NavigationView.OnNavi
 
     private NavigationView navigationView;
 
-    private String[] menuList = {"nav_article", "nav_column", "nav_photo", "nav_day_magazine", "nav_info", "nav_report", "nav_help", "nav_open_source"};
+    private String[] menuList = {"nav_article", "nav_column", "nav_photo", "nav_day_magazine", "nav_info", "nav_report", "nav_file", "nav_open_source"};
     private int currentSelectId;
     private boolean menuVisible = true;
 
@@ -389,11 +394,9 @@ public class MainActivity extends BaseActivity  implements NavigationView.OnNavi
                 showSnackbar(R.string.no_install_email_client);
             }
 
-        } else if(id == R.id.nav_help){
+        } else if(id == R.id.nav_file){
 
-            showSnackbar("도움말 페이지");
-//            Intent intent = new Intent(getApplicationContext(), IntroduceActivity.class);
-//            startActivity(intent);
+            showTempPdfFileList();
 
         } else if(id == R.id.nav_open_source){
 
@@ -414,6 +417,85 @@ public class MainActivity extends BaseActivity  implements NavigationView.OnNavi
         invalidateOptionsMenu();
 
         return true;
+    }
+
+    private void showTempPdfFileList(){
+
+        final File dir = new File(Environment.getExternalStorageDirectory(), "PageConnected");
+        boolean isShowAlert = false;
+        if (dir.isDirectory())
+        {
+            String[] children = dir.list();
+            int count = 0;
+            for(int i=0; i<children.length; i++){
+                if(children[i].endsWith(".pdf") || children[i].endsWith(".PDF")){
+                    count += 1;
+                }
+            }
+            if(count > 0){
+                isShowAlert = true;
+            }
+//                        for (int i = 0; i < children.length; i++)
+//                        {
+//                            new File(dir, children[i]).delete();
+//                        }
+        }
+
+        if(isShowAlert){
+            ArrayList<String> list = new ArrayList<>();
+            final String[] children = dir.list();
+            for(int i=0; i<children.length; i++){
+                if(children[i].endsWith(".pdf") || children[i].endsWith(".PDF")){
+                    list.add(children[i]);
+                }
+            }
+            new MaterialDialog.Builder(this)
+                    .title(R.string.file_list)
+                    .items(AdditionalFunc.arrayListToStringArray(list))
+                    .itemsCallback(new MaterialDialog.ListCallback() {
+                        @Override
+                        public void onSelection(MaterialDialog dialog, View itemView, int position, CharSequence text) {
+                            viewPdf(text.toString());
+                        }
+                    })
+                    .itemsLongCallback(new MaterialDialog.ListLongCallback() {
+                        @Override
+                        public boolean onLongSelection(MaterialDialog dialog, View itemView, int position, CharSequence text) {
+                            new File(dir, text.toString()).delete();
+                            return false;
+                        }
+                    })
+                    .positiveText(R.string.ok)
+                    .neutralText(R.string.delete_all)
+                    .onNeutral(new MaterialDialog.SingleButtonCallback() {
+                        @Override
+                        public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+                            for(int i=0; i<children.length; i++){
+                                new File(dir, children[i]).delete();
+                            }
+                        }
+                    })
+                    .show();
+
+        }else{
+            new MaterialDialog.Builder(this)
+                    .title(R.string.ok)
+                    .content(R.string.there_is_no_file)
+                    .positiveText(R.string.ok)
+                    .show();
+        }
+
+    }
+
+    private void viewPdf(String fileName){
+        File dir = new File(Environment.getExternalStorageDirectory(), "PageConnected");
+        File pdfFile = new File(dir, fileName);
+
+        Intent intent = new Intent(Intent.ACTION_VIEW);
+        intent.setAction(android.content.Intent.ACTION_VIEW);
+        intent.setDataAndType(Uri.fromFile(pdfFile), "application/pdf");
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(intent);
     }
 
     private void showFragment(String tag, Fragment fragment){

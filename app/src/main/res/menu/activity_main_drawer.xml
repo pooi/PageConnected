@@ -47,8 +47,8 @@
                     android:id="@+id/nav_report"
                     android:title="@string/report" />
                 <item
-                    android:id="@+id/nav_help"
-                    android:title="@string/help" />
+                    android:id="@+id/nav_file"
+                    android:title="@string/temp_file_short" />
                 <item
                     android:id="@+id/nav_open_source"
                     android:title="@string/opensource" />
