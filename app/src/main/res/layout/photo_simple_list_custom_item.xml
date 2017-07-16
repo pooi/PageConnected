@@ -88,6 +88,43 @@
 
             </LinearLayout>
 
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/background_color"
+                android:padding="5dp"
+                >
+
+                <RelativeLayout
+                    android:id="@+id/rl_interest"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    >
+
+                    <ImageView
+                        android:id="@+id/img_heart"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/ic_heart_outline_grey600_24dp"
+                        />
+
+                    <TextView
+                        android:id="@+id/tv_interest"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_toRightOf="@+id/img_heart"
+                        android:text="@string/interest_short"
+                        android:textSize="12sp"
+                        android:textColor="@color/dark_gray"
+                        android:layout_centerInParent="true"
+                        android:paddingLeft="5dp"
+                        />
+
+                </RelativeLayout>
+
+            </RelativeLayout>
+
 
         </LinearLayout>
 

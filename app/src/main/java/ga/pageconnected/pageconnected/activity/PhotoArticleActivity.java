@@ -34,6 +34,7 @@ import ga.pageconnected.pageconnected.util.UpdateItem;
 
 public class PhotoArticleActivity extends BaseActivity implements OnAdapterSupport {
 
+    public static final int UPDATE_HEART = 100;
 
     private MyHandler handler = new MyHandler();
     private final int MSG_MESSAGE_MAKE_LIST = 500;
@@ -196,6 +197,15 @@ public class PhotoArticleActivity extends BaseActivity implements OnAdapterSuppo
 
     }
 
+    public int calculateTotalHeart(){
+        int total = 0;
+        for(HashMap<String, Object> map : list){
+            int heart = (int)map.get("heart");
+            total += heart;
+        }
+        return total;
+    }
+
     @Override
     public void showView() {
 
@@ -234,8 +244,9 @@ public class PhotoArticleActivity extends BaseActivity implements OnAdapterSuppo
                         if ("success".equals(status)) {
                             //handler.sendMessage(handler.obtainMessage(MSG_MESSAGE_SUCCESS));
                             list.get(position).put("hitAble", false);
-                            list.get(position).put("hit", message);
+                            list.get(position).put("hit", Integer.parseInt(message));
                             adapter.notifyItemChanged(position);
+//                            adapter.notifyDataSetChanged();
                         } else {
                             //handler.sendMessage(handler.obtainMessage(MSG_MESSAGE_FAIL));
                         }
@@ -248,7 +259,30 @@ public class PhotoArticleActivity extends BaseActivity implements OnAdapterSuppo
                 }
             }).start();
         }
-        startActivity(intent);
+        startActivityForResult(intent, UPDATE_HEART);
+
+    }
+
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        switch (resultCode) {
+            case UPDATE_HEART:
+                if(data != null) {
+                    int pos = data.getIntExtra("position", -1);
+                    if (pos >= 0) {
+                        boolean heartAble = data.getBooleanExtra("heartAble", false);
+                        list.get(pos).put("heartAble", heartAble);
+                        int heart = data.getIntExtra("heart", 0);
+                        list.get(pos).put("heart", heart);
+                        adapter.notifyItemChanged(pos);
+                    }
+                }
+                break;
+            default:
+                break;
+        }
 
     }
 

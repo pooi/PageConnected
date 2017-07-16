@@ -91,6 +91,7 @@ public class PhotoListCustomAdapter extends RecyclerView.Adapter<PhotoListCustom
             public void onClick(View view) {
                 Intent intent = new Intent(context, PhotoArticleDatailActivity.class);
                 intent.putExtra("item", item);
+                intent.putExtra("position", pos);
 //                intent.putExtra("updateId", (String)item.get("id"));
 //                onAdapterSupport.redirectActivity(intent);
                 activity.redirectActivityWithUpdateItem(intent, (String)item.get("id"), pos);
@@ -142,9 +143,8 @@ public class PhotoListCustomAdapter extends RecyclerView.Adapter<PhotoListCustom
         String date = AdditionalFunc.parseDateString((String)item.get("date"), (String)item.get("time"));
         holder.tv_date.setText(date);
 
-        holder.tv_hit.setText((String)item.get("hit"));
-        holder.tv_heart.setText((String)item.get("heart"));
-
+        holder.tv_hit.setText((int)item.get("hit") + "");
+//        holder.tv_heart.setText(activity.calculateTotalHeart() + "");
 
     }
 

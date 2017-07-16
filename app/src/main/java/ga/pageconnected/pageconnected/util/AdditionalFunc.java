@@ -384,7 +384,7 @@ public class AdditionalFunc {
                 hashTemp.put("day", (String)temp.get("day"));
                 hashTemp.put("date", (String)temp.get("date"));
                 hashTemp.put("time", (String)temp.get("time"));
-                hashTemp.put("hit", (String)temp.get("hit"));
+                hashTemp.put("hit", Integer.parseInt((String)temp.get("hit")));
                 hashTemp.put("hitAble", "1".equals((String)temp.get("hitAble")));
 
                 JSONObject jObjectImg = (JSONObject)temp.get("imageList");
@@ -401,7 +401,8 @@ public class AdditionalFunc {
                     map.put("id", (String)tempImg.get("id"));
                     map.put("userId", (String)tempImg.get("userId"));
                     map.put("photo", (String)tempImg.get("photo"));
-                    map.put("heart", (String)tempImg.get("heart"));
+                    map.put("heart", Integer.parseInt((String)tempImg.get("heart")));
+                    map.put("heartAble", "1".equals((String)tempImg.get("heartAble")));
 
                     imageList.add(map);
 
