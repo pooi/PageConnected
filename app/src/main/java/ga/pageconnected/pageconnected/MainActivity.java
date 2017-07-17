@@ -39,10 +39,12 @@ import ga.pageconnected.pageconnected.activity.ArticleActivity;
 import ga.pageconnected.pageconnected.activity.PhotoArticleActivity;
 import ga.pageconnected.pageconnected.activity.add.AddArticleActivity;
 import ga.pageconnected.pageconnected.activity.add.AddColumnActivity;
+import ga.pageconnected.pageconnected.activity.add.AddMyMagazineActivity;
 import ga.pageconnected.pageconnected.activity.add.AddPhotoActivity;
 import ga.pageconnected.pageconnected.fragment.ArticleFragment;
 import ga.pageconnected.pageconnected.fragment.ColumnFragment;
 import ga.pageconnected.pageconnected.fragment.DayMagazineFragment;
+import ga.pageconnected.pageconnected.fragment.MyMagazineFragment;
 import ga.pageconnected.pageconnected.fragment.PhotoFragment;
 import ga.pageconnected.pageconnected.profile.ProfileActivity;
 import ga.pageconnected.pageconnected.util.AdditionalFunc;
@@ -58,7 +60,7 @@ public class MainActivity extends BaseActivity  implements NavigationView.OnNavi
 
     private NavigationView navigationView;
 
-    private String[] menuList = {"nav_article", "nav_column", "nav_photo", "nav_day_magazine", "nav_info", "nav_report", "nav_file", "nav_open_source"};
+    private String[] menuList = {"nav_article", "nav_column", "nav_photo", "nav_day_magazine", "nav_my_magazine", "nav_info", "nav_report", "nav_file", "nav_open_source"};
     private int currentSelectId;
     private boolean menuVisible = true;
 
@@ -250,6 +252,12 @@ public class MainActivity extends BaseActivity  implements NavigationView.OnNavi
                 startActivity(intent);
                 break;
             }
+            case R.id.nav_my_magazine:{
+                Intent intent = new Intent(MainActivity.this, AddMyMagazineActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
+                startActivity(intent);
+                break;
+            }
             case R.id.nav_day_magazine:
                 showSnackbar("Add magazine");
                 break;
@@ -335,6 +343,13 @@ public class MainActivity extends BaseActivity  implements NavigationView.OnNavi
             title = getResources().getString(R.string.day_magazine);
             currentSelectId = id;
             menuVisible = false;
+
+        }else if(id == R.id.nav_my_magazine){
+
+            showFragment("nav_my_magazine", new MyMagazineFragment());
+            title = getResources().getString(R.string.my_magazine);
+            currentSelectId = id;
+            menuVisible = true;
 
         }else if (id == R.id.nav_show_profile) {
 

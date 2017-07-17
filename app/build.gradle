@@ -57,6 +57,8 @@ dependencies {
     compile('com.crashlytics.sdk.android:crashlytics:2.6.8@aar') {
         transitive = true;
     }
+    compile files('libs/itext-pdfa-5.5.6.jar')
+    compile files('libs/itextpdf-5.5.6.jar')
     compile 'com.android.support:appcompat-v7:25.3.1'
     compile 'com.android.support:design:25.3.1'
     compile 'com.android.support:support-v4:25.3.1'
@@ -75,6 +77,4 @@ dependencies {
     compile 'dev.dworks.libs:volleyplus:+'
     compile 'com.github.chrisbanes:PhotoView:2.0.0'
     testCompile 'junit:junit:4.12'
-    compile files('libs/itext-pdfa-5.5.6.jar')
-    compile files('libs/itextpdf-5.5.6.jar')
 }

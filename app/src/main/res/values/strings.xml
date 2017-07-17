@@ -40,6 +40,8 @@
     <string name="preview">미리보기</string>
     <string name="interest_short">관심</string>
     <string name="temp_file_short">임시PDF파일</string>
+    <string name="create">생성하기</string>
+    <string name="create_short">생성</string>
 
     <!-- Main Activity -->
     <string name="navigation_drawer_open">Open navigation drawer</string>
@@ -48,6 +50,7 @@
     <string name="share_column">칼럼 공유</string>
     <string name="share_photo">사진 공유</string>
     <string name="day_magazine">일자별 잡지</string>
+    <string name="my_magazine">나만의 잡지</string>
     <string name="show_profile">프로필 보기</string>
     <string name="logout_and_delete">로그아웃 및 데이터 삭제</string>
     <string name="information">정보</string>
@@ -93,6 +96,12 @@
     <!-- Day Magazine Fragment -->
     <string name="no_day_magazine">등록된 잡지가 없습니다.</string>
 
+    <!-- My Magazine Fragment -->
+    <string name="no_my_magazine">생성한 나만의 잡지가 없습니다.</string>
+    <string name="no_articles">등록된 게시글이 없습니다.\n게시글을 작성 후 시도해주세요.</string>
+    <string name="select_pdf_page">%1$d번째 페이지로 삽입됨</string>
+
+
     <!-- Add Article Activity -->
     <string name="write_article">기사 작성</string>
     <string name="please_select_layout">사용할 레이아웃을 선택해주세요.</string>
@@ -112,7 +121,6 @@
 
     <!-- Add Photo Activity -->
     <string name="upload_photo">사진 등록</string>
-
 
 
     <!-- Show Layout Activity -->

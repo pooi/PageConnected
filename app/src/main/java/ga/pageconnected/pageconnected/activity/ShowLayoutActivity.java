@@ -100,12 +100,7 @@ public class ShowLayoutActivity extends BaseActivity implements DialogListener{
 
     private void init(){
 
-        progressDialog = new MaterialDialog.Builder(this)
-                .content(R.string.please_wait)
-                .progress(true, 0)
-                .progressIndeterminateStyle(true)
-                .theme(Theme.LIGHT)
-                .build();
+        resetProgressDialog();
 
         root = (RelativeLayout)findViewById(R.id.root);
         root.setBackgroundColor(getColorId(R.color.transparent));
@@ -315,6 +310,7 @@ public class ShowLayoutActivity extends BaseActivity implements DialogListener{
                 .progress(true, 0)
                 .progressIndeterminateStyle(true)
                 .theme(Theme.LIGHT)
+                .cancelable(false)
                 .build();
     }
 

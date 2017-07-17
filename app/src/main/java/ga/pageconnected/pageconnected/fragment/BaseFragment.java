@@ -40,4 +40,8 @@ public class BaseFragment extends Fragment {
         snackbar.show();
     }
 
+    public int getColorId(Context context, int id){
+        return ContextCompat.getColor(context, id);
+    }
+
 }

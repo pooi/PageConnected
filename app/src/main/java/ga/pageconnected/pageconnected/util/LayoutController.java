@@ -20,6 +20,9 @@ public class LayoutController implements Serializable {
         int id;
 
         switch (position){
+            case -1:
+                id = R.layout.fragment_layout_item_photo;
+                break;
             case 0:
                 id = R.layout.fragment_layout_item_01;
                 break;
@@ -49,6 +52,9 @@ public class LayoutController implements Serializable {
         int count;
 
         switch (position){
+            case -1:
+                count = 1;
+                break;
             case 0:
                 count = 1;
                 break;

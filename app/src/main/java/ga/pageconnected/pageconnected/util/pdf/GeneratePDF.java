@@ -67,6 +67,10 @@ public abstract class GeneratePDF extends Thread{
 					listener.changeContent(String.format(context.getResources().getString(R.string.generating_pdf_page), i, list.size()));
 				}
 				switch(layout){
+				case -1:
+					CreateLayoutImage layoutImage = new CreateLayoutImage(list.get(i), objBaseFont);
+					layoutImage.create(document, writer);
+					break;
 				case 0:
 					CreateLayout01 layout01 = new CreateLayout01(list.get(i), objBaseFont);
 					layout01.create(document, writer);

@@ -9,8 +9,8 @@
 
     <android.support.v7.widget.CardView
         android:id="@+id/cv"
-        android:layout_width="@dimen/paper_width"
-        android:layout_height="@dimen/paper_height"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_margin="5dp"
         android:layout_centerHorizontal="true"
         android:layout_centerVertical="true"
@@ -18,79 +18,102 @@
         android:clickable="true"
         >
 
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@color/white"
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
             >
 
-
-
-            <ga.pageconnected.pageconnected.util.AdvancedImageView
-                android:id="@+id/img0"
-                android:layout_width="match_parent"
-                android:layout_height="200dp"
-                android:background="@color/light_gray"
-                android:scaleType="centerCrop"
-                />
-
             <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_below="@+id/img0"
-                android:padding="10dp"
+                android:layout_width="@dimen/paper_width"
+                android:layout_height="@dimen/paper_height"
+                android:background="@color/white"
                 >
 
-                <TextView
-                    android:id="@+id/tv_title"
+
+
+                <ga.pageconnected.pageconnected.util.AdvancedImageView
+                    android:id="@+id/img0"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Title"
-                    android:textSize="14sp"
-                    android:textStyle="bold"
-                    android:textColor="@color/black"
-                    android:padding="5dp"
+                    android:layout_height="200dp"
+                    android:background="@color/light_gray"
+                    android:scaleType="centerCrop"
                     />
 
-
-                <TextView
-                    android:id="@+id/tv_content"
+                <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:text="Content"
-                    android:textSize="14sp"
-                    android:textColor="@color/black"
-                    android:padding="5dp"
-                    android:layout_below="@+id/tv_title"
-                    android:layout_above="@+id/tv_reference"
-                    />
+                    android:layout_below="@+id/img0"
+                    android:padding="10dp"
+                    >
 
-                <View
-                    android:id="@+id/line0"
-                    android:layout_width="match_parent"
-                    android:layout_height="1dip"
-                    android:background="@color/light_gray2"
-                    android:layout_below="@id/tv_content"
-                    android:layout_above="@+id/tv_reference"
-                    />
+                    <TextView
+                        android:id="@+id/tv_title"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Title"
+                        android:textSize="14sp"
+                        android:textStyle="bold"
+                        android:textColor="@color/black"
+                        android:padding="5dp"
+                        />
 
-                <TextView
-                    android:id="@+id/tv_reference"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Reference"
-                    android:textSize="12sp"
-                    android:textColor="@color/gray"
-                    android:paddingLeft="5dp"
-                    android:paddingRight="5dp"
-                    android:paddingTop="5dp"
-                    android:layout_alignParentBottom="true"
-                    />
+
+                    <TextView
+                        android:id="@+id/tv_content"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:text="Content"
+                        android:textSize="14sp"
+                        android:textColor="@color/black"
+                        android:padding="5dp"
+                        android:layout_below="@+id/tv_title"
+                        android:layout_above="@+id/tv_reference"
+                        />
+
+                    <View
+                        android:id="@+id/line0"
+                        android:layout_width="match_parent"
+                        android:layout_height="1dip"
+                        android:background="@color/light_gray2"
+                        android:layout_below="@id/tv_content"
+                        android:layout_above="@+id/tv_reference"
+                        />
+
+                    <TextView
+                        android:id="@+id/tv_reference"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Reference"
+                        android:textSize="12sp"
+                        android:textColor="@color/gray"
+                        android:paddingLeft="5dp"
+                        android:paddingRight="5dp"
+                        android:paddingTop="5dp"
+                        android:layout_alignParentBottom="true"
+                        />
+
+                </RelativeLayout>
+
 
             </RelativeLayout>
 
 
-        </RelativeLayout>
+            <Button
+                android:id="@+id/select_btn"
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+                android:text="@string/select"
+                android:textSize="12sp"
+                android:textColor="@color/white"
+                android:padding="0dp"
+                android:background="@color/dark_gray"
+                android:visibility="gone"
+                />
+
+        </LinearLayout>
+
+
 
     </android.support.v7.widget.CardView>
 
