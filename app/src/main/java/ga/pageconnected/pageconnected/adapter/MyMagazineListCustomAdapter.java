@@ -3,6 +3,7 @@ package ga.pageconnected.pageconnected.adapter;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
+import android.os.Environment;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -14,6 +15,7 @@ import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -78,35 +80,39 @@ public class MyMagazineListCustomAdapter extends RecyclerView.Adapter<MyMagazine
         final HashMap<String,String> item = list.get(position);
         final int pos = position;
 
-        final String day = item.get("day");
-        int dayIndex = 0;
-        for(int i=0; i<Information.DATE_LIST.length; i++){
-            if(Information.DATE_LIST[i].equals(day)){
-                dayIndex = i;
-                break;
-            }
-        }
-        String title = "";
-        if("0".equals(day)){ // 대회 시작전
-            title = context.getResources().getString(R.string.before_the_competition);
-        }else {
-            title = String.format(context.getResources().getString(R.string.day_title2), dayIndex, day.substring(0, 4), day.substring(4, 6), day.substring(6, 8));
-        }
+        String title = item.get("title");
 
         holder.cv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String url = item.get("file");
-                if (!url.startsWith("http://") && !url.startsWith("https://"))
-                    url = "http://" + url;
-                Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
-                onAdapterSupport.redirectActivity(browserIntent);
+                String fileName = item.get("file");
+                File dir = new File(Environment.getExternalStorageDirectory(), "PageConnected/mymagazine");
+                File pdfFile = new File(dir, fileName);
+
+                Intent intent = new Intent(Intent.ACTION_VIEW);
+                intent.setAction(android.content.Intent.ACTION_VIEW);
+                intent.setDataAndType(Uri.fromFile(pdfFile), "application/pdf");
+                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+
+                onAdapterSupport.redirectActivity(intent);
+            }
+        });
+        holder.cv.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View view) {
+                String fileName = item.get("file");
+                fragment.removeMagazine(pos, fileName);
+//                File dir = new File(Environment.getExternalStorageDirectory(), "PageConnected/mymagazine");
+//                new File(dir, fileName).delete();
+//                list.remove(pos);
+//                notifyItemRemoved(pos);
+                return false;
             }
         });
 
-        Picasso.with(context)
-                .load((String)item.get("coverImg"))
-                .into(holder.img);
+//        Picasso.with(context)
+//                .load((String)item.get("coverImg"))
+//                .into(holder.img);
 
         holder.tv_day.setText(title);
 

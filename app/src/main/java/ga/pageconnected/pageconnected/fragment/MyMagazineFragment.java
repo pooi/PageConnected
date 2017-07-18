@@ -3,8 +3,10 @@ package ga.pageconnected.pageconnected.fragment;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Environment;
 import android.os.Handler;
 import android.os.Message;
+import android.support.annotation.NonNull;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -13,8 +15,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.afollestad.materialdialogs.DialogAction;
+import com.afollestad.materialdialogs.MaterialDialog;
 import com.wang.avi.AVLoadingIndicatorView;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -100,6 +105,23 @@ public class MyMagazineFragment extends BaseFragment implements OnAdapterSupport
 
     private void getMagazineList(){
 
+
+        final File dir = new File(Environment.getExternalStorageDirectory(), "PageConnected/mymagazine");
+        if (dir.isDirectory())
+        {
+            String[] children = dir.list();
+            int count = 0;
+            for(int i=0; i<children.length; i++){
+                if(children[i].endsWith(".pdf") || children[i].endsWith(".PDF")){
+                    HashMap<String, String> map = new HashMap<>();
+                    map.put("title", children[i]);
+                    map.put("file", children[i]);
+                    list.add(map);
+                }
+            }
+        }
+        handler.sendMessage(handler.obtainMessage(MSG_MESSAGE_MAKE_LIST));
+
 //        loading.show();
 //        HashMap<String, String> map = new HashMap<>();
 //        map.put("service", "getMagazineList");
@@ -140,6 +162,26 @@ public class MyMagazineFragment extends BaseFragment implements OnAdapterSupport
 //        });
 
         adapter.notifyDataSetChanged();
+
+    }
+
+    public void removeMagazine(final int pos, final String fileName){
+
+        new MaterialDialog.Builder(context)
+                .title(R.string.ok)
+                .content(R.string.are_you_delete)
+                .positiveText(R.string.delete)
+                .negativeText(R.string.cancel)
+                .onPositive(new MaterialDialog.SingleButtonCallback() {
+                    @Override
+                    public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+                        File dir = new File(Environment.getExternalStorageDirectory(), "PageConnected/mymagazine");
+                        new File(dir, fileName).delete();
+                        list.remove(pos);
+                        adapter.notifyItemRemoved(pos);
+                    }
+                })
+                .show();
 
     }
 
