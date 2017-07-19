@@ -105,6 +105,7 @@ public class MyMagazineFragment extends BaseFragment implements OnAdapterSupport
 
     private void getMagazineList(){
 
+        list.clear();
 
         final File dir = new File(Environment.getExternalStorageDirectory(), "PageConnected/mymagazine");
         if (dir.isDirectory())
@@ -198,6 +199,12 @@ public class MyMagazineFragment extends BaseFragment implements OnAdapterSupport
     @Override
     public void redirectActivityForResult(Intent intent) {
         startActivityForResult(intent, 0);
+    }
+
+    @Override
+    public void onResume(){
+        super.onResume();
+        getMagazineList();
     }
 
     @Override
