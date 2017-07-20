@@ -2,6 +2,8 @@ package ga.pageconnected.pageconnected.fragment;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.RectF;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
@@ -10,6 +12,7 @@ import android.support.annotation.NonNull;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Base64;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,9 +20,16 @@ import android.widget.TextView;
 
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
+import com.itextpdf.text.Document;
+import com.sun.pdfview.PDFFile;
+import com.sun.pdfview.PDFPage;
 import com.wang.avi.AVLoadingIndicatorView;
 
+import net.sf.andpdf.nio.ByteBuffer;
+
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -121,6 +131,9 @@ public class MyMagazineFragment extends BaseFragment implements OnAdapterSupport
                 }
             }
         }
+
+
+
         handler.sendMessage(handler.obtainMessage(MSG_MESSAGE_MAKE_LIST));
 
 //        loading.show();
@@ -141,6 +154,7 @@ public class MyMagazineFragment extends BaseFragment implements OnAdapterSupport
 //        }.start();
 
     }
+
 
     public void makeList(){
 

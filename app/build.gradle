@@ -77,4 +77,5 @@ dependencies {
     compile 'dev.dworks.libs:volleyplus:+'
     compile 'com.github.chrisbanes:PhotoView:2.0.0'
     testCompile 'junit:junit:4.12'
+    compile files('libs/PdfViewer.jar')
 }

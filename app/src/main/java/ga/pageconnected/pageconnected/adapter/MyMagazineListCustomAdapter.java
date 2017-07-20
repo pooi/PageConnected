@@ -2,11 +2,17 @@ package ga.pageconnected.pageconnected.adapter;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.RectF;
 import android.net.Uri;
+import android.os.Bundle;
 import android.os.Environment;
+import android.os.Handler;
+import android.os.Message;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Base64;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,14 +20,21 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
+import com.squareup.picasso.Target;
+import com.sun.pdfview.PDFFile;
+import com.sun.pdfview.PDFPage;
+
+import net.sf.andpdf.nio.ByteBuffer;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
 
 import ga.pageconnected.pageconnected.Information;
 import ga.pageconnected.pageconnected.R;
 import ga.pageconnected.pageconnected.fragment.MyMagazineFragment;
+import ga.pageconnected.pageconnected.util.LoadBitmap;
 import ga.pageconnected.pageconnected.util.OnAdapterSupport;
 import ga.pageconnected.pageconnected.util.OnLoadMoreListener;
 
@@ -116,9 +129,53 @@ public class MyMagazineListCustomAdapter extends RecyclerView.Adapter<MyMagazine
 
         holder.tv_day.setText(title);
 
+        new LoadBitmap(holder.img, item.get("file")).start();
+//        Bitmap bitmap = getBitmap(item.get("file"));
+//        if(bitmap!=null){
+//            holder.img.setImageBitmap(bitmap);
+//        }
+
 
     }
 
+    private Bitmap getBitmap(String fileName){
+
+        byte[] bytes;
+        try {
+
+            File dir = new File(Environment.getExternalStorageDirectory(), "PageConnected/mymagazine");
+            File file = new File(dir, fileName);
+            FileInputStream is = new FileInputStream(file);
+
+            // Get the size of the file
+            long length = file.length();
+            bytes = new byte[(int) length];
+            int offset = 0;
+            int numRead = 0;
+            while (offset < bytes.length && (numRead=is.read(bytes, offset, bytes.length-offset)) >= 0) {
+                offset += numRead;
+            }
+            ByteBuffer buffer = ByteBuffer.NEW(bytes);
+            String data = Base64.encodeToString(bytes, Base64.DEFAULT);
+            PDFFile pdf_file = new PDFFile(buffer);
+            PDFPage page = pdf_file.getPage(0, true);
+
+            RectF rect = new RectF(0, 0, (int) page.getBBox().width(),
+                    (int) page.getBBox().height());
+
+            Bitmap image = page.getImage((int)rect.width(), (int)rect.height(), rect);
+//            File file1 = new File(dir, "sixth.jpg");
+//            FileOutputStream os = new FileOutputStream(file1);
+//            image.compress(Bitmap.CompressFormat.PNG, 100, os);
+            //((ImageView) findViewById(R.id.testView)).setImageBitmap(image);
+            return image;
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+
+    }
 
     @Override
     public int getItemCount() {
