@@ -197,14 +197,6 @@ public class PhotoArticleActivity extends BaseActivity implements OnAdapterSuppo
 
     }
 
-    public int calculateTotalHeart(){
-        int total = 0;
-        for(HashMap<String, Object> map : list){
-            int heart = (int)map.get("heart");
-            total += heart;
-        }
-        return total;
-    }
 
     @Override
     public void showView() {
@@ -272,10 +264,12 @@ public class PhotoArticleActivity extends BaseActivity implements OnAdapterSuppo
                 if(data != null) {
                     int pos = data.getIntExtra("position", -1);
                     if (pos >= 0) {
-                        boolean heartAble = data.getBooleanExtra("heartAble", false);
-                        list.get(pos).put("heartAble", heartAble);
-                        int heart = data.getIntExtra("heart", 0);
-                        list.get(pos).put("heart", heart);
+                        list.get(pos).put("imageList", (ArrayList<HashMap<String, Object>>)data.getSerializableExtra("imageList"));
+//                        boolean heartAble = data.getBooleanExtra("heartAble", false);
+//                        list.get(pos).put("heartAble", heartAble);
+//                        int heart = data.getIntExtra("heart", 0);
+//                        list.get(pos).put("heart", heart);
+                        calculateTotalHeart(pos);
                         adapter.notifyItemChanged(pos);
                     }
                 }
@@ -284,6 +278,16 @@ public class PhotoArticleActivity extends BaseActivity implements OnAdapterSuppo
                 break;
         }
 
+    }
+    public void calculateTotalHeart(int pos){
+        int total = 0;
+        HashMap<String, Object> map = list.get(pos);
+        ArrayList<HashMap<String, Object>> imageList = (ArrayList<HashMap<String, Object>>)map.get("imageList");
+        for(HashMap<String, Object> m : imageList) {
+            int heart = (int) m.get("heart");
+            total += heart;
+        }
+        list.get(pos).put("heart", total);
     }
 
     private class MyHandler extends Handler {

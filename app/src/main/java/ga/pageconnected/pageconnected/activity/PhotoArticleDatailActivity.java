@@ -10,6 +10,7 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
+import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -40,6 +41,7 @@ public class PhotoArticleDatailActivity extends BaseActivity {
     private final int MSG_MESSAGE_UPDATE_HEART = 500;
     private final int MSG_MESSAGE_UPDATE_FAIL_HEART = 501;
 
+    private ScrollView sv;
     private RelativeLayout rl_profile;
     private TextView tv_name;
     private TextView tv_email;
@@ -96,6 +98,8 @@ public class PhotoArticleDatailActivity extends BaseActivity {
                 .cancelable(false)
                 .build();
 
+        sv = (ScrollView)findViewById(R.id.sv);
+
         rl_profile = (RelativeLayout)findViewById(R.id.rl_profile);
         rl_profile.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -133,6 +137,8 @@ public class PhotoArticleDatailActivity extends BaseActivity {
     }
 
     private void makeList(){
+
+        float scrollY = sv.getScrollY();
 
         li_photoField.removeAllViews();
         ArrayList<String> al = getAllImageList();
@@ -175,6 +181,8 @@ public class PhotoArticleDatailActivity extends BaseActivity {
 
         }
 
+        sv.setScrollY((int)scrollY);
+
     }
 
     private void updateHeart(boolean tag, final int pos){
@@ -208,8 +216,9 @@ public class PhotoArticleDatailActivity extends BaseActivity {
 
                         Intent intent = new Intent();
                         intent.putExtra("position", position);
-                        intent.putExtra("heart", (int)imageList.get(pos).get("heart"));
-                        intent.putExtra("heartAble", (boolean)imageList.get(pos).get("heartAble"));
+                        intent.putExtra("imageList", imageList);
+//                        intent.putExtra("heart", (int)imageList.get(pos).get("heart"));
+//                        intent.putExtra("heartAble", (boolean)imageList.get(pos).get("heartAble"));
                         setResult(UPDATE_HEART, intent);
 
                         handler.sendMessage(handler.obtainMessage(MSG_MESSAGE_UPDATE_HEART));
@@ -239,6 +248,7 @@ public class PhotoArticleDatailActivity extends BaseActivity {
                         temp_rl_interest.setTag(!((boolean) temp_rl_interest.getTag()));
                         checkFillHeartForTemp(temp_rl_interest);
                     }
+                    makeList();
                     break;
                 case MSG_MESSAGE_UPDATE_FAIL_HEART:
                     progressDialog.hide();

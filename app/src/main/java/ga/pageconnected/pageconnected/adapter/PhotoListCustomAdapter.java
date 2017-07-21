@@ -144,6 +144,7 @@ public class PhotoListCustomAdapter extends RecyclerView.Adapter<PhotoListCustom
         holder.tv_date.setText(date);
 
         holder.tv_hit.setText((int)item.get("hit") + "");
+        holder.tv_heart.setText((int)item.get("heart") + "");
 //        holder.tv_heart.setText(activity.calculateTotalHeart() + "");
 
     }

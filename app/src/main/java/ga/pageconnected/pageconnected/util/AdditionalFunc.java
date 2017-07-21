@@ -384,6 +384,7 @@ public class AdditionalFunc {
                 hashTemp.put("day", (String)temp.get("day"));
                 hashTemp.put("date", (String)temp.get("date"));
                 hashTemp.put("time", (String)temp.get("time"));
+                hashTemp.put("heart", 0);
                 hashTemp.put("hit", Integer.parseInt((String)temp.get("hit")));
                 hashTemp.put("hitAble", "1".equals((String)temp.get("hitAble")));
 
@@ -411,6 +412,18 @@ public class AdditionalFunc {
                 hashTemp.put("imageList", imageList);
 
                 list.add(hashTemp);
+
+
+                for(int k=0; k<list.size(); k++) {
+                    int total = 0;
+                    HashMap<String, Object> sm = list.get(k);
+                    ArrayList<HashMap<String, Object>> il = (ArrayList<HashMap<String, Object>>) sm.get("imageList");
+                    for (HashMap<String, Object> m : il) {
+                        int heart = (int) m.get("heart");
+                        total += heart;
+                    }
+                    list.get(k).put("heart", total);
+                }
 
             }
 
