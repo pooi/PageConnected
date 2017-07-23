@@ -8,6 +8,10 @@
     <dimen name="custom_actionbar_title_size">16sp</dimen>
     <dimen name="custom_actionbar_sub_title_size">12sp</dimen>
 
+    <dimen name="layout_title_size">8sp</dimen>
+    <dimen name="layout_content_size">8sp</dimen>
+    <dimen name="layout_reference_size">6sp</dimen>
+
 
     <!-- Profile Activity -->
     <dimen name="header_height">200dp</dimen>

@@ -110,6 +110,7 @@ public class ArticleActivity extends BaseActivity {
 //        viewPager.setPageMargin(0);
         viewPager.setClipChildren(false);
 
+
     }
 
     private void getArticleList(){
@@ -227,10 +228,10 @@ public class ArticleActivity extends BaseActivity {
                         list.get(pos).put("heartAble", heartAble);
                         int heart = data.getIntExtra("heart", 0);
                         list.get(pos).put("heart", heart);
-                        ArticleItemFragment fragment = (ArticleItemFragment) pagerAdapter.getItem(pos);
-                        if(fragment != null) {
-                            fragment.setItem(list.get(pos));
-                        }
+//                        ArticleItemFragment fragment = (ArticleItemFragment) pagerAdapter.getItem(pos);
+//                        if(fragment != null) {
+//                            fragment.setItem(list.get(pos));
+//                        }
                     }
                 }
                 break;
@@ -260,6 +261,7 @@ public class ArticleActivity extends BaseActivity {
             bdl.putInt("position", pattern);
             bdl.putSerializable("data", list.get(pattern));
             f.setArguments(bdl);
+//            f = new ArticleItemFragment();
 
             return f;
         }
