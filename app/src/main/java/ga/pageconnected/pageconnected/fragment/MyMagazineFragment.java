@@ -1,18 +1,24 @@
 package ga.pageconnected.pageconnected.fragment;
 
+import android.Manifest;
+import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.RectF;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
 import android.os.Message;
 import android.support.annotation.NonNull;
+import android.support.v4.app.ActivityCompat;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Base64;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -41,6 +47,8 @@ import ga.pageconnected.pageconnected.util.OnAdapterSupport;
 import ga.pageconnected.pageconnected.util.ParsePHP;
 
 public class MyMagazineFragment extends BaseFragment implements OnAdapterSupport {
+
+    public final int MY_PERMISSION_REQUEST_STORAGE = 100;
 
     private MyHandler handler = new MyHandler();
     private final int MSG_MESSAGE_MAKE_LIST = 500;
@@ -91,7 +99,8 @@ public class MyMagazineFragment extends BaseFragment implements OnAdapterSupport
 
         initUI();
 
-        getMagazineList();
+//        getMagazineList();
+        checkPermission();
 
         return view;
     }
@@ -122,12 +131,14 @@ public class MyMagazineFragment extends BaseFragment implements OnAdapterSupport
         {
             String[] children = dir.list();
             int count = 0;
-            for(int i=0; i<children.length; i++){
-                if(children[i].endsWith(".pdf") || children[i].endsWith(".PDF")){
-                    HashMap<String, String> map = new HashMap<>();
-                    map.put("title", children[i]);
-                    map.put("file", children[i]);
-                    list.add(map);
+            if(children != null) {
+                for (int i = 0; i < children.length; i++) {
+                    if (children[i].endsWith(".pdf") || children[i].endsWith(".PDF")) {
+                        HashMap<String, String> map = new HashMap<>();
+                        map.put("title", children[i]);
+                        map.put("file", children[i]);
+                        list.add(map);
+                    }
                 }
             }
         }
@@ -198,6 +209,52 @@ public class MyMagazineFragment extends BaseFragment implements OnAdapterSupport
                 })
                 .show();
 
+    }
+
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+        switch (requestCode) {
+            case MY_PERMISSION_REQUEST_STORAGE:
+                if (grantResults[0] == PackageManager.PERMISSION_GRANTED
+                        && grantResults[1] == PackageManager.PERMISSION_GRANTED) {
+
+                    getMagazineList();
+
+                    // permission was granted, yay! do the
+                    // calendar task you need to do.
+
+                } else {
+
+                    Log.d("dd", "Permission always deny");
+
+                    // permission denied, boo! Disable the
+                    // functionality that depends on this permission.
+                }
+                break;
+        }
+    }
+
+    @TargetApi(Build.VERSION_CODES.M)
+    private void checkPermission() {
+
+        if (ActivityCompat.checkSelfPermission(context, Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                != PackageManager.PERMISSION_GRANTED
+                || ActivityCompat.checkSelfPermission(context, Manifest.permission.READ_EXTERNAL_STORAGE)
+                != PackageManager.PERMISSION_GRANTED) {
+
+            // Should we show an explanation?
+            if (shouldShowRequestPermissionRationale(Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
+                // Explain to the user why we need to write the permission.
+//                Toast.makeText(this, "Read/Write external storage", Toast.LENGTH_SHORT).show();
+            }
+
+            requestPermissions(new String[]{Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE},
+                    MY_PERMISSION_REQUEST_STORAGE);
+
+        } else {
+            getMagazineList();
+        }
     }
 
     @Override

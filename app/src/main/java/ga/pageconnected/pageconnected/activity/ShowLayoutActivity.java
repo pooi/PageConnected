@@ -53,6 +53,7 @@ public class ShowLayoutActivity extends BaseActivity implements DialogListener{
 
     public static final int UPDATE_HEART = 100;
     public final int MY_PERMISSION_REQUEST_STORAGE = 100;
+    public final int CHECK_EXIST_FILE = 105;
 
     private MyHandler handler = new MyHandler();
     private final int MSG_MESSAGE_UPDATE_HEART = 500;
@@ -94,8 +95,10 @@ public class ShowLayoutActivity extends BaseActivity implements DialogListener{
 
         init();
 
-        checkAlreadyExistFile();
-        checkPDFText();
+        checkOnlyPermission();
+
+//        checkAlreadyExistFile();
+//        checkPDFText();
 
     }
 
@@ -357,10 +360,12 @@ public class ShowLayoutActivity extends BaseActivity implements DialogListener{
         if (dir.isDirectory())
         {
             String[] children = dir.list();
-            for(int i=0; i<children.length; i++){
-                if(fileName.equals(children[i])){
-                    pdfFile = new File(dir, children[i]);
-                    break;
+            if(children != null) {
+                for (int i = 0; i < children.length; i++) {
+                    if (fileName.equals(children[i])) {
+                        pdfFile = new File(dir, children[i]);
+                        break;
+                    }
                 }
             }
 //                        for (int i = 0; i < children.length; i++)
@@ -369,6 +374,7 @@ public class ShowLayoutActivity extends BaseActivity implements DialogListener{
 //                        }
 
         }
+        checkPDFText();
     }
     private void checkPDFText(){
         if(pdfFile == null){
@@ -447,6 +453,9 @@ public class ShowLayoutActivity extends BaseActivity implements DialogListener{
                     // functionality that depends on this permission.
                 }
                 break;
+            case CHECK_EXIST_FILE:
+                checkAlreadyExistFile();
+                break;
         }
     }
     @TargetApi(Build.VERSION_CODES.M)
@@ -460,7 +469,7 @@ public class ShowLayoutActivity extends BaseActivity implements DialogListener{
             // Should we show an explanation?
             if (shouldShowRequestPermissionRationale(Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
                 // Explain to the user why we need to write the permission.
-                Toast.makeText(this, "Read/Write external storage", Toast.LENGTH_SHORT).show();
+//                Toast.makeText(this, "Read/Write external storage", Toast.LENGTH_SHORT).show();
             }
 
             requestPermissions(new String[]{Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE},
@@ -468,6 +477,28 @@ public class ShowLayoutActivity extends BaseActivity implements DialogListener{
 
         } else {
             createPdf();
+        }
+    }
+    @TargetApi(Build.VERSION_CODES.M)
+    private void checkOnlyPermission() {
+
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                != PackageManager.PERMISSION_GRANTED
+                || ActivityCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE)
+                != PackageManager.PERMISSION_GRANTED) {
+
+            // Should we show an explanation?
+            if (shouldShowRequestPermissionRationale(Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
+                // Explain to the user why we need to write the permission.
+//                Toast.makeText(this, "Read/Write external storage", Toast.LENGTH_SHORT).show();
+            }
+
+            requestPermissions(new String[]{Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE},
+                    CHECK_EXIST_FILE);
+
+        } else {
+//            createPdf();
+            checkAlreadyExistFile();
         }
     }
 
