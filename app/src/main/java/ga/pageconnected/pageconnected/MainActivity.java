@@ -5,6 +5,7 @@ import android.content.SharedPreferences;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Environment;
 import android.os.Handler;
 import android.os.Message;
@@ -12,6 +13,7 @@ import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+import android.support.v4.content.FileProvider;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -508,7 +510,13 @@ public class MainActivity extends BaseActivity  implements NavigationView.OnNavi
 
         Intent intent = new Intent(Intent.ACTION_VIEW);
         intent.setAction(android.content.Intent.ACTION_VIEW);
-        intent.setDataAndType(Uri.fromFile(pdfFile), "application/pdf");
+        if(Build.VERSION.SDK_INT >= 24) {
+            Uri pdfURI = FileProvider.getUriForFile(this, getApplicationContext().getPackageName() + ".provider", pdfFile);
+            System.out.println(getApplicationContext().getPackageName());
+            intent.setDataAndType(pdfURI, "application/pdf");
+        }else{
+            intent.setDataAndType(Uri.fromFile(pdfFile), "application/pdf");
+        }
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(intent);
     }

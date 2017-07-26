@@ -13,6 +13,7 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.content.FileProvider;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.InputType;
@@ -274,7 +275,13 @@ public class AddMyMagazineActivity extends BaseActivity implements MyMagazineSel
     private void viewPdf(){
         Intent intent = new Intent(Intent.ACTION_VIEW);
         intent.setAction(android.content.Intent.ACTION_VIEW);
-        intent.setDataAndType(Uri.fromFile(pdfFile), "application/pdf");
+        if(Build.VERSION.SDK_INT >= 24) {
+            Uri pdfURI = FileProvider.getUriForFile(this, getApplicationContext().getPackageName() + ".provider", pdfFile);
+            System.out.println(getApplicationContext().getPackageName());
+            intent.setDataAndType(pdfURI, "application/pdf");
+        }else{
+            intent.setDataAndType(Uri.fromFile(pdfFile), "application/pdf");
+        }
         startActivity(intent);
     }
 
