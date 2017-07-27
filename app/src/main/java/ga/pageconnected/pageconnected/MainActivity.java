@@ -510,6 +510,7 @@ public class MainActivity extends BaseActivity  implements NavigationView.OnNavi
 
         Intent intent = new Intent(Intent.ACTION_VIEW);
         intent.setAction(android.content.Intent.ACTION_VIEW);
+        intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
         if(Build.VERSION.SDK_INT >= 24) {
             Uri pdfURI = FileProvider.getUriForFile(this, getApplicationContext().getPackageName() + ".provider", pdfFile);
             System.out.println(getApplicationContext().getPackageName());

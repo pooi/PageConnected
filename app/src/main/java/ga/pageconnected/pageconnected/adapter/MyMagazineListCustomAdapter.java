@@ -5,10 +5,12 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.RectF;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
 import android.os.Message;
+import android.support.v4.content.FileProvider;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -104,7 +106,14 @@ public class MyMagazineListCustomAdapter extends RecyclerView.Adapter<MyMagazine
 
                 Intent intent = new Intent(Intent.ACTION_VIEW);
                 intent.setAction(android.content.Intent.ACTION_VIEW);
-                intent.setDataAndType(Uri.fromFile(pdfFile), "application/pdf");
+                intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+                if(Build.VERSION.SDK_INT >= 24) {
+                    Uri pdfURI = FileProvider.getUriForFile(context, context.getPackageName() + ".provider", pdfFile);
+                    System.out.println(context.getPackageName());
+                    intent.setDataAndType(pdfURI, "application/pdf");
+                }else{
+                    intent.setDataAndType(Uri.fromFile(pdfFile), "application/pdf");
+                }
                 intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 
                 onAdapterSupport.redirectActivity(intent);
