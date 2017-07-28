@@ -1,5 +1,7 @@
 package ga.pageconnected.pageconnected;
 
+import android.Manifest;
+import android.annotation.TargetApi;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageInfo;
@@ -11,6 +13,7 @@ import android.os.Handler;
 import android.os.Message;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.content.FileProvider;
@@ -20,6 +23,7 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.text.InputType;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -56,6 +60,8 @@ import ga.pageconnected.pageconnected.util.ParsePHP;
 import jp.wasabeef.picasso.transformations.CropCircleTransformation;
 
 public class MainActivity extends BaseActivity  implements NavigationView.OnNavigationItemSelectedListener {
+
+    public final int MY_PERMISSION_REQUEST_STORAGE = 100;
 
     private MyHandler handler = new MyHandler();
     private final int MSG_MESSAGE_FINISH = 500;
@@ -413,7 +419,8 @@ public class MainActivity extends BaseActivity  implements NavigationView.OnNavi
 
         } else if(id == R.id.nav_file){
 
-            showTempPdfFileList();
+//            showTempPdfFileList();
+            checkPermission();
 
         } else if(id == R.id.nav_open_source){
 
@@ -443,14 +450,16 @@ public class MainActivity extends BaseActivity  implements NavigationView.OnNavi
         if (dir.isDirectory())
         {
             String[] children = dir.list();
-            int count = 0;
-            for(int i=0; i<children.length; i++){
-                if(children[i].endsWith(".pdf") || children[i].endsWith(".PDF")){
-                    count += 1;
+            if(children != null) {
+                int count = 0;
+                for (int i = 0; i < children.length; i++) {
+                    if (children[i].endsWith(".pdf") || children[i].endsWith(".PDF")) {
+                        count += 1;
+                    }
                 }
-            }
-            if(count > 0){
-                isShowAlert = true;
+                if (count > 0) {
+                    isShowAlert = true;
+                }
             }
 //                        for (int i = 0; i < children.length; i++)
 //                        {
@@ -571,6 +580,50 @@ public class MainActivity extends BaseActivity  implements NavigationView.OnNavi
                 break;
         }
 
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+        switch (requestCode) {
+            case MY_PERMISSION_REQUEST_STORAGE:
+                if (grantResults[0] == PackageManager.PERMISSION_GRANTED
+                        && grantResults[1] == PackageManager.PERMISSION_GRANTED) {
+
+                    showTempPdfFileList();
+
+                    // permission was granted, yay! do the
+                    // calendar task you need to do.
+
+                } else {
+
+                    Log.d("dd", "Permission always deny");
+
+                    // permission denied, boo! Disable the
+                    // functionality that depends on this permission.
+                }
+                break;
+        }
+    }
+    @TargetApi(Build.VERSION_CODES.M)
+    private void checkPermission() {
+
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                != PackageManager.PERMISSION_GRANTED
+                || ActivityCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE)
+                != PackageManager.PERMISSION_GRANTED) {
+
+            // Should we show an explanation?
+            if (shouldShowRequestPermissionRationale(Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
+                // Explain to the user why we need to write the permission.
+//                Toast.makeText(this, "Read/Write external storage", Toast.LENGTH_SHORT).show();
+            }
+
+            requestPermissions(new String[]{Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE},
+                    MY_PERMISSION_REQUEST_STORAGE);
+
+        } else {
+            showTempPdfFileList();
+        }
     }
 
     private void removeUser(String userId){
