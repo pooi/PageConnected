@@ -42,6 +42,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import ga.pageconnected.pageconnected.activity.ArticleActivity;
+import ga.pageconnected.pageconnected.activity.OpenSourceActivity;
 import ga.pageconnected.pageconnected.activity.PhotoArticleActivity;
 import ga.pageconnected.pageconnected.activity.add.AddArticleActivity;
 import ga.pageconnected.pageconnected.activity.add.AddColumnActivity;
@@ -424,9 +425,9 @@ public class MainActivity extends BaseActivity  implements NavigationView.OnNavi
 
         } else if(id == R.id.nav_open_source){
 
-            showSnackbar("오픈소스 페이지");
-//            Intent intent = new Intent(getApplicationContext(), OpenSourceActivity.class);
-//            startActivity(intent);
+            Intent intent = new Intent(getApplicationContext(), OpenSourceActivity.class);
+            startActivity(intent);
+
         }
 
         if (getSupportActionBar() != null && title != null) {
