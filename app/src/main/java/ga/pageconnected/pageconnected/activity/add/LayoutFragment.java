@@ -33,6 +33,7 @@ public class LayoutFragment extends BaseFragment implements Serializable{
     // UI
     private ImageView img;
     private TextView tv_layout_pos;
+    private TextView tv_select;
 
 
 
@@ -108,6 +109,15 @@ public class LayoutFragment extends BaseFragment implements Serializable{
                 listener.selected(position, LayoutController.getMaxImageCount(position));
             }
         });
+        tv_select = (TextView)view.findViewById(R.id.tv_select);
+        tv_select.setVisibility(View.VISIBLE);
+        tv_select.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                listener.selected(position, LayoutController.getMaxImageCount(position));
+            }
+        });
+
 
     }
 
