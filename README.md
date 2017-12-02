@@ -7,7 +7,8 @@ Page Connected is a service that allows you to register three types of posts thr
 <br><br>
 
 ## Feature
-><a href="https://drive.google.com/open?id=0B67FssKXYIKQM3NBZ2FITk1Zbkk">개발계획서</a>
+><a href="https://drive.google.com/open?id=0B67FssKXYIKQM3NBZ2FITk1Zbkk">개발계획서</a><br>
+<a href="https://drive.google.com/open?id=0ByBmJmojn2EeeDA0Nk8yOVZSdkk">Intro Video</a>
 
 평창올림픽을 즐기는 사람이라면 누구나 올림픽과 관련된 사진, 객관적인 사실만 나열한 기사, 자신의 주관적인 생각이 담긴 칼럼을 제작하며, 이것들은 각각 잡지의 한 페이지를 구성하게 된다. 최종적으로 이 페이지들이 모여 올림픽을 기념하는 올림픽 기념물(모두가 참여해서 만들어낸 잡지)이 만들어진다.
 <hr>
